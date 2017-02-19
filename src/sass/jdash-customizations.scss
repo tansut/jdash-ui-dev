@@ -1,0 +1,29 @@
+.j-icon-btn {
+    padding-top: 6px;
+}
+
+.j-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.j-padding-top {
+    padding-top: 16px !important;
+}
+
+.j-drag-handle {
+    cursor: move;
+}
+
+[j-view-mode="configure"] {
+    [j-drag-handle] {
+        cursor: move;
+    }
+}
+
+j-dashboard {
+    display: block;
+}
+

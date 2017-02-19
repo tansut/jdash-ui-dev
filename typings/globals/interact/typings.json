@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/8621c476047cd21552da5f5570767dd7750235a5/interactjs/interact.d.ts",
+    "raw": "registry:dt/interact#1.0.25+20161208130438",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/8621c476047cd21552da5f5570767dd7750235a5/interactjs/interact.d.ts"
+  }
+}

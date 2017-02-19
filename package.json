@@ -1,0 +1,40 @@
+{
+  "name": "jdash-ui-dev",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/definitions/index.d.ts",
+  "bin": {
+    "jdash": "JDashCore.js"
+  },
+  "dependencies": {
+    "gulp": "^3.9.1"
+  },
+  "devDependencies": {
+    "browserify": "^13.1.1",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^2.4.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^3.0.0",
+    "gulp-sourcemaps": "^2.4.1",
+    "gulp-typescript": "^3.1.3",
+    "gulp-uglify": "^2.0.1",
+    "gulp-vulcanize": "^6.1.0",
+    "gulp-webserver": "^0.9.1",
+    "mocha": "^3.2.0",
+    "node-sass": "^4.1.1",
+    "pump": "^1.0.2",
+    "tsify": "^2.0.7",
+    "typescript": "^2.1.4",
+    "typings": "^2.0.0",
+    "vinyl-paths": "^2.1.0",
+    "vulcanize": "^1.15.2",
+    "jdash-core": "git+ssh://git@bitbucket.org:kalitte/jdash-core.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

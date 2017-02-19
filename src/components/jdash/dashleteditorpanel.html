@@ -1,0 +1,27 @@
+<style>
+    j-dashlet-editor-panel {
+        display: block;
+    }
+</style>
+<j-component id="j-dashlet-editor-panel">
+    <template>
+        <div class="j-modal">
+            <div class="j-modal-content j-animate-zoom j-card-8 j-round">
+                <header class="j-container j-theme handle">
+                    <span j-action="closeeditor" class="j-closebtn">&times;</span>
+                    <h2 j-bind="title" class="j-truncate" j-type="j-dashlet-title">
+                        Configure
+                    </h2>
+                </header>
+                <div class="j-content-theme">
+                    <slot name="body"></slot>
+                </div>
+                <div class="j-container j-border-top j-padding-16 j-theme-light">
+                    <a j-action="setconfig" class="j-btn j-theme-action">Done</a>
+
+                </div>
+            </div>
+        </div>
+    </template>
+
+</j-component>

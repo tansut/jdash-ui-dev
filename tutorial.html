@@ -1,0 +1,51 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Simple Page with JDash</title>
+
+    <script src="/dist/jdash.min.js"></script>
+    <link rel="import" href="/dist/components/jdash.html">
+
+</head>
+
+<body>
+    <j-dashlet id="hello-world" title="Hello World">
+        <template>
+            <div class="j-padding">
+                <h1>Hello World!</h1>
+            </div>
+        </template>
+    </j-dashlet>
+
+    <div id="dashlets">
+
+    </div>
+
+    <j-dashboard id="mydashboard" class="j-theme-dashboard" j-view-mode="dashletedit">
+
+    </j-dashboard>
+
+    <!--<j-provider id="localstorageprovider" type="localstorage" storage="session"></j-provider>-->
+    <j-provider api-key="myapikey"></j-provider>
+
+</body>
+
+<script>
+    jdash.ready(function () {
+        var mydashboard = document.querySelector('#mydashboard'),
+            dashlets = document.querySelector('#dashlets');
+
+        jdash.DashletModule.getModules().forEach(function (module) {
+            var btn = document.createElement('button');
+            btn.textContent = module.title;
+            btn.addEventListener('click', function () {
+                mydashboard.addDashlet(module)
+            });
+            dashlets.appendChild(btn);
+        });
+    })
+
+</script>
+
+</html>
