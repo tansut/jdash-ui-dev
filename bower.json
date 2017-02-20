@@ -20,7 +20,6 @@
     "custom-elements": "webcomponents/custom-elements#^1.0.0-alpha.3",
     "interactjs": "^1.2.8",
     "html-imports": "webcomponents/html-imports",
-    "webcomponentsjs": "^0.7.23",
-    "axios": "^0.15.3"
+    "webcomponentsjs": "^0.7.23"
   }
 }

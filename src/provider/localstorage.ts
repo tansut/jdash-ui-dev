@@ -1,12 +1,12 @@
 import { KeyValue } from '../core';
-import { ProviderBase, ProviderManager } from './';
+import { ProviderManager } from './';
 import Helper from '../helper';
 import { IClientProvider, DashboardCreateModel, DashboardUpdateModel, ISearchDashboards, DashboardModel, CreateResult, Query, QueryResult, DashletCreateModel, DashletUpdateModel, DashletModel, DashletPositionModel } from 'jdash-core';
 
 
-export class LocalStorageProvider extends ProviderBase {
+export class LocalStorageProvider implements IClientProvider {
     static ProviderType = 'localstorage';
-    static Register = ProviderManager.register(LocalStorageProvider.ProviderType, LocalStorageProvider);
+    static Register = ProviderManager.register(LocalStorageProvider.ProviderType, typeof LocalStorageProvider);
     public storage: Storage;
 
     init(values: KeyValue<string>) {
@@ -138,6 +138,11 @@ export class LocalStorageProvider extends ProviderBase {
             dashlets.forEach(dashlet => this.removeItem('dashlets', dashlet.id));
             this.removeItem('dashboards', dashboardId);
         })
+    }
+
+    deleteDashlet(id: string) {
+        this.removeItem('dashlets', id);
+        return Promise.resolve();
     }
 }
 

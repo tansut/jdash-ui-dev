@@ -59,7 +59,6 @@ gulp.task('ts2js-dev', function () {
     return Promise.all(doit()).then(() => {
         return gulp.src([
             'bower_components/interactjs/interact.js',
-            'bower_components/axios/lib/axios.js',
             'lib/jdash.lean.js'
         ])
             .pipe(sourcemaps.init())
@@ -82,7 +81,7 @@ gulp.task('generate-native-only', ['deploy:clean'], function (cb) {
         var jdash = gulp.src([
             'bower_components/custom-elements/src/native-shim.js',
             'bower_components/interactjs/interact.js',
-            'bower_components/axios/lib/axios.js',
+            'node_modules/jdash-core/lib/jdash-core.min.js',
             'lib/jdash.lean.min.js'
         ])
             .pipe(concat('jdash.native.min.js'))
@@ -112,7 +111,7 @@ gulp.task('generate-full', ['deploy:clean'], function (cb) {
             'bower_components/custom-elements/src/native-shim.js',
             'bower_components/es6-promise/es6-promise.auto.min.js',
             'bower_components/interactjs/dist/interact.min.js',
-            'bower_components/axios/dist/axios.min.js',
+            'node_modules/jdash-core/lib/jdash-core.min.js',
             'lib/jdash.lean.min.js'
         ])
             .pipe(concat('jdash.min.js'))
