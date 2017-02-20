@@ -431,7 +431,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         style && (this.layoutStyle = style);
         super.initializeElement();
         
-        interact.dynamicDrop(true);
+        (<any>interact).dynamicDrop(true);
         this.listenforActions();
         Helper.ensureId(this, 'j-dashlet-zone');
         this.setViewMode(this.viewMode);

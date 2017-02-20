@@ -1,5 +1,4 @@
 {
-  "name": "web-components",
   "globalDependencies": {
     "interact": "registry:dt/interact#1.0.25+20161208130438"
   }
