@@ -14,8 +14,11 @@
         "rootDir": "src",
         "suppressImplicitAnyIndexErrors": true
     },
+    "include": [
+        "./src/**"
+    ],
     "exclude": [
-        "node_modules/**",
-        "bower_components/**"
+        "./node_modules/**",
+        "./bower_components/**"
     ]
 }

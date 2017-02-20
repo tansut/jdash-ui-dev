@@ -28,7 +28,6 @@ export default class JDash {
     static Configuration = Configuration;
     static ThemeManager = ThemeManager;
     static Dashboard = Dashboard;
-    static Http = axios;
 
 
     static dashlet(id: string | Function | Object, handler: Function | Object) {
@@ -64,7 +63,7 @@ declare global {
 }
 
 (function (window: Window) {
-    window.jdash = JDash;
+    window['jdash'] = JDash;
     register.elements();
     JDash.ready(() => ThemeManager.init())
 })(window)

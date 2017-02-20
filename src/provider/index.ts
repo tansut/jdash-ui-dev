@@ -3,57 +3,14 @@ import { HtmlElement, KeyValue } from '../core';
 import { IClientProvider, LayoutModel, DashboardCreateModel, DashboardUpdateModel, ISearchDashboards, DashboardModel, CreateResult, Query, QueryResult, DashletCreateModel, DashletUpdateModel, DashletModel, DashletPositionModel } from 'jdash-core';
 
 
-
-export class ProviderBase implements IClientProvider {
-    init(values: KeyValue<any>) {
-
-    }
-
-    getDashboard(id: string): Promise<DashboardModel> {
-        return null;
-    }
-
-    createDashboard(model: DashboardCreateModel): Promise<CreateResult> {
-        return null;
-    }
-    getMyDashboards(query?: Query): Promise<QueryResult<DashboardModel>> {
-        return null;
-    }
-    searchDashboards(search?: ISearchDashboards, query?: Query): Promise<QueryResult<DashboardModel>> {
-        return null;
-    }
-    deleteDashboard(id: string): Promise<any> {
-        return null;
-    }
-    saveDashboard(id: string, updateValues: DashboardUpdateModel): Promise<any> {
-        return null;
-    }
-    createDashlet(model: DashletCreateModel): Promise<CreateResult> {
-        return null;
-    }
-    getDashletsOfDashboard(dashboardId: string): Promise<Array<DashletCreateModel>> {
-        return null;
-    }
-    deleteDashlet(id: string): Promise<any> {
-        return null;
-    }
-    saveDashlet(id: string, updateValues: DashletUpdateModel): Promise<any> {
-        return null;
-    }
-
-
-}
-
 export class ProviderManager {
+    static providers: KeyValue<Function> = {};
 
-    static providers: KeyValue<typeof ProviderBase> = {};
-
-
-    public static get(type?: string): typeof ProviderBase {
+    public static get(type?: string): any {
         return type ? ProviderManager.providers[type] : ProviderManager.providers[Object.keys(ProviderManager.providers)[0]];
     }
 
-    public static register(type: string, provider: typeof ProviderBase): typeof ProviderBase {
+    public static register(type: string, provider: any): IClientProvider {
         ProviderManager.providers[type] = provider;
         return provider;
     }
@@ -62,7 +19,7 @@ export class ProviderManager {
 
 
 export class ProviderElement extends HtmlElement {
-    public provider: ProviderBase;
+    public provider: IClientProvider;
 
     static get observedAttributes() {
         return ['type'];
@@ -91,33 +48,17 @@ export class ProviderElement extends HtmlElement {
     }
 
 
-    createProvider(constructor: typeof ProviderBase) {
-        this.provider = new constructor();
-    }
-
-    attributeChangedCallback(name: string, oldVal: string, newVal: string) {
-        if (name.toLowerCase() == 'type' && newVal) {
-            if (this.provider)
-                throw new Error('Cannot change provider.');
-            var constructor = ProviderManager.get(newVal);
-            if (!constructor)
-                throw new Error(`${newVal} is not a valid provider. Available providers: ${Object.keys(ProviderManager.providers)}`);
-            this.createProvider(constructor);
-        }
+    createProvider(constructor: typeof Object, params: any) {
+        this.provider = <IClientProvider>new constructor(params);
     }
 
     connectedCallback() {
-        if (!this.provider) {
-            var constructor = ProviderManager.get('api');
-            constructor && this.createProvider(constructor);
-        }
-        if (this.provider) {
-            var initProps = {};
-            for (var i = 0; i < this.attributes.length; i++)
-                if (this.attributes[i].name.toLowerCase() != 'id' && this.attributes[i].name.toLocaleLowerCase() != 'type')
-                    initProps[this.attributes[i].name] = this.attributes[i].value;
-            this.provider.init(initProps);
-        }
+        var initProps = {};
+        for (var i = 0; i < this.attributes.length; i++)
+            if (this.attributes[i].name.toLowerCase() != 'id' && this.attributes[i].name.toLocaleLowerCase() != 'type')
+                initProps[this.attributes[i].name] = this.attributes[i].value;
+        var constructor = ProviderManager.get(this.getAttribute('type'));
+        this.createProvider(constructor, initProps);
         super.connectedCallback();
     }
 }

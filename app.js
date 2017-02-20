@@ -198,7 +198,7 @@
     }
 
     app.prototype.loadDashboards = function () {
-        return this.dashboard.provider.getDashboardsOfUser(this.username).then(function (result) {
+        return this.dashboard.provider.getMyDashboards().then(function (result) {
             this.createDashboardList(result.data);
             this.listingDashboards = result.data;
             return result;

@@ -1,6 +1,5 @@
 import { Dashboard, DashboardState } from '../dashboard';
 import { IDashletEditorPanel } from '../dashboard/dashleteditorpanel';
-import { Dropzone } from './dargdrop';
 import { DashletModel, DashletPositionModel, LayoutDashletMetaModel, LayoutModel } from 'jdash-core';
 import {
     Dashlet,
@@ -134,6 +133,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
             this.classList.add(value);
             this._layoutStyle = value;
         }
+        
     }
 
 
@@ -409,7 +409,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
 
     }
 
-    set viewMode(newVal: string) {
+    set viewMode(newVal: string) {        
         if (this.viewMode != newVal) {
             this.fireEvent('viewmode-change', {
                 oldVal: this.viewMode,
@@ -430,6 +430,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         }
         style && (this.layoutStyle = style);
         super.initializeElement();
+        
         interact.dynamicDrop(true);
         this.listenforActions();
         Helper.ensureId(this, 'j-dashlet-zone');

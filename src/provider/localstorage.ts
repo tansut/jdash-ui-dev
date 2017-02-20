@@ -1,12 +1,12 @@
 import { KeyValue } from '../core';
-import { ProviderBase, ProviderManager } from './';
+import { ProviderManager } from './';
 import Helper from '../helper';
 import { IClientProvider, DashboardCreateModel, DashboardUpdateModel, ISearchDashboards, DashboardModel, CreateResult, Query, QueryResult, DashletCreateModel, DashletUpdateModel, DashletModel, DashletPositionModel } from 'jdash-core';
 
 
-export class LocalStorageProvider extends ProviderBase {
+export class LocalStorageProvider implements IClientProvider {
     static ProviderType = 'localstorage';
-    static Register = ProviderManager.register(LocalStorageProvider.ProviderType, LocalStorageProvider);
+    static Register = ProviderManager.register(LocalStorageProvider.ProviderType, typeof LocalStorageProvider);
     public storage: Storage;
 
     init(values: KeyValue<string>) {
@@ -51,7 +51,7 @@ export class LocalStorageProvider extends ProviderBase {
         return colection;
     }
 
-    createDashboard(model: DashboardModel): Promise<CreateResult> {
+    createDashboard(model: DashboardCreateModel): Promise<CreateResult> {
         return new Promise((resolve, reject) => {
             model.id = model.id || Helper.makeid();
             this.addToCollection('dashboards', model);
@@ -94,7 +94,7 @@ export class LocalStorageProvider extends ProviderBase {
 
         if (updateValues.layout) {
             dashletsInCollection.forEach((dashlet) => {
-                var foundInLayout = dashboard.layout[dashlet.id];
+                var foundInLayout = updateValues.layout.dashlets[dashlet.id];
                 if (!foundInLayout)
                     this.removeItem('dashlets', dashlet.id)
             })
@@ -115,7 +115,7 @@ export class LocalStorageProvider extends ProviderBase {
     }
 
 
-    createDashlet(model: DashletModel): Promise<any> {
+    createDashlet(model: DashletCreateModel): Promise<any> {
         return this.getDashboard(model.dashboardId).then((dashboard) => {
             model.id = Helper.makeid();
             this.addToCollection('dashlets', model);
@@ -138,6 +138,11 @@ export class LocalStorageProvider extends ProviderBase {
             dashlets.forEach(dashlet => this.removeItem('dashlets', dashlet.id));
             this.removeItem('dashboards', dashboardId);
         })
+    }
+
+    deleteDashlet(id: string) {
+        this.removeItem('dashlets', id);
+        return Promise.resolve();
     }
 }
 
