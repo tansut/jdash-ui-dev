@@ -81,7 +81,7 @@ gulp.task('generate-native-only', ['deploy:clean'], function (cb) {
         var jdash = gulp.src([
             'bower_components/custom-elements/src/native-shim.js',
             'bower_components/interactjs/interact.js',
-            'node_modules/jdash-core/lib/jdash-core.min.js',
+            //'node_modules/jdash-core/lib/jdash-core.min.js',
             'lib/jdash.lean.min.js'
         ])
             .pipe(concat('jdash.native.min.js'))
@@ -109,9 +109,9 @@ gulp.task('generate-full', ['deploy:clean'], function (cb) {
             'bower_components/custom-elements/custom-elements.min.js',
             'bower_components/webcomponentsjs/HTMLImports.min.js',
             'bower_components/custom-elements/src/native-shim.js',
-            'bower_components/es6-promise/es6-promise.auto.min.js',
+             'bower_components/es6-promise/es6-promise.auto.min.js',
             'bower_components/interactjs/dist/interact.min.js',
-            'node_modules/jdash-core/lib/jdash-core.min.js',
+            //'node_modules/jdash-core/lib/jdash-core.min.js',
             'lib/jdash.lean.min.js'
         ])
             .pipe(concat('jdash.min.js'))
@@ -126,7 +126,7 @@ gulp.task('polyfills', function () {
         'bower_components/custom-elements/src/native-shim.js',
         'bower_components/custom-elements/custom-elements.min.js',
         'bower_components/webcomponentsjs/HTMLImports.min.js',
-        'bower_components/es6-promise/es6-promise.min.js'
+         'bower_components/es6-promise/es6-promise.min.js'
     ])
         .pipe(concat('polyfills.js'))
         .pipe(gulp.dest('./debug/'));

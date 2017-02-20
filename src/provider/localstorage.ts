@@ -6,10 +6,12 @@ import { IClientProvider, DashboardCreateModel, DashboardUpdateModel, ISearchDas
 
 export class LocalStorageProvider implements IClientProvider {
     static ProviderType = 'localstorage';
-    static Register = ProviderManager.register(LocalStorageProvider.ProviderType, typeof LocalStorageProvider);
+    static Register = ProviderManager.register(LocalStorageProvider.ProviderType, LocalStorageProvider);
     public storage: Storage;
 
-    init(values: KeyValue<string>) {
+    
+
+    constructor(values: KeyValue<string>) {
         this.storage = values['storage'] == 'session' ? window.sessionStorage : window.localStorage;
     }
 

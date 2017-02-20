@@ -2,13 +2,8 @@
   "name": "jdash-ui-dev",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
-  "types": "dist/definitions/index.d.ts",
-  "bin": {
-    "jdash": "JDashCore.js"
-  },
   "dependencies": {
-    "gulp": "^3.9.1"
+    "jdash-core": "git+ssh://git@bitbucket.org/kalitte/jdash-core.git"
   },
   "devDependencies": {
     "@types/es6-promise": "0.0.32",

@@ -1,3 +1,4 @@
+import * as axios from 'axios';
 import { Dashboard } from './dashboard';
 import { ThemeManager } from './theme';
 import { DashletModule } from './dashboard/dashlet';
@@ -28,6 +29,7 @@ export default class JDash {
     static Configuration = Configuration;
     static ThemeManager = ThemeManager;
     static Dashboard = Dashboard;
+    static Http = axios;
 
 
     static dashlet(id: string | Function | Object, handler: Function | Object) {
