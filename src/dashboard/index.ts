@@ -1,7 +1,9 @@
-import { JDash } from '../jdash';
-import { DashboardModel, DashletModel, DashletModuleModel, DashletPositionModel } from '../provider/models';
+import JDash from '../jdash';
+import { DashboardModel, DashletModel, DashletPositionModel, IClientProvider } from 'jdash-core';
+
 import { LocalStorageProvider } from '../provider/localstorage';
-import { ProviderManager, ProviderElement, IProvider } from '../provider';
+import { ProviderManager, ProviderElement } from '../provider';
+
 import { Dashlet, DashletEditor, DashletModule, IDashletElement, IDashletElementStatus } from './dashlet';
 import { IDashletPanel } from './dashletpanel';
 import { Component, ComponentElement, TemplatedElement, HtmlElement, KeyValue } from '../core';
@@ -20,7 +22,7 @@ export const DashboardState = {
 
 
 export class Dashboard extends TemplatedElement {
-    protected _provider: IProvider;
+    protected _provider: IClientProvider;
     protected _layout: DashboardLayout;
     private _model: DashboardModel;
     public _state: string = DashboardState.none;
@@ -45,7 +47,7 @@ export class Dashboard extends TemplatedElement {
         return this._provider;
     }
 
-    set provider(val: IProvider) {
+    set provider(val: IClientProvider) {
         this._provider = val;
     }
 
@@ -133,7 +135,6 @@ export class Dashboard extends TemplatedElement {
             updatedDashlets.forEach((dashlet) => {
                 providerValues[dashlet.getAttribute('j-provider-id')] = this.getDashletPosition(dashlet);
             })
-            //return this.provider.updateDashletPositions(providerValues);
         });
     }
 

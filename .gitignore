@@ -40,4 +40,5 @@ bower_components
 .vscode
 bin
 dist
+lib
 debug

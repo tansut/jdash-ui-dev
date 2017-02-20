@@ -1,7 +1,7 @@
-import { IProvider } from '../provider';
+import { IClientProvider } from 'jdash-core';
 
 import { DashboardState, Dashboard } from './';
-import { DashboardModel, DashletModel } from '../provider/models';
+import { DashboardModel, DashletModel } from 'jdash-core';
 import { IDashletEditorPanel } from './dashleteditorpanel';
 import { DashboardLayout } from '../layout';
 import { Component, ComponentElement, ComponentGeneratedElement, HtmlElement, KeyValue, Configuration } from '../core';
@@ -49,7 +49,7 @@ export class Dashlet extends ComponentGeneratedElement<DashletModule> implements
     public _configObject: Configuration;
     public _viewMode: string = DashletViewMode.readonly;
     private _panel: IDashletPanel;
-    private _provider: IProvider;
+    private _provider: IClientProvider;
     public _model: DashletModel;
 
     // set title(val: string) {
@@ -227,7 +227,7 @@ export class Dashlet extends ComponentGeneratedElement<DashletModule> implements
         return Promise.resolve(detail.$waitFor).then(() => {
             if (!this.Provider)
                 return Promise.reject('no provider');
-            return this.Provider.saveDashletConfiguration(this.getAttribute('j-provider-id') || this.id, this.config);
+            return this.Provider.saveDashlet(this.getAttribute('j-provider-id') || this.id, { configuration: this.config });
         });
     }
 
@@ -322,7 +322,7 @@ export class Dashlet extends ComponentGeneratedElement<DashletModule> implements
         if (newTitle !== null) {
             var dashletId = this.getAttribute('j-provider-id') || this.id;
             if (this.Provider) {
-                event.detail.$waitFor = this.Provider.updateDashletProperties(dashletId, {
+                event.detail.$waitFor = this.Provider.saveDashlet(dashletId, {
                     title: newTitle
                 }).then(() => {
                     this.title = newTitle;

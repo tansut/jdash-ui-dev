@@ -1,7 +1,7 @@
 import { Dashboard, DashboardState } from '../dashboard';
 import { IDashletEditorPanel } from '../dashboard/dashleteditorpanel';
 import { Dropzone } from './dargdrop';
-import { DashletModel, DashletPositionModel, LayoutDashletMetaModel, LayoutModel } from '../provider/models';
+import { DashletModel, DashletPositionModel, LayoutDashletMetaModel, LayoutModel } from 'jdash-core';
 import {
     Dashlet,
     DashletModule,
@@ -117,7 +117,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
             })
         }
         var model: LayoutModel = {
-            module: this.tagName.toLowerCase(),
+            moduleId: this.tagName.toLowerCase(),
             dashlets: dashletData,
             config: {
                 content: clone.outerHTML
@@ -517,7 +517,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         }
         var dashboardId = this.dashboard.getAttribute('j-provider-id') || this.dashboard.id;
         return this.dashboard.provider.getDashletsOfDashboard(dashboardId).then((dashletsResult) => {
-            var dashlets = dashletsResult.data;
+            var dashlets = dashletsResult;
             dashlets.forEach((dashletModel) => {
                 var dashlet = this.generateDashletElement(dashletModel, IDashletElementStatus.loaded);
                 this.placeDashlet(dashlet, model.dashlets && model.dashlets[dashletModel.id] && model.dashlets[dashletModel.id].position);
@@ -528,7 +528,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
     save() {
         var layoutData = this.getModel();
         var dashboardId = this.dashboard.getAttribute('j-provider-id') || this.dashboard.id;
-        return this.dashboard.provider.updateLayout(dashboardId, layoutData);
+        return this.dashboard.provider.saveDashboard(dashboardId, { layout: layoutData });
     }
 
 

@@ -1,4 +1,4 @@
-import { JDash } from './jdash';
+import JDash from './jdash';
 import { KeyValue } from './core';
 
 export interface ThemeDefinition {

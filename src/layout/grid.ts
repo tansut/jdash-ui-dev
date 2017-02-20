@@ -1,4 +1,4 @@
-import { JDash } from '../jdash';
+import JDash from '../jdash';
 import { Component } from '../core';
 import { DashboardLayout } from './';
 

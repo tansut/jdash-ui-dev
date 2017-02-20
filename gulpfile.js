@@ -7,12 +7,27 @@ var cleanCSS = require('gulp-clean-css');
 var vulcanize = require('gulp-vulcanize');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
-
+var sourceStream = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
 var merge = require('merge-stream');
 var pump = require('pump');
 var del = require('del');
 var sourcemaps = require('gulp-sourcemaps');
 var vinylPaths = require('vinyl-paths');
+var ts = require('gulp-typescript');
+
+gulp.task('tsc-def', function () {
+    var tsProject = ts.createProject('tsconfig.json', {
+        declaration: true
+    });
+    var tsResult = tsProject.src()
+        .pipe(tsProject());
+    return merge([tsResult.dts.pipe(gulp.dest('lib/definitions'))]);
+
+});
+
+
+var npmDir = '../jdash-ui/';
 
 gulp.task('webserver', function () {
     return gulp.src('./')
@@ -30,14 +45,12 @@ function compile(op) {
     bundler.add(op.main);
     bundler.plugin('tsify', tsConfig.compilerOptions);
     return new Promise((res, rej) => {
-        bundler.bundle(function (err, src, map) {
-            if (err) {
-                console.log(err.message);
-                rej(err)
-            }
-            fs.writeFileSync(op.out, src);
-            res()
-        });
+        var action = bundler.bundle();
+        action = action.pipe(sourceStream(op.out))
+        action = action.pipe(buffer())
+        op.min && (action = action.pipe(uglify()));
+        action.pipe(gulp.dest('./'));
+        action.on('end', () => res());
     })
 
 }
@@ -47,14 +60,14 @@ gulp.task('ts2js-dev', function () {
         return [compile({
             debug: true,
             main: 'src/jdash.ts',
-            out: 'debug/jdash-lean.js'
+            out: './debug/jdash.lean.js'
         })]
     }
     return Promise.all(doit()).then(() => {
         return gulp.src([
             'bower_components/interactjs/interact.js',
-            'bower_components/axios/dist/axios.js',
-            'dist/jdash-lean.js'
+            'bower_components/axios/lib/axios.js',
+            'lib/jdash.lean.js'
         ])
             .pipe(sourcemaps.init())
             .pipe(concat('jdash.js'))
@@ -68,7 +81,7 @@ gulp.task('generate-native-only', function (cb) {
         return [compile({
             debug: false,
             main: 'src/jdash.ts',
-            out: 'dist/jdash-lean.js'
+            out: 'lib/jdash.lean.min.js'
         })]
     }
 
@@ -76,12 +89,12 @@ gulp.task('generate-native-only', function (cb) {
         var jdash = gulp.src([
             'bower_components/custom-elements/src/native-shim.js',
             'bower_components/interactjs/interact.js',
-            'bower_components/axios/dist/axios.js',
-            'dist/jdash-lean.js'
+            'bower_components/axios/lib/axios.js',
+            'lib/jdash.lean.min.js'
         ])
             .pipe(concat('jdash.native.min.js'))
             //.pipe(uglify())
-            .pipe(gulp.dest('./dist/'));
+            .pipe(gulp.dest('./lib/'));
 
         return merge(jdash);
     });
@@ -93,8 +106,9 @@ gulp.task('generate-full', function (cb) {
     var doit = function () {
         return [compile({
             debug: false,
+            min: true,
             main: 'src/jdash.ts',
-            out: 'dist/jdash-lean.js'
+            out: 'lib/jdash.lean.min.js'
         })]
     }
 
@@ -104,13 +118,12 @@ gulp.task('generate-full', function (cb) {
             'bower_components/webcomponentsjs/HTMLImports.min.js',
             'bower_components/custom-elements/src/native-shim.js',
             'bower_components/es6-promise/es6-promise.min.js',
-            'bower_components/interactjs/interact.js',
-            'bower_components/axios/dist/axios.js',
-            'dist/jdash-lean.js'
+            'bower_components/interactjs/lib/interact.min.js',
+            'bower_components/axios/lib/axios.min.js',
+            'lib/jdash.lean.min.js'
         ])
             .pipe(concat('jdash.min.js'))
-            //.pipe(uglify())
-            .pipe(gulp.dest('./dist/'));
+            .pipe(gulp.dest('./lib/'));
 
         return merge(jdash);
     });
@@ -135,14 +148,14 @@ gulp.task('polyfills-deploy', function () {
         'bower_components/es6-promise/es6-promise.min.js'
     ])
         .pipe(concat('polyfills.js'))
-        .pipe(gulp.dest('./dist/'));
+        .pipe(gulp.dest('./lib/'));
 })
 
 gulp.task('min-deploy', function (cb) {
     pump([
-        gulp.src('dist/*.js'),
+        gulp.src('lib/*.js'),
         uglify(),
-        gulp.dest('dist')
+        gulp.dest('lib')
     ],
         cb
     );
@@ -155,14 +168,14 @@ gulp.task('fonts', function () {
 
 gulp.task('fonts-deploy', function () {
     return gulp.src(['./fonts/**/*'])
-        .pipe(gulp.dest('./dist/fonts'))
+        .pipe(gulp.dest('./lib/fonts'))
 })
 
 gulp.task('sass-deploy', ['fonts-deploy'], function () {
     return merge(gulp.src('./src/sass/**/jdash.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(cleanCSS())
-        .pipe(gulp.dest('./dist/components')),
+        .pipe(gulp.dest('./lib/components')),
         gulp.src('./src/sass/**/jdash.scss')
             .pipe(sass().on('error', sass.logError))
             .pipe(cleanCSS())
@@ -213,7 +226,7 @@ gulp.task('vulcanize-deploy', ['sass-deploy'], function () {
             inlineCss: true
         }))
         .pipe(concat('jdash.html'))
-        .pipe(gulp.dest('dist/components')), gulp.src('./src/components/bs/index.html')
+        .pipe(gulp.dest('lib/components')), gulp.src('./src/components/bs/index.html')
             .pipe(vulcanize({
                 abspath: '',
                 excludes: [],
@@ -221,7 +234,7 @@ gulp.task('vulcanize-deploy', ['sass-deploy'], function () {
                 inlineCss: true
             }))
             .pipe(concat('bs.html'))
-            .pipe(gulp.dest('dist/components')));
+            .pipe(gulp.dest('lib/components')));
 });
 
 
@@ -231,6 +244,29 @@ gulp.task('dev', ['ts2js-dev', 'polyfills', 'sass', 'vulcanize', 'webserver'], f
     gulp.watch('src/**/*.html', ['vulcanize']);
 });
 
+gulp.task('npm:clean', [], function () {
+    return del([
+        npmDir + '/**/*',
+        '!' + npmDir + 'package.json'
+    ], {
+            force: true
+        })
+})
 
-gulp.task('deploy', ['generate-native-only', 'generate-full', 'sass-deploy', 'vulcanize-deploy']);
+gulp.task('deploy:clean', [], function (done) {
+    del([
+        './lib'
+    ], {
+            force: true
+        }).then(() => done()).catch(err => done(err))
+})
 
+gulp.task('npm', ['npm:clean', 'tsc-def'], function () {
+    return merge([gulp.src('./lib/**/*').pipe(gulp.dest(npmDir + 'lib'))])
+})
+
+gulp.task('deploy', ['deploy:clean', 'generate-native-only', 'generate-full', 'sass-deploy', 'vulcanize-deploy']);
+
+gulp.task('npm-deploy', ['deploy', 'npm'], function () {
+
+})

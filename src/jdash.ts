@@ -13,42 +13,35 @@ import { DashboardLayout } from './layout';
 import Helper from './helper';
 import register from './register';
 
-
-declare global {
-    interface Window {
-        jdash: JDashStatic
-    }
-}
-
-class JDashStatic {
-    HtmlElement = HtmlElement;
-    Helper = Helper;
-    Component = Component;
-    DashletModule = DashletModule;
-    DashletPanel = DashletPanel;
-    DashletEditorPanel = DashletEditorPanel;
-    ApiProvider = ApiProvider;
-    LocalStorageProvider = LocalStorageProvider;
-    GenericLayout = GenericLayout;
-    GridLayout = GridLayout;
-    DashboardLayout = DashboardLayout;
-    Configuration = Configuration;
-    ThemeManager = ThemeManager;
-    Dashboard = Dashboard;
-    Http = axios;
+export default class JDash {
+    static HtmlElement = HtmlElement;
+    static Helper = Helper;
+    static Component = Component;
+    static DashletModule = DashletModule;
+    static DashletPanel = DashletPanel;
+    static DashletEditorPanel = DashletEditorPanel;
+    static ApiProvider = ApiProvider;
+    static LocalStorageProvider = LocalStorageProvider;
+    static GenericLayout = GenericLayout;
+    static GridLayout = GridLayout;
+    static DashboardLayout = DashboardLayout;
+    static Configuration = Configuration;
+    static ThemeManager = ThemeManager;
+    static Dashboard = Dashboard;
+    static Http = axios;
 
 
-    dashlet(id: string | Function | Object, handler: Function | Object) {
+    static dashlet(id: string | Function | Object, handler: Function | Object) {
         var args = Array.prototype.slice.call(arguments);
-        this.define.apply(this, args);
+        JDash.define.apply(this, args);
     }
 
-    define(id: string | Function | Object, handler: Function | Object) {
+    static define(id: string | Function | Object, handler: Function | Object) {
         var args = Array.prototype.slice.apply(arguments);
         return Component.define.apply(Component, args);
     }
 
-    ready(fn) {
+    static ready(fn) {
         window.customElements.flush && window.customElements.flush();
 
         if (document.readyState != 'loading')
@@ -63,10 +56,15 @@ class JDashStatic {
     }
 }
 
-export let JDash: JDashStatic;
+
+declare global {
+    interface Window {
+        jdash: JDash
+    }
+}
 
 (function (window: Window) {
-    JDash = window.jdash = new JDashStatic();
+    window.jdash = JDash;
     register.elements();
     JDash.ready(() => ThemeManager.init())
 })(window)

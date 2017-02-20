@@ -1,7 +1,8 @@
 import { KeyValue } from '../core';
 import { ProviderBase, ProviderManager } from './';
 import Helper from '../helper';
-import { DashboardModel, CreateResult, Query, QueryResult, DashletModel, DashletModuleModel, DashletProperties, DashletPositionModel, LayoutModel } from './models';
+import { IClientProvider, DashboardCreateModel, DashboardUpdateModel, ISearchDashboards, DashboardModel, CreateResult, Query, QueryResult, DashletCreateModel, DashletUpdateModel, DashletModel, DashletPositionModel } from 'jdash-core';
+
 
 export class LocalStorageProvider extends ProviderBase {
     static ProviderType = 'localstorage';
@@ -60,11 +61,16 @@ export class LocalStorageProvider extends ProviderBase {
         })
     }
 
-    getDashboardsOfUser(username: string, query?: Query): Promise<QueryResult<DashboardModel>> {
+    getMyDashboards(query?: Query): Promise<QueryResult<DashboardModel>> {
+        return this.searchDashboards({
+            user: 'me'
+        }, query);
+    }
+
+    searchDashboards(search?: ISearchDashboards, query?: Query): Promise<QueryResult<DashboardModel>> {
         var dashboards = this.getCollection<DashboardModel>('dashboards');
-        var filtered = dashboards.filter((item) => (item.meta ? item.meta.owner == username : false));
         var result: QueryResult<DashboardModel> = {
-            data: filtered,
+            data: dashboards,
             hasMore: false
         }
         return Promise.resolve(result);
@@ -75,14 +81,39 @@ export class LocalStorageProvider extends ProviderBase {
         return dashboard ? Promise.resolve(dashboard) : Promise.reject('not found');
     }
 
-    saveDashletConfiguration(dashletId: string, configuration: KeyValue<any>): Promise<any> {
-        var dashlet = this.getCollection<DashletModel>('dashlets', dashletId)[0];
+
+    saveDashboard(id: string, updateValues: DashboardUpdateModel): Promise<any> {
+        var dashboard = this.getCollection<DashboardModel>('dashboards', id)[0]
+        if (!dashboard)
+            return Promise.reject('not found');
+        var dashletsInCollection = this.getCollection<DashletModel>('dashlets', (item) => item.dashboardId == id);
+
+        updateValues = updateValues || {};
+        for (var key in updateValues)
+            dashboard[key] = updateValues;
+
+        if (updateValues.layout) {
+            dashletsInCollection.forEach((dashlet) => {
+                var foundInLayout = dashboard.layout[dashlet.id];
+                if (!foundInLayout)
+                    this.removeItem('dashlets', dashlet.id)
+            })
+        }
+        this.saveItem('dashboards', dashboard);
+        return Promise.resolve({});
+    }
+
+    saveDashlet(id: string, updateValues: DashletUpdateModel): Promise<any> {
+        var dashlet = this.getCollection<DashletModel>('dashlets', id)[0];
         if (!dashlet)
             return Promise.reject('not found');
-        dashlet.configuration = configuration;
+        updateValues = updateValues || {};
+        for (var key in updateValues)
+            dashlet[key] = updateValues;
         this.saveItem('dashlets', dashlet);
         return Promise.resolve({});
     }
+
 
     createDashlet(model: DashletModel): Promise<any> {
         return this.getDashboard(model.dashboardId).then((dashboard) => {
@@ -94,41 +125,11 @@ export class LocalStorageProvider extends ProviderBase {
         })
     }
 
-    getDashletsOfDashboard(dashboardId: string): Promise<QueryResult<DashletModel>> {
+    getDashletsOfDashboard(dashboardId: string): Promise<Array<DashletCreateModel>> {
         return this.getDashboard(dashboardId).then((dashboard) => {
             var dashlets = this.getCollection<DashletModel>('dashlets').filter((item) => item.dashboardId == dashboard.id);
-            var result: QueryResult<DashletModel> = {
-                data: dashlets,
-                hasMore: false
-            };
-            return result;
+            return dashlets;
         })
-    }
-
-
-    updateLayout(dashboardId: string, layout: LayoutModel): Promise<any> {
-        var dashboard = this.getCollection<DashboardModel>('dashboards', dashboardId)[0]
-        if (!dashboard)
-            return Promise.reject('not found');
-        var dashletsInLayout = layout.dashlets || {};
-        var dashletsInCollection = this.getCollection<DashletModel>('dashlets', (item) => item.dashboardId == dashboardId);
-
-        dashletsInCollection.forEach((dashlet) => {
-            var foundInLayout = dashletsInLayout[dashlet.id];
-            if (!foundInLayout)
-                this.removeItem('dashlets', dashlet.id)
-        })
-
-        dashboard.layout = layout;
-        this.saveItem('dashboards', dashboard);
-        return Promise.resolve({});
-    }
-
-    updateDashletProperties(dashletId: string, properties: DashletProperties): Promise<any> {
-        var dashlet = this.getCollection<DashletModel>('dashlets', dashletId)[0];
-        Object.keys(properties).forEach(key => dashlet[key] = properties[key]);
-        this.saveItem('dashlets', dashlet);
-        return Promise.resolve({});
     }
 
     deleteDashboard(dashboardId: string) {

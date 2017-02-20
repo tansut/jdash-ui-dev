@@ -1,88 +1,46 @@
-import {
-    CreateResult,
-    DashboardModel,
-    DashletModel,
-    DashletPositionModel,
-    DashletProperties,
-    LayoutModel,
-    Query,
-    QueryResult,
-    ResourcePermission,
-    ResourceType
-} from './models';
 import { Dashlet } from '../dashboard/dashlet';
 import { HtmlElement, KeyValue } from '../core';
-import { IClientProvider } from 'jdash-core';
+import { IClientProvider, LayoutModel, DashboardCreateModel, DashboardUpdateModel, ISearchDashboards, DashboardModel, CreateResult, Query, QueryResult, DashletCreateModel, DashletUpdateModel, DashletModel, DashletPositionModel } from 'jdash-core';
 
 
 
-export interface IProvider {
-
-    getDashboardsOfUser(username: string, query?: Query): Promise<QueryResult<DashboardModel>>;
-    // getDashboards(query?: Query): Promise<QueryResult<DashboardModel>>;
-    getDashboard(id: string): Promise<DashboardModel>;
-    getDashletsOfDashboard(dashboardId: string): Promise<QueryResult<DashletModel>>;
-    updateLayout(dashboardId: string, layout: LayoutModel): Promise<any>;
-
-
-    createDashboard(model: DashboardModel): Promise<CreateResult>;
-    // updateDashboard(dashboardId: string, updateValues: any): Promise<any>;
-    // updateLayout(dashboardId: string, layout: any): Promise<any>;
-    deleteDashboard(dashboardId: string): Promise<any>;
-
-    // updateDashletPositions(values: KeyValue<DashletPositionModel>): Promise<any>;
-    // deleteDashlet(dashletId: string, updatedPositions: KeyValue<DashletPositionModel>): Promise<any>;
-    saveDashletConfiguration(dashletId: string, configuration: KeyValue<any>): Promise<any>;
-    updateDashletProperties(dashletId: string, properties: DashletProperties): Promise<any>;
-    createDashlet(model: DashletModel): Promise<any>;
-
-    // getResourcePermissions(id: string, resourceType: string): Promise<Array<ResourcePermission>>;
-    // getResourcePermissionsForOwner(id: string, resourceType: string, owner: string, ownerType: string): Promise<Array<ResourcePermission>>;
-
-    init(values: KeyValue<any>);
-
-}
-
-export class ProviderBase implements IProvider {
+export class ProviderBase implements IClientProvider {
     init(values: KeyValue<any>) {
 
-    }
-
-    createDashboard(model: DashboardModel): Promise<CreateResult> {
-        return null;
     }
 
     getDashboard(id: string): Promise<DashboardModel> {
         return null;
     }
 
-    getDashboardsOfUser(username: string, query?: Query): Promise<QueryResult<DashboardModel>> {
+    createDashboard(model: DashboardCreateModel): Promise<CreateResult> {
+        return null;
+    }
+    getMyDashboards(query?: Query): Promise<QueryResult<DashboardModel>> {
+        return null;
+    }
+    searchDashboards(search?: ISearchDashboards, query?: Query): Promise<QueryResult<DashboardModel>> {
+        return null;
+    }
+    deleteDashboard(id: string): Promise<any> {
+        return null;
+    }
+    saveDashboard(id: string, updateValues: DashboardUpdateModel): Promise<any> {
+        return null;
+    }
+    createDashlet(model: DashletCreateModel): Promise<CreateResult> {
+        return null;
+    }
+    getDashletsOfDashboard(dashboardId: string): Promise<Array<DashletCreateModel>> {
+        return null;
+    }
+    deleteDashlet(id: string): Promise<any> {
+        return null;
+    }
+    saveDashlet(id: string, updateValues: DashletUpdateModel): Promise<any> {
         return null;
     }
 
-    saveDashletConfiguration(dashletId: string, configuration: KeyValue<any>): Promise<any> {
-        return null;
-    }
-
-    createDashlet(model: DashletModel): Promise<any> {
-        return null;
-    }
-
-    getDashletsOfDashboard(dashboardId: string): Promise<QueryResult<DashletModel>> {
-        return null;
-    }
-
-    updateLayout(dashboardId: string, layout: LayoutModel): Promise<any> {
-        return null;
-    }
-
-    updateDashletProperties(dashletId: string, properties: DashletProperties): Promise<any> {
-        return null;
-    }
-
-    deleteDashboard(dashboardId: string): Promise<any> {
-        return null;
-    }
 
 }
 
