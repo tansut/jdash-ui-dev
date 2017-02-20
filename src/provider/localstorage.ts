@@ -51,7 +51,7 @@ export class LocalStorageProvider extends ProviderBase {
         return colection;
     }
 
-    createDashboard(model: DashboardModel): Promise<CreateResult> {
+    createDashboard(model: DashboardCreateModel): Promise<CreateResult> {
         return new Promise((resolve, reject) => {
             model.id = model.id || Helper.makeid();
             this.addToCollection('dashboards', model);
@@ -94,7 +94,7 @@ export class LocalStorageProvider extends ProviderBase {
 
         if (updateValues.layout) {
             dashletsInCollection.forEach((dashlet) => {
-                var foundInLayout = dashboard.layout[dashlet.id];
+                var foundInLayout = updateValues.layout.dashlets[dashlet.id];
                 if (!foundInLayout)
                     this.removeItem('dashlets', dashlet.id)
             })
@@ -115,7 +115,7 @@ export class LocalStorageProvider extends ProviderBase {
     }
 
 
-    createDashlet(model: DashletModel): Promise<any> {
+    createDashlet(model: DashletCreateModel): Promise<any> {
         return this.getDashboard(model.dashboardId).then((dashboard) => {
             model.id = Helper.makeid();
             this.addToCollection('dashlets', model);

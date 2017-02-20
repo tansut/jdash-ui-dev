@@ -64,7 +64,7 @@ declare global {
 }
 
 (function (window: Window) {
-    window.jdash = JDash;
+    window['jdash'] = JDash;
     register.elements();
     JDash.ready(() => ThemeManager.init())
 })(window)
