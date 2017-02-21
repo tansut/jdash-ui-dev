@@ -1,7 +1,7 @@
 import { KeyValue } from '../core';
 import { ProviderManager } from './';
 import Helper from '../helper';
-import { IClientProvider, DashboardCreateModel, DashboardUpdateModel, ISearchDashboards, DashboardModel, CreateResult, Query, QueryResult, DashletCreateModel, DashletUpdateModel, DashletModel, DashletPositionModel } from 'jdash-core';
+import { IClientProvider, GetDashboardResult, DashboardCreateModel, DashboardUpdateModel, ISearchDashboards, DashboardModel, CreateResult, Query, QueryResult, DashletCreateModel, DashletUpdateModel, DashletModel, DashletPositionModel } from 'jdash-core';
 
 
 export class LocalStorageProvider implements IClientProvider {
@@ -9,10 +9,12 @@ export class LocalStorageProvider implements IClientProvider {
     static Register = ProviderManager.register(LocalStorageProvider.ProviderType, LocalStorageProvider);
     public storage: Storage;
 
-    
+    init() {
 
-    constructor(values: KeyValue<string>) {
-        this.storage = values['storage'] == 'session' ? window.sessionStorage : window.localStorage;
+    }
+
+    constructor(values?: KeyValue<string>) {
+        this.storage = (values && values['storage'] == 'session') ? window.sessionStorage : window.localStorage;
     }
 
     getCollection<T>(type: string, id?: string | Function) {
@@ -78,9 +80,13 @@ export class LocalStorageProvider implements IClientProvider {
         return Promise.resolve(result);
     }
 
-    getDashboard(id: string): Promise<DashboardModel> {
-        var dashboard = this.getCollection<DashboardModel>('dashboards', id)[0]
-        return dashboard ? Promise.resolve(dashboard) : Promise.reject('not found');
+    getDashboard(id: string): Promise<GetDashboardResult> {
+        var dashboard = this.getCollection<DashboardModel>('dashboards', id)[0];
+        if (dashboard) {
+            var dashlets = this.getCollection<DashletModel>('dashlets').filter((item) => item.dashboardId == dashboard.id);
+            return Promise.resolve({dashboard: dashboard, dashlets: dashlets})
+        }
+        return Promise.reject('not found');
     }
 
 
@@ -127,16 +133,10 @@ export class LocalStorageProvider implements IClientProvider {
         })
     }
 
-    getDashletsOfDashboard(dashboardId: string): Promise<Array<DashletCreateModel>> {
-        return this.getDashboard(dashboardId).then((dashboard) => {
-            var dashlets = this.getCollection<DashletModel>('dashlets').filter((item) => item.dashboardId == dashboard.id);
-            return dashlets;
-        })
-    }
 
     deleteDashboard(dashboardId: string) {
-        return this.getDashboard(dashboardId).then((dashboard) => {
-            var dashlets = this.getCollection<DashletModel>('dashlets').filter((item) => item.dashboardId == dashboard.id);
+        return this.getDashboard(dashboardId).then((dashboardData) => {
+            var dashlets = this.getCollection<DashletModel>('dashlets').filter((item) => item.dashboardId == dashboardData.dashboard.id);
             dashlets.forEach(dashlet => this.removeItem('dashlets', dashlet.id));
             this.removeItem('dashboards', dashboardId);
         })

@@ -1,5 +1,6 @@
-import * as axios from 'axios';
+import { IClientProvider } from 'jdash-core/lib/definitions';
 import { Dashboard } from './dashboard';
+import * as axios from 'axios';
 import { ThemeManager } from './theme';
 import { DashletModule } from './dashboard/dashlet';
 import { LocalStorageProvider } from './provider/localstorage';
@@ -14,35 +15,35 @@ import { DashboardLayout } from './layout';
 import Helper from './helper';
 import register from './register';
 
-export default class JDash {
-    static HtmlElement = HtmlElement;
-    static Helper = Helper;
-    static Component = Component;
-    static DashletModule = DashletModule;
-    static DashletPanel = DashletPanel;
-    static DashletEditorPanel = DashletEditorPanel;
-    static ApiProvider = ApiProvider;
-    static LocalStorageProvider = LocalStorageProvider;
-    static GenericLayout = GenericLayout;
-    static GridLayout = GridLayout;
-    static DashboardLayout = DashboardLayout;
-    static Configuration = Configuration;
-    static ThemeManager = ThemeManager;
-    static Dashboard = Dashboard;
-    static Http = axios;
+export var JDash = {
+     HtmlElement : HtmlElement,
+     Helper : Helper,
+     Component : Component,
+     DashletModule : DashletModule,
+     DashletPanel : DashletPanel,
+     DashletEditorPanel : DashletEditorPanel,
+     LocalStorageProvider : LocalStorageProvider,
+     GenericLayout : GenericLayout,
+     GridLayout : GridLayout,
+     DashboardLayout : DashboardLayout,
+     Configuration : Configuration,
+     ThemeManager : ThemeManager,
+     Dashboard : Dashboard,
+     Http: axios,
+    //  Provider: new LocalStorageProvider(),
+     Provider: new ApiProvider(),
 
-
-    static dashlet(id: string | Function | Object, handler: Function | Object) {
+     dashlet: function(id: string | Function | Object, handler: Function | Object) {
         var args = Array.prototype.slice.call(arguments);
         JDash.define.apply(this, args);
-    }
+    },
 
-    static define(id: string | Function | Object, handler: Function | Object) {
+     define: function(id: string | Function | Object, handler: Function | Object) {
         var args = Array.prototype.slice.apply(arguments);
         return Component.define.apply(Component, args);
-    }
+    },
 
-    static ready(fn) {
+     ready: function(fn) {
         window.customElements.flush && window.customElements.flush();
 
         if (document.readyState != 'loading')
@@ -60,12 +61,15 @@ export default class JDash {
 
 declare global {
     interface Window {
-        jdash: JDash
+        jdash: any
     }
 }
 
-(function (window: Window) {
+(function (window: Window) {    
     window['jdash'] = JDash;
+    // var jdash = window['jdash'] = (window['jdash'] || {});
+    // for(var prop in JDash)
+    //   jdash[prop] = JDash[prop] || jdash[prop];
     register.elements();
     JDash.ready(() => ThemeManager.init())
 })(window)

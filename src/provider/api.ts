@@ -1,39 +1,40 @@
 import { ProviderManager } from './';
-import {  IClientProvider, DashboardCreateModel, DashboardUpdateModel, ISearchDashboards, DashboardModel, CreateResult, Query, QueryResult, DashletCreateModel, DashletUpdateModel, DashletModel, DashletPositionModel } from 'jdash-core';
+import { IClientProvider, GetDashboardResult, DashboardCreateModel, DashboardUpdateModel, ISearchDashboards, DashboardModel, CreateResult, Query, QueryResult, DashletCreateModel, DashletUpdateModel, DashletModel, DashletPositionModel } from 'jdash-core';
 import * as axios from 'axios';
 
+export type fnType = () => string;
+
 export interface ITokenProvider {
-    apikey(): string;
-    userToken(): string;
+    apikey: string | fnType;
+    userToken: string | fnType;
 }
 
-
 export class ApiProvider implements IClientProvider {
-
-    static ProviderType = 'api';
-    static Register = ProviderManager.register(ApiProvider.ProviderType, ApiProvider);
     private tokenProvider: ITokenProvider;
 
     static getUrl() {
         return 'http://localhost:3000/jdash/api/v1'
     }
 
+    init(tokenProvider: ITokenProvider) {
+        this.tokenProvider = tokenProvider;
+    }
+
     constructor() {
-        this.tokenProvider = <ITokenProvider>{
-            userToken: ()=> 'sdsa',
-            apikey: ()=>''
-        }
+
     }
 
     private request(): axios.AxiosInstance {
+        var token = this.tokenProvider ? (typeof this.tokenProvider.userToken == 'string' ? this.tokenProvider.userToken : this.tokenProvider.userToken()): null;
+        var headers = token ? { 'Authorization': 'Bearer ' + token } : {}
         var instance = axios.default.create({
             baseURL: ApiProvider.getUrl(),
-            headers: { 'Authentication': 'Bearer ' + this.tokenProvider.userToken() }
+            headers: headers
         });
         return instance;
     }
 
-    getDashboard(id: string): Promise<DashboardModel> {
+    getDashboard(id: string): Promise<GetDashboardResult> {
         return this.request().get(`/dashboard/${id}`).then(result => result.data);
     }
 
@@ -76,7 +77,6 @@ export class ApiProvider implements IClientProvider {
         return this.request().post(`/dashlet/save/${id}`, updateValues).then(result => result.data);
     }
 }
-
 
 
 

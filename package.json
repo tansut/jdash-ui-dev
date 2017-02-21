@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
+    "axios": "^0.15.3",
     "jdash-core": "git+ssh://git@bitbucket.org/kalitte/jdash-core.git"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/es6-promise": "0.0.32",
     "browserify": "^13.1.1",
     "del": "^2.2.2",

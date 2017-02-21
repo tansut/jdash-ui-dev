@@ -512,20 +512,21 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         });
     }
 
-    load(model: LayoutModel) {
+    load(model: LayoutModel, dashlets: Array<DashletModel>) {
         if (model.config && model.config["content"]) {
             this.generateLayoutContent(model.config && model.config['content']);
         } else {
             this.reset();
         }
-        var dashboardId = this.dashboard.getAttribute('j-provider-id') || this.dashboard.id;
-        return this.dashboard.provider.getDashletsOfDashboard(dashboardId).then((dashletsResult) => {
-            var dashlets = dashletsResult;
-            dashlets.forEach((dashletModel) => {
-                var dashlet = this.generateDashletElement(dashletModel, IDashletElementStatus.loaded);
-                this.placeDashlet(dashlet, model.dashlets && model.dashlets[dashletModel.id] && model.dashlets[dashletModel.id].position);
-            })
+        dashlets.forEach((dashletModel) => {
+             var dashlet = this.generateDashletElement(dashletModel, IDashletElementStatus.loaded);
+             this.placeDashlet(dashlet, model.dashlets && model.dashlets[dashletModel.id] && model.dashlets[dashletModel.id].position);
         })
+        //var dashboardId = this.dashboard.getAttribute('j-provider-id') || this.dashboard.id;
+        // return this.dashboard.provider.getDashletsOfDashboard(dashboardId).then((dashletsResult) => {
+        //     var dashlets = dashletsResult;
+
+        // })
     }
 
     save() {

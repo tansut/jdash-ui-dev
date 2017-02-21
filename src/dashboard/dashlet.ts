@@ -1,7 +1,5 @@
-import { IClientProvider } from 'jdash-core';
-
 import { DashboardState, Dashboard } from './';
-import { DashboardModel, DashletModel } from 'jdash-core';
+import { IClientProvider, DashboardModel, DashletModel } from 'jdash-core';
 import { IDashletEditorPanel } from './dashleteditorpanel';
 import { DashboardLayout } from '../layout';
 import { Component, ComponentElement, ComponentGeneratedElement, HtmlElement, KeyValue, Configuration } from '../core';

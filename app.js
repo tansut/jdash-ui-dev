@@ -46,6 +46,12 @@
         this.createDashletModuleEls();
         this.viewModeChangeHandler(this.dashboard.getAttribute('j-view-mode') || 'readonly');
         this.dashboard.layout.makeDroppable('[j-type="j-dashlet-module"]', true, this.dashletList);
+
+        window.jdash.Provider.init({
+            userToken: function() {
+                return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXIiOiJ0dHgifSwiaWF0IjoxNDg3NjgxNjk4LCJleHAiOjE1MzA4ODE2OTgsImlzcyI6ImFwaS5qZGFzaC5pbyIsInN1YiI6IjBmOTgwMjNmLTgwNWMtNDQ5OS1hN2I3LWExNGZjOTg0MzY5ZiJ9.N2qScuk5c4l3NnDKB4t_rIjGK025MqR-2ZkxEVdHK4Y'
+            }
+        })
         this.go();
     }
 
@@ -74,7 +80,10 @@
                 this.loadDashboard(model)
             }
             document.body.style.display = ''
-        }.bind(this));
+        }.bind(this)).catch(function(err) {
+            document.body.style.display = '';
+            alert(err.message || err)
+        });
     }
 
     app.prototype.popStateHandler = function (event) {

@@ -1,4 +1,5 @@
-import JDash from '../jdash';
+import { JDash } from '../jdash';
+
 import { DashboardModel, DashletModel, DashletPositionModel, IClientProvider } from 'jdash-core';
 
 import { LocalStorageProvider } from '../provider/localstorage';
@@ -42,14 +43,14 @@ export class Dashboard extends TemplatedElement {
     get provider() {
         if (!this._provider) {
             var located = this.locateProvider();
-            located && (this._provider = located.provider)
+            located && (this._provider = located)
         }
         return this._provider;
     }
 
-    set provider(val: IClientProvider) {
-        this._provider = val;
-    }
+    // set provider(val: IClientProvider) {
+    //     this._provider = val;
+    // }
 
 
     set state(newVal: string) {
@@ -116,14 +117,14 @@ export class Dashboard extends TemplatedElement {
         if (this.state == DashboardState.loading)
             return Promise.reject(new Error('Loading not completed'));
         this.state = DashboardState.loading;
-        var promise = typeof id == 'string' ? this.provider.getDashboard(id) : Promise.resolve(id);
-        return promise.then((dashboard) => this.provider.getDashletsOfDashboard(dashboard.id).then((dashletsResult) => {
-            this.model = dashboard;
-            return this.layout.load(dashboard.layout).then(() => {
+        var promise = this.provider.getDashboard(typeof id == 'string' ? id: id.id) ;
+        return promise.then((dashboardData) => {
+            this.model = dashboardData.dashboard;
+            return Promise.resolve(this.layout.load(this.model.layout, dashboardData.dashlets)).then(() => {
                 this.state = DashboardState.loaded;
-                return dashboard;
+                return dashboardData.dashboard;
             });
-        })).catch((err) => {
+        }).catch((err) => {
             this.state = DashboardState.none;
             return Promise.reject(err);
         });
@@ -154,10 +155,11 @@ export class Dashboard extends TemplatedElement {
         super.connectedCallback();
     }
 
-    locateProvider() {
-        var providerAtAttribute = this.getAttribute('j-provider');
-        var located = ProviderElement.locate(providerAtAttribute);
-        return located;
+    locateProvider(): IClientProvider {
+        //var providerAtAttribute = this.getAttribute('j-provider');
+        //var located = ProviderElement.locate(providerAtAttribute);
+        //return located;
+        return JDash['Provider']
     }
 
 
