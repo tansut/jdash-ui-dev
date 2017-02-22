@@ -117,7 +117,7 @@ export class Dashboard extends TemplatedElement {
         if (this.state == DashboardState.loading)
             return Promise.reject(new Error('Loading not completed'));
         this.state = DashboardState.loading;
-        var promise = this.provider.getDashboard(typeof id == 'string' ? id: id.id) ;
+        var promise = this.provider.getDashboard(typeof id == 'string' ? id : id.id);
         return promise.then((dashboardData) => {
             this.model = dashboardData.dashboard;
             return Promise.resolve(this.layout.load(this.model.layout, dashboardData.dashlets)).then(() => {
@@ -226,7 +226,8 @@ export class Dashboard extends TemplatedElement {
             model = {
                 moduleId: (module && module.elementTag) || dashletEl,
                 title: (module && module.title) || '',
-                dashboardId: this.getAttribute('j-provider-id') || this.id
+                dashboardId: this.getAttribute('j-provider-id') || this.id,
+                createdAt: undefined
             }
             dashlet = this.layout.generateDashletElement(model, IDashletElementStatus.created);
         } else if (dashletEl instanceof Dashlet) {
@@ -234,14 +235,16 @@ export class Dashboard extends TemplatedElement {
             model = {
                 moduleId: dashletEl.tagName.toLowerCase(),
                 title: dashletEl.title,
-                dashboardId: this.getAttribute('j-provider-id') || this.id
+                dashboardId: this.getAttribute('j-provider-id') || this.id,
+                createdAt: undefined
             }
         } else if (dashletEl instanceof DashletModule) {
             var module = dashletEl;
             model = {
                 moduleId: (module && module.elementTag),
                 title: (module && module.title) || '',
-                dashboardId: this.getAttribute('j-provider-id') || this.id
+                dashboardId: this.getAttribute('j-provider-id') || this.id,
+                createdAt: undefined
             }
             dashlet = this.layout.generateDashletElement(model, IDashletElementStatus.created);
         } else {

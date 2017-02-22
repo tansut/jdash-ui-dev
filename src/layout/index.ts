@@ -135,7 +135,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
             this.classList.add(value);
             this._layoutStyle = value;
         }
-        
+
     }
 
 
@@ -411,7 +411,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
 
     }
 
-    set viewMode(newVal: string) {        
+    set viewMode(newVal: string) {
         if (this.viewMode != newVal) {
             this.fireEvent('viewmode-change', {
                 oldVal: this.viewMode,
@@ -432,7 +432,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         }
         style && (this.layoutStyle = style);
         super.initializeElement();
-        
+
         (<any>interact).dynamicDrop(true);
         this.listenforActions();
         Helper.ensureId(this, 'j-dashlet-zone');
@@ -519,8 +519,8 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
             this.reset();
         }
         dashlets.forEach((dashletModel) => {
-             var dashlet = this.generateDashletElement(dashletModel, IDashletElementStatus.loaded);
-             this.placeDashlet(dashlet, model.dashlets && model.dashlets[dashletModel.id] && model.dashlets[dashletModel.id].position);
+            var dashlet = this.generateDashletElement(dashletModel, IDashletElementStatus.loaded);
+            this.placeDashlet(dashlet, model.dashlets && model.dashlets[dashletModel.id] && model.dashlets[dashletModel.id].position);
         })
         //var dashboardId = this.dashboard.getAttribute('j-provider-id') || this.dashboard.id;
         // return this.dashboard.provider.getDashletsOfDashboard(dashboardId).then((dashletsResult) => {
@@ -673,7 +673,8 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
                             moduleId: el.getAttribute('j-module-id'),
                             dashboardId: self.dashboard.getAttribute('j-provider-id') || self.dashboard.id,
                             title: '',
-                            configuration: {}
+                            configuration: {},
+                            createdAt: null
                         }
                         self.dashboard.addDashlet(el.getAttribute('j-module-id'), newPos);
                     }
