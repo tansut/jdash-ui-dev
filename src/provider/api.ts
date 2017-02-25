@@ -3,11 +3,18 @@ import { IClientProvider, GetDashboardResult, DashboardCreateModel, DashboardUpd
 import * as axios from 'axios';
 
 export type fnType = () => string;
+export type refreshType = (newToken: string) => void;
 
 export interface ITokenProvider {
     apikey: string | fnType;
     userToken: string | fnType;
+    refreshToken: refreshType;
 }
+
+// export interface ITokenProvider {
+//     apikey: string | fnType;
+//     getUserToken: fnType;
+// }
 
 export class ApiProvider implements IClientProvider {
     private tokenProvider: ITokenProvider;
@@ -25,7 +32,7 @@ export class ApiProvider implements IClientProvider {
     }
 
     private request(): axios.AxiosInstance {
-        var token = this.tokenProvider ? (typeof this.tokenProvider.userToken == 'string' ? this.tokenProvider.userToken : this.tokenProvider.userToken()): null;
+        var token = this.tokenProvider ? (typeof this.tokenProvider.userToken == 'string' ? this.tokenProvider.userToken : this.tokenProvider.userToken()) : null;
         var headers = token ? { 'Authorization': 'Bearer ' + token } : {}
         var instance = axios.default.create({
             baseURL: ApiProvider.getUrl(),

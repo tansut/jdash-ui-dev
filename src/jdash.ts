@@ -16,34 +16,34 @@ import Helper from './helper';
 import register from './register';
 
 export var JDash = {
-     HtmlElement : HtmlElement,
-     Helper : Helper,
-     Component : Component,
-     DashletModule : DashletModule,
-     DashletPanel : DashletPanel,
-     DashletEditorPanel : DashletEditorPanel,
-     LocalStorageProvider : LocalStorageProvider,
-     GenericLayout : GenericLayout,
-     GridLayout : GridLayout,
-     DashboardLayout : DashboardLayout,
-     Configuration : Configuration,
-     ThemeManager : ThemeManager,
-     Dashboard : Dashboard,
-     Http: axios,
-    //  Provider: new LocalStorageProvider(),
-     Provider: new ApiProvider(),
+    HtmlElement: HtmlElement,
+    Helper: Helper,
+    Component: Component,
+    DashletModule: DashletModule,
+    DashletPanel: DashletPanel,
+    DashletEditorPanel: DashletEditorPanel,
+    LocalStorageProvider: LocalStorageProvider,
+    GenericLayout: GenericLayout,
+    GridLayout: GridLayout,
+    DashboardLayout: DashboardLayout,
+    Configuration: Configuration,
+    ThemeManager: ThemeManager,
+    Dashboard: Dashboard,
+    Http: axios,
+    //Provider: new LocalStorageProvider(),
+    Provider: new ApiProvider(),
 
-     dashlet: function(id: string | Function | Object, handler: Function | Object) {
+    dashlet: function (id: string | Function | Object, handler: Function | Object) {
         var args = Array.prototype.slice.call(arguments);
         JDash.define.apply(this, args);
     },
 
-     define: function(id: string | Function | Object, handler: Function | Object) {
+    define: function (id: string | Function | Object, handler: Function | Object) {
         var args = Array.prototype.slice.apply(arguments);
         return Component.define.apply(Component, args);
     },
 
-     ready: function(fn) {
+    ready: function (fn) {
         window.customElements.flush && window.customElements.flush();
 
         if (document.readyState != 'loading')
@@ -65,7 +65,7 @@ declare global {
     }
 }
 
-(function (window: Window) {    
+(function (window: Window) {
     window['jdash'] = JDash;
     // var jdash = window['jdash'] = (window['jdash'] || {});
     // for(var prop in JDash)
