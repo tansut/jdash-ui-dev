@@ -50,11 +50,7 @@
         window.jdash.Provider.init({
             // apikey: 'dsfsdfdsf',
             getUserToken: (callback) => {
-
-                ajax().then((result) => {
-                    callback('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXIiOiJ0ZXN0In0sImlhdCI6MTQ4ODE3NTA2OCwiZXhwIjoxNTMxMzc1MDY4LCJpc3MiOiJhcGkuamRhc2guaW8iLCJzdWIiOiI0NDEwZmFmMy0yMWNiLTRiMTgtODJiNi01MGQzZjQyYjRlMDgifQ.JOGT96_bdc6ZxSB7gLNGPVLaqaUE14uZEPGaV6Qz6FQ');
-                });
-
+                callback('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXIiOiJ0ZXN0In0sImlhdCI6MTQ4ODE3NTA2OCwiZXhwIjoxNTMxMzc1MDY4LCJpc3MiOiJhcGkuamRhc2guaW8iLCJzdWIiOiI0NDEwZmFmMy0yMWNiLTRiMTgtODJiNi01MGQzZjQyYjRlMDgifQ.JOGT96_bdc6ZxSB7gLNGPVLaqaUE14uZEPGaV6Qz6FQ');
             }
         })
         this.go();
