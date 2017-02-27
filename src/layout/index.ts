@@ -89,6 +89,32 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         'j-type': ['j-dashlet-panel', 'j-dashlet', 'j-zone-editor', 'j-section-editor', 'j-dashlet-zone-group-editor']
     }
 
+
+    private init() {
+        var content = <HTMLElement>this.querySelector('template[j-type="j-layout-content"]');
+        var sections = content.querySelectorAll('[j-type="j-layout-section"]');
+
+        var model: any = {
+            sections: []
+        }
+
+
+        for (var index = 0; index < sections.length; index++) {
+            var section = sections[index];
+            var titleNode = section.querySelector('[j-type="j-layout-section-title"]');
+            var title = (titleNode && titleNode.innerHTML) || '';
+
+            var dashletZones = Helper.getElementsNotIn(section, '[j-dashlet-zone]', '[j-dashlet-zone]');
+
+
+            model.sections.push({
+                title: title
+            })
+        }
+
+    }
+
+
     getType() {
         return 'j-layout';
     }

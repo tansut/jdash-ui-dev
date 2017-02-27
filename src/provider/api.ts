@@ -1,23 +1,25 @@
+import { CompilationResult } from 'gulp-typescript/release/reporter';
 import { ProviderManager } from './';
 import { IClientProvider, GetDashboardResult, DashboardCreateModel, DashboardUpdateModel, ISearchDashboards, DashboardModel, CreateResult, Query, QueryResult, DashletCreateModel, DashletUpdateModel, DashletModel, DashletPositionModel } from 'jdash-core';
 import * as axios from 'axios';
 
-export type fnType = () => string;
-export type refreshType = (newToken: string) => void;
+
+
+export type fnType = (callback: Function) => string;
 
 export interface ITokenProvider {
     apikey: string | fnType;
-    userToken: string | fnType;
-    refreshToken: refreshType;
+    getUserToken: fnType;
 }
 
-// export interface ITokenProvider {
-//     apikey: string | fnType;
-//     getUserToken: fnType;
-// }
+interface IJDashRequestHeader {
+    Authorization?: string;
+}
+
 
 export class ApiProvider implements IClientProvider {
     private tokenProvider: ITokenProvider;
+    private currentUserToken: string;
 
     static getUrl() {
         return 'http://localhost:3000/jdash/api/v1'
@@ -31,57 +33,120 @@ export class ApiProvider implements IClientProvider {
 
     }
 
-    private request(): axios.AxiosInstance {
-        var token = this.tokenProvider ? (typeof this.tokenProvider.userToken == 'string' ? this.tokenProvider.userToken : this.tokenProvider.userToken()) : null;
-        var headers = token ? { 'Authorization': 'Bearer ' + token } : {}
-        var instance = axios.default.create({
-            baseURL: ApiProvider.getUrl(),
-            headers: headers
+    private refreshUserToken(): Promise<any> {
+        var self = this;
+        return new Promise((resolve, reject) => {
+            try {
+                self.tokenProvider.getUserToken((function (userToken) {
+                    self.currentUserToken = userToken;
+                    resolve(userToken);
+                }))
+            } catch (err) {
+                reject(err);
+            }
+
         });
-        return instance;
+    }
+
+    private getAuthorizationHeaderContent() {
+        return "Bearer " + this.currentUserToken;
+    }
+
+    private getDefaultRequestConfig(url: string): Promise<axios.AxiosRequestConfig> {
+        var headers = <IJDashRequestHeader>{};
+
+        var config = <axios.AxiosRequestConfig>{
+            baseURL: ApiProvider.getUrl(),
+            url: url,
+            headers: headers
+        };
+
+        if (!this.currentUserToken) {
+            return this.refreshUserToken().then(() => {
+                headers.Authorization = this.getAuthorizationHeaderContent()
+                return config;
+            });
+        } else {
+            headers.Authorization = this.getAuthorizationHeaderContent();
+            return Promise.resolve(config);
+        }
+
+
+    }
+
+    private ensureTokenReceived(err: axios.AxiosError, config: axios.AxiosRequestConfig) {
+        if (err.code !== "401" || err.config["authRetry"]) {
+            throw err;
+        }
+
+        return this.refreshUserToken().then(() => {
+            config.headers.Authorization = this.getAuthorizationHeaderContent();
+            config["authRetry"] = true;
+            return this.makeRequest(config);
+        });
+    }
+
+
+    private get<T>(url: string): Promise<T> {
+        return this.getDefaultRequestConfig(url).then((requestConfig) => {
+            requestConfig.method = 'get';
+            return this.makeRequest(requestConfig).then(result => result.data);
+        });
+    }
+
+    private post<T>(url: string, data?: any): Promise<T> {
+        return this.getDefaultRequestConfig(url).then((requestConfig) => {
+            requestConfig.method = 'post';
+            requestConfig.data = data;
+            return this.makeRequest(requestConfig).then(result => result.data);
+        });
+    }
+
+    private makeRequest(config: axios.AxiosRequestConfig): Promise<axios.AxiosResponse> {
+        var request = (<Promise<axios.AxiosResponse>>axios["request"](config)).catch((err: axios.AxiosError) => {
+            return this.ensureTokenReceived(err, config);
+        });
+        return request;
     }
 
     getDashboard(id: string): Promise<GetDashboardResult> {
-        return this.request().get(`/dashboard/${id}`).then(result => result.data);
+        return this.get(`/dashboard/${id}`);
     }
 
     createDashboard(model: DashboardCreateModel): Promise<CreateResult> {
-        return this.request().post(`/dashboard/create`, model).then(result => result.data);
+        return this.post(`/dashboard/create`, model);
     }
 
     getMyDashboards(query?: Query): Promise<QueryResult<DashboardModel>> {
-        return this.request().get(`/dashboard/my`).then(result => result.data);
+        return this.get(`/dashboard/my`);
     }
 
     searchDashboards(search?: ISearchDashboards, query?: Query): Promise<QueryResult<DashboardModel>> {
-        return this.request().post(`/dashboard/search`, {
-            search: search,
-            query: query
-        }).then(result => result.data);
+        return this.post(`/dashboard/search`, { search: search, query: query });
     }
 
     deleteDashboard(id: string): Promise<any> {
-        return this.request().post(`/dashboard/delete/${id}`).then(result => result.data);
+        return this.post(`/dashboard/delete/${id}`);
     }
 
     saveDashboard(id: string, updateValues: DashboardUpdateModel): Promise<any> {
-        return this.request().post(`/dashboard/save/${id}`, updateValues).then(result => result.data);
+        return this.post(`/dashboard/save/${id}`, updateValues);
     }
 
     createDashlet(model: DashletCreateModel): Promise<CreateResult> {
-        return this.request().post(`/dashlet/create`, model).then(result => result.data);
+        return this.post(`/dashlet/create`, model);
     }
 
     getDashletsOfDashboard(dashboardId: string): Promise<Array<DashletCreateModel>> {
-        return this.request().get(`/dashlet/bydashboard/${dashboardId}`).then(result => result.data);
+        return this.get(`/dashlet/bydashboard/${dashboardId}`);
     }
 
     deleteDashlet(id: string): Promise<any> {
-        return this.request().post(`/dashlet/delete/${id}`).then(result => result.data);
+        return this.post(`/dashlet/delete/${id}`);
     }
 
     saveDashlet(id: string, updateValues: DashletUpdateModel): Promise<any> {
-        return this.request().post(`/dashlet/save/${id}`, updateValues).then(result => result.data);
+        return this.post(`/dashlet/save/${id}`, updateValues);
     }
 }
 

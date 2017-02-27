@@ -122,6 +122,7 @@ gulp.task('generate-full', ['deploy:clean'], function (cb) {
 });
 
 gulp.task('polyfills', function () {
+    console.log("test");
     return gulp.src([
         'bower_components/custom-elements/src/native-shim.js',
         'bower_components/custom-elements/custom-elements.min.js',
