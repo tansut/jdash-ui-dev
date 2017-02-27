@@ -68,10 +68,10 @@ gulp.task('ts2js-dev', function () {
     });
 });
 
-gulp.task('generate-native-only', ['deploy:clean'], function (cb) {
+gulp.task('deploy-native-only', ['deploy:clean'], function (cb) {
     var doit = function () {
         return [compile({
-            debug: false,
+            min: true,
             main: 'src/jdash.ts',
             out: 'lib/jdash.lean.min.js'
         })]
@@ -80,12 +80,10 @@ gulp.task('generate-native-only', ['deploy:clean'], function (cb) {
     return Promise.all(doit()).then(() => {
         var jdash = gulp.src([
             'bower_components/custom-elements/src/native-shim.js',
-            'bower_components/interactjs/interact.js',
-            //'node_modules/jdash-core/lib/jdash-core.min.js',
+            'bower_components/interactjs/dist/interact.min.js',
             'lib/jdash.lean.min.js'
         ])
             .pipe(concat('jdash.native.min.js'))
-            //.pipe(uglify())
             .pipe(gulp.dest('./lib/'));
 
         return merge(jdash);
@@ -94,10 +92,9 @@ gulp.task('generate-native-only', ['deploy:clean'], function (cb) {
 
 
 
-gulp.task('generate-full', ['deploy:clean'], function (cb) {
+gulp.task('deploy-full', ['deploy:clean'], function (cb) {
     var doit = function () {
         return [compile({
-            debug: false,
             min: true,
             main: 'src/jdash.ts',
             out: 'lib/jdash.lean.min.js'
@@ -109,9 +106,8 @@ gulp.task('generate-full', ['deploy:clean'], function (cb) {
             'bower_components/custom-elements/custom-elements.min.js',
             'bower_components/webcomponentsjs/HTMLImports.min.js',
             'bower_components/custom-elements/src/native-shim.js',
-             'bower_components/es6-promise/es6-promise.auto.min.js',
+            'bower_components/es6-promise/es6-promise.auto.min.js',
             'bower_components/interactjs/dist/interact.min.js',
-            //'node_modules/jdash-core/lib/jdash-core.min.js',
             'lib/jdash.lean.min.js'
         ])
             .pipe(concat('jdash.min.js'))
@@ -126,7 +122,7 @@ gulp.task('polyfills', function () {
         'bower_components/custom-elements/src/native-shim.js',
         'bower_components/custom-elements/custom-elements.min.js',
         'bower_components/webcomponentsjs/HTMLImports.min.js',
-         'bower_components/es6-promise/es6-promise.min.js'
+        'bower_components/es6-promise/es6-promise.min.js'
     ])
         .pipe(concat('polyfills.js'))
         .pipe(gulp.dest('./debug/'));
@@ -267,4 +263,4 @@ gulp.task('npm-deploy', ['npm:clean', 'deploy', 'tsc-def'], function () {
     return merge([gulp.src('./lib/**/*').pipe(gulp.dest(npmDir + 'lib'))])
 })
 
-gulp.task('deploy', ['generate-native-only', 'generate-full', 'sass-deploy', 'vulcanize-deploy']);
+gulp.task('deploy', ['deploy-native-only', 'deploy-full', 'sass-deploy', 'vulcanize-deploy']);
