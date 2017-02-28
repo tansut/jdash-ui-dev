@@ -98,7 +98,7 @@ export class LocalStorageProvider implements IClientProvider {
 
         updateValues = updateValues || {};
         for (var key in updateValues)
-            dashboard[key] = updateValues;
+            dashboard[key] = updateValues[key];
 
         if (updateValues.layout) {
             dashletsInCollection.forEach((dashlet) => {
@@ -117,7 +117,7 @@ export class LocalStorageProvider implements IClientProvider {
             return Promise.reject('not found');
         updateValues = updateValues || {};
         for (var key in updateValues)
-            dashlet[key] = updateValues;
+            dashlet[key] = updateValues[key];
         this.saveItem('dashlets', dashlet);
         return Promise.resolve({});
     }
