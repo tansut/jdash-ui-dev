@@ -1,5 +1,15 @@
 (function (window) {
 
+    function parseQuery(qstr) {
+        var query = {};
+        var a = (qstr[0] === '?' ? qstr.substr(1) : qstr).split('&');
+        for (var i = 0; i < a.length; i++) {
+            var b = a[i].split('=');
+            query[decodeURIComponent(b[0])] = decodeURIComponent(b[1] || '');
+        }
+        return query;
+    }
+
     var getDemoToken = function (email) {
         var instance = axios.default.create({
             baseURL: '/api/v1'
@@ -17,6 +27,7 @@
     }
     app.prototype.init = function () {
         var self = this;
+        this.query = parseQuery(window.location.search);
         this.username = 'tansu';
         this.dashboard = document.querySelector('#mydashboard');
         this.dashletModules = jdash.DashletModule.getModules();
@@ -54,10 +65,10 @@
         this.dashboard.layout.makeDroppable('[j-type="j-dashlet-module"]', true, this.dashletList);
 
 
-        var mail = decodeURIComponent(window.location.search.split('=')[1]);
+
         window.jdash.Provider.init({
             getUserToken: function (cb) {
-                getDemoToken(mail).then(function (token) {
+                getDemoToken(self.query.mail).then(function (token) {
                     cb(token);
                 });
             }
@@ -76,12 +87,13 @@
     }
 
     app.prototype.go = function () {
+        var self = this;
         this.loadDashboards().then(function (dashboards) {
-            var matchedId = window.location.pathname.match('\\w+');
+
             var model;
-            if (matchedId) {
+            if (self.query.dashboard) {
                 var model = dashboards.data.filter((function (item) {
-                    return item.id == matchedId[0]
+                    return item.id == self.query.dashboard
                 }))[0];
 
             }
@@ -259,8 +271,9 @@
     }
 
     app.prototype.loadDashboard = function (id, discardState) {
+        var self = this;
         this.dashboard.load(id).then(function (model) {
-            //      !discardState && history.pushState({ state: 'dashboard', dashboard: model }, model.title, encodeURI(model.id))
+            !discardState && history.pushState({ state: 'dashboard', dashboard: model }, model.title, "?dashboard=" + encodeURI(model.id) + "&mail=" + encodeURI(self.query.mail));
         }).catch(function (err) {
             alert(err.message);
         })
