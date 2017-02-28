@@ -2,21 +2,32 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="/debug/polyfills.js"></script>
-    <script src="/bower_components/interactjs/interact.js"></script>
-    <script src="/node_modules/jdash-core/lib/index.js"></script>
-    <script src="/debug/jdash.lean.js"></script>
-    <link rel="import" href="/debug/components/jdash.html">
 
-    <script src="app.js"></script>
-    <link rel="stylesheet" href="app.css">
+    <!-- deploy vendor libs -->
+    <!--<script src="node_modules/jdash-ui/dist/jdash.min.js"></script>
+    <link rel="import" href="node_modules/jdash-ui/dist/jdash.html">
+    <script src="node_modules/axios/axios.min.js"></script>-->
+    <!-- end deploy vendor libs -->
 
 
-    <link rel="import" href="components/generic/rss-dashlet.html">
-    <link rel="import" href="components/generic/nasa-apod.html">
-    <link rel="import" href="components/generic/chart-dashlet.html">
-    <link rel="import" href="components/generic/content-dashlet.html">
-    <link rel="import" href="components/generic/rich-content.html">
+    <!-- dev vendor libs -->
+    <script src="../../debug/polyfills.js"></script>
+    <script src="../../bower_components/interactjs/interact.js"></script>
+    <script src="../../node_modules/jdash-core/lib/index.js"></script>
+    <script src="../../debug/jdash.lean.js"></script>
+    <link rel="import" href="../../debug/components/jdash.html">
+    <!-- end dev vendor libs -->
+
+    <script src="index.js"></script>
+    <script src="../app.js"></script>
+    <link rel="stylesheet" href="./app.css">
+
+
+    <link rel="import" href="dashlets/rss-dashlet.html">
+    <link rel="import" href="dashlets/nasa-apod.html">
+    <link rel="import" href="dashlets/chart-dashlet.html">
+    <link rel="import" href="dashlets/content-dashlet.html">
+    <link rel="import" href="dashlets/rich-content.html">
 
     <script>
         jdash.ready(function () {
@@ -127,9 +138,12 @@
 
 
             <j-dashboard id="mydashboard" j-view-mode="dashletedit" style="display: none" class="j-theme-dashboard">
+
             </j-dashboard>
+
+
             <j-provider id="localstorageprovider" type="localstorage" storage="session"></j-provider>
-            
+
         </div>
 
     </div>

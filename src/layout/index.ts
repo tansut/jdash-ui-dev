@@ -90,31 +90,6 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
     }
 
 
-    private init() {
-        var content = <HTMLElement>this.querySelector('template[j-type="j-layout-content"]');
-        var sections = content.querySelectorAll('[j-type="j-layout-section"]');
-
-        var model: any = {
-            sections: []
-        }
-
-
-        for (var index = 0; index < sections.length; index++) {
-            var section = sections[index];
-            var titleNode = section.querySelector('[j-type="j-layout-section-title"]');
-            var title = (titleNode && titleNode.innerHTML) || '';
-
-            var dashletZones = Helper.getElementsNotIn(section, '[j-dashlet-zone]', '[j-dashlet-zone]');
-
-
-            model.sections.push({
-                title: title
-            })
-        }
-
-    }
-
-
     getType() {
         return 'j-layout';
     }
@@ -176,12 +151,14 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
             containingGroup.remove();
         }
         this.setColumnWidths4Zones(immidiateSiblings)
+        this.save();
     }
 
     moveSectionActionHandler(event: CustomEvent) {
         var direction = event.detail.direction || 'next';
         var section = event.detail.section;
         Helper.moveElement(section, direction, '[j-type="j-layout-section"]');
+        this.save();
     }
 
     cloneZoneActionHandler(event: CustomEvent) {
@@ -192,6 +169,8 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         this.setLayoutMode4Zone(clone);
         var zones = Helper.getImmidiateSiblings(zone, "[j-dashlet-zone]", false);
         this.setColumnWidths4Zones(Array.prototype.concat.apply(zones, [zone]))
+
+        this.save();
     }
 
     editSectionTitle(section: HTMLElement, header: string) {
@@ -214,6 +193,8 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
     removeSectionActionHandler(event: CustomEvent) {
         var section = <HTMLElement>event.detail.section;
         section.remove();
+
+        this.save();
     }
 
 
@@ -234,6 +215,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
     moveZoneGroupActionHandler(event: CustomEvent) {
         var direction = event.detail.direction, group = event.detail.group;
         Helper.moveElement(group, direction, '[j-type="j-dashlet-zone-group"]');
+        this.save();
     }
 
     cloneZoneGroupActionHandler(event: CustomEvent) {
@@ -249,6 +231,8 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         var titleRes = this.editzoneGroupTitle(newGroup, 'Set a title for new group');
         if (titleRes === null)
             return;
+
+        this.save();
         group.parentElement.insertBefore(newGroup, group);
     }
 
@@ -259,6 +243,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
     removeZoneGroupActionHandler(event: CustomEvent) {
         var group = event.detail.group;
         group.remove();
+        this.save();
     }
 
     makeZoneGroupActionHandler(event: CustomEvent) {
@@ -278,6 +263,8 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
                     this.setColumnWidths4Zones(zones);
                 }
             })
+
+            this.save();
         }
     }
 
@@ -296,6 +283,8 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         if (titleRes === null)
             return;
         section.parentElement.insertBefore(newSection, section);
+
+        this.save();
     }
 
     resetSectionActionHandler(event: CustomEvent) {
@@ -305,12 +294,14 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
             (<HTMLElement>zones[i]).removeAttribute('j-weight');
         }
         this.setColumnWidths4Zones(zones);
+        this.save();
     }
 
 
     moveZoneActionHandler(event: CustomEvent) {
         var direction = event.detail.direction, zone = event.detail.zone;
         Helper.moveElement(zone, direction, '[j-dashlet-zone]');
+        this.save();
     }
 
     setColumnWidths4Zones(zoneElements: NodeListOf<Element>) {
@@ -359,6 +350,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
             this.changeElementWeigths(zones, 1, maxWeight);
         }
         this.setColumnWidths4Zones(Array.prototype.concat.apply(zones, [zone]));
+        this.save();
     }
 
 
