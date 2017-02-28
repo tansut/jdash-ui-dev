@@ -4,7 +4,11 @@
   "description": "",
   "dependencies": {
     "axios": "^0.15.3",
-    "jdash-core": "git+ssh://git@bitbucket.org/kalitte/jdash-core.git"
+    "custom-elements": "^1.0.2",
+    "es6-promise": "^4.0.5",
+    "interactjs": "^1.2.8",
+    "jdash-core": "git+ssh://git@bitbucket.org/kalitte/jdash-core.git",
+    "webcomponentsjs": "^1.0.2"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

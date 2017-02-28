@@ -1,16 +1,22 @@
-// window.app = {
-//     init() {
-
-//     }
-// }
-
 (function (window) {
+
+    var getDemoToken = function (email) {
+        var instance = axios.default.create({
+            baseURL: '/api/v1'
+        });
+        var posted = instance.post('/user/startdemo', {
+            email: email
+        });
+        return posted.then(function (result) {
+            return result.data.usertoken;
+        });
+    }
 
     var app = function App() {
 
     }
-
     app.prototype.init = function () {
+        var self = this;
         this.username = 'tansu';
         this.dashboard = document.querySelector('#mydashboard');
         this.dashletModules = jdash.DashletModule.getModules();
@@ -47,10 +53,13 @@
         this.viewModeChangeHandler(this.dashboard.getAttribute('j-view-mode') || 'readonly');
         this.dashboard.layout.makeDroppable('[j-type="j-dashlet-module"]', true, this.dashletList);
 
+
+        var mail = decodeURIComponent(window.location.search.split('=')[1]);
         window.jdash.Provider.init({
-            // apikey: 'dsfsdfdsf',
-            getUserToken: (callback) => {
-                callback('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXIiOiJ0ZXN0In0sImlhdCI6MTQ4ODE3NTA2OCwiZXhwIjoxNTMxMzc1MDY4LCJpc3MiOiJhcGkuamRhc2guaW8iLCJzdWIiOiI0NDEwZmFmMy0yMWNiLTRiMTgtODJiNi01MGQzZjQyYjRlMDgifQ.JOGT96_bdc6ZxSB7gLNGPVLaqaUE14uZEPGaV6Qz6FQ');
+            getUserToken: function (cb) {
+                getDemoToken(mail).then(function (token) {
+                    cb(token);
+                });
             }
         })
         this.go();
@@ -251,7 +260,7 @@
 
     app.prototype.loadDashboard = function (id, discardState) {
         this.dashboard.load(id).then(function (model) {
-            !discardState && history.pushState({ state: 'dashboard', dashboard: model }, model.title, encodeURI(model.id))
+            //      !discardState && history.pushState({ state: 'dashboard', dashboard: model }, model.title, encodeURI(model.id))
         }).catch(function (err) {
             alert(err.message);
         })
