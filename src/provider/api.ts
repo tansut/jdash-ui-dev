@@ -75,7 +75,7 @@ export class ApiProvider implements IClientProvider {
     }
 
     private ensureTokenReceived(err: axios.AxiosError, config: axios.AxiosRequestConfig) {
-        if (err.code !== "401" || err.config["authRetry"]) {
+        if (err.response.status !== 401 || err.config["authRetry"]) {
             throw err;
         }
 
