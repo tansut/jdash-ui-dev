@@ -71,10 +71,6 @@ gulp.task('ts2js-dev', function () {
 gulp.task('deploy-native-only', ['deploy:clean'], function (cb) {
     var doit = function () {
         return [compile({
-<<<<<<< HEAD
-=======
-            debug: false,
->>>>>>> a2845634026a443dbbc50d95f75d218d0947a8c3
             min: true,
             main: 'src/jdash.ts',
             out: 'dist/jdash.lean.min.js'
@@ -84,13 +80,6 @@ gulp.task('deploy-native-only', ['deploy:clean'], function (cb) {
     return Promise.all(doit()).then(() => {
         var jdash = gulp.src([
             'bower_components/custom-elements/src/native-shim.js',
-<<<<<<< HEAD
-            'bower_components/interactjs/dist/interact.min.js',
-            'lib/jdash.lean.min.js'
-        ])
-            .pipe(concat('jdash.native.min.js'))
-            .pipe(gulp.dest('./lib/'));
-=======
             'bower_components/interactjs/interact.js',
             //'node_modules/jdash-core/dist/jdash-core.min.js',
             'dist/jdash.lean.min.js'
@@ -98,8 +87,6 @@ gulp.task('deploy-native-only', ['deploy:clean'], function (cb) {
             .pipe(concat('jdash.native.min.js'))
             //.pipe(uglify())
             .pipe(gulp.dest('./dist/'));
->>>>>>> a2845634026a443dbbc50d95f75d218d0947a8c3
-
         return merge(jdash);
     });
 });
@@ -122,12 +109,8 @@ gulp.task('deploy-full', ['deploy:clean'], function (cb) {
             'bower_components/custom-elements/src/native-shim.js',
             'bower_components/es6-promise/es6-promise.auto.min.js',
             'bower_components/interactjs/dist/interact.min.js',
-<<<<<<< HEAD
-            'lib/jdash.lean.min.js'
-=======
             //'node_modules/jdash-core/dist/jdash-core.min.js',
             'dist/jdash.lean.min.js'
->>>>>>> a2845634026a443dbbc50d95f75d218d0947a8c3
         ])
             .pipe(concat('jdash.min.js'))
             .pipe(gulp.dest('./dist/'));
