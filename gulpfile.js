@@ -221,7 +221,8 @@ gulp.task('dev', ['ts2js-dev', 'polyfills', 'sass', 'vulcanize', 'webserver'], f
 gulp.task('npm:clean', [], function () {
     return del([
         npmDir + '/**/*',
-        '!' + npmDir + 'package.json'
+        '!' + npmDir + 'package.json',
+        './dist/jdash.lean.min.js',
     ], {
             force: true
         })
@@ -246,7 +247,7 @@ gulp.task('tsc-def', ['npm:clean', 'deploy'], function () {
 });
 
 gulp.task('npm-deploy', ['npm:clean', 'deploy', 'tsc-def'], function () {
-    return merge([gulp.src('./dist/**/*').pipe(gulp.dest(npmDir + 'dist'))])
+    return merge([gulp.src(['!./dist/jdash.lean.min.js', './dist/**/*']).pipe(gulp.dest(npmDir + 'dist'))])
 })
 
 gulp.task('deploy', ['deploy-native-only', 'deploy-full', 'sass-deploy', 'vulcanize-deploy']);
