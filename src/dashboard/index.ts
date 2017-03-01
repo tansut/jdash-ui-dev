@@ -3,7 +3,6 @@ import { JDash } from '../jdash';
 import { DashboardModel, DashletModel, DashletPositionModel, IClientProvider } from 'jdash-core';
 
 import { LocalStorageProvider } from '../provider/localstorage';
-import { ProviderManager, ProviderElement } from '../provider';
 
 import { Dashlet, DashletEditor, DashletModule, IDashletElement, IDashletElementStatus } from './dashlet';
 import { IDashletPanel } from './dashletpanel';

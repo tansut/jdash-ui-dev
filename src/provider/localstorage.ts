@@ -1,12 +1,10 @@
 import { KeyValue } from '../core';
-import { ProviderManager } from './';
 import Helper from '../helper';
 import { IClientProvider, GetDashboardResult, DashboardCreateModel, DashboardUpdateModel, ISearchDashboards, DashboardModel, CreateResult, Query, QueryResult, DashletCreateModel, DashletUpdateModel, DashletModel, DashletPositionModel } from 'jdash-core';
 
 
 export class LocalStorageProvider implements IClientProvider {
     static ProviderType = 'localstorage';
-    static Register = ProviderManager.register(LocalStorageProvider.ProviderType, LocalStorageProvider);
     public storage: Storage;
 
     init() {
@@ -84,7 +82,7 @@ export class LocalStorageProvider implements IClientProvider {
         var dashboard = this.getCollection<DashboardModel>('dashboards', id)[0];
         if (dashboard) {
             var dashlets = this.getCollection<DashletModel>('dashlets').filter((item) => item.dashboardId == dashboard.id);
-            return Promise.resolve({dashboard: dashboard, dashlets: dashlets})
+            return Promise.resolve({ dashboard: dashboard, dashlets: dashlets })
         }
         return Promise.reject('not found');
     }

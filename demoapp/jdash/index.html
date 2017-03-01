@@ -3,20 +3,16 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- deploy vendor libs -->
-    <!--<script src="node_modules/jdash-ui/dist/jdash.min.js"></script>
-    <link rel="import" href="node_modules/jdash-ui/dist/jdash.html">
-    <script src="node_modules/axios/axios.min.js"></script>-->
-    <!-- end deploy vendor libs -->
+    <script src="../node_modules/jdash-ui/dist/jdash.min.js"></script>
+    <link rel="import" href="../node_modules/jdash-ui/dist/components/jdash.html">
 
-
-    <!-- dev vendor libs -->
+    <!--removeIf(production)-->
     <script src="../../debug/polyfills.js"></script>
     <script src="../../bower_components/interactjs/interact.js"></script>
     <script src="../../node_modules/jdash-core/lib/index.js"></script>
     <script src="../../debug/jdash.lean.js"></script>
     <link rel="import" href="../../debug/components/jdash.html">
-    <!-- end dev vendor libs -->
+    <!--endRemoveIf(production)-->
 
     <script src="index.js"></script>
     <script src="../app.js"></script>

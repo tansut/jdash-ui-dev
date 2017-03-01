@@ -30,8 +30,8 @@ export var JDash = {
     ThemeManager: ThemeManager,
     Dashboard: Dashboard,
     Http: axios,
-    Provider: new LocalStorageProvider(),
-    //Provider: new ApiProvider(),
+    //Provider: new LocalStorageProvider(),
+    Provider: new ApiProvider(),
 
     dashlet: function (id: string | Function | Object, handler: Function | Object) {
         var args = Array.prototype.slice.call(arguments);
