@@ -150,6 +150,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         if (containingGroup && !immidiateSiblings.length) {
             containingGroup.remove();
         }
+
         this.setColumnWidths4Zones(immidiateSiblings)
         this.save();
     }
@@ -192,8 +193,13 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
 
     removeSectionActionHandler(event: CustomEvent) {
         var section = <HTMLElement>event.detail.section;
+        var container = Helper.getContainingType(section, "j-layout-content");
         section.remove();
-
+        if (!container.querySelector('[j-type="j-layout-section"]')) {
+            container.remove();
+            this.generateLayoutContent();
+            this.setLayoutEditMode(true);
+        }
         this.save();
     }
 
