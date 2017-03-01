@@ -11,8 +11,14 @@
     }
 
     var getDemoToken = function (email) {
-        var instance = axios.default.create({
-            baseURL: '/api/v1'
+        var url = 'https://app.jdash.io/api/v1';
+
+        //removeIf(production) 
+        url = 'http://localhost:3000/api/v1'
+        //endRemoveIf(production) 
+
+        var instance = jdash.Http.default.create({
+            baseURL: url
         });
         var posted = instance.post('/user/startdemo', {
             email: email

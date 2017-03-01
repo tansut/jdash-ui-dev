@@ -1,5 +1,3 @@
-//import { ApiProvider } from './provider/api';
-import { ProviderElement } from './provider';
 import { Dashboard } from './dashboard';
 import { GenericLayout } from './layout/generic';
 import { GridLayout } from './layout/grid';
@@ -13,7 +11,6 @@ export default {
         window.customElements.define('j-component', Component);
         window.customElements.define('j-dashlet', DashletModule);
         window.customElements.define('j-dashlet-editor', DashletEditorModule);
-        window.customElements.define('j-provider', ProviderElement);
         window.customElements.define('j-layout', GenericLayout);
     }
 }

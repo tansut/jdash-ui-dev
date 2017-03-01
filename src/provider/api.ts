@@ -1,5 +1,3 @@
-import { CompilationResult } from 'gulp-typescript/release/reporter';
-import { ProviderManager } from './';
 import { IClientProvider, GetDashboardResult, DashboardCreateModel, DashboardUpdateModel, ISearchDashboards, DashboardModel, CreateResult, Query, QueryResult, DashletCreateModel, DashletUpdateModel, DashletModel, DashletPositionModel } from 'jdash-core';
 import * as axios from 'axios';
 
@@ -22,7 +20,11 @@ export class ApiProvider implements IClientProvider {
     private currentUserToken: string;
 
     static getUrl() {
-        return 'http://localhost:3000/jdash/api/v1'
+        var url = 'https://app.jdash.io/jdash/api/v1';
+        //removeIf(production) 
+        url = 'http://localhost:3000/jdash/api/v1'
+        //endRemoveIf(production) 
+        return url;
     }
 
     init(tokenProvider: ITokenProvider) {
