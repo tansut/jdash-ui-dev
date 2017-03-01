@@ -689,6 +689,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
                     self.dropEndForElement(el);
 
                     var newPos = self.getElementPosition(zone);
+
                     if (dashlet) {
                         self.placeDashlet(dashlet, newPos);
                     } else if (el.getAttribute('j-type') == 'j-dashlet-module') {
@@ -789,6 +790,16 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         }
     }
 
+    generateDashletZoneIds() {
+        var unidentifiedZones = this.querySelectorAll("[j-dashlet-zone='']");
+
+        for (var i = 0; i < unidentifiedZones.length; i++) {
+            var zone = unidentifiedZones[i];
+            var zoneId = Helper.makeid();
+            zone.setAttribute("j-dashlet-zone", zoneId);
+        }
+    }
+
     generateLayoutContent(newContent?: string) {
         var contentTemplate = Helper.locateTemplate(this, 'j-layout-content', false);
         if (newContent) {
@@ -798,8 +809,11 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
             template.setAttribute('j-type', 'j-layout-content');
             var content = Helper.extractTemplate(template);
             this.insertBefore(content, contentTemplate);
+            this.generateDashletZoneIds(); // fix : if not given zoneId, moving dashlet to the zone cannot work.
         } else {
             Helper.instantiateTemplate(contentTemplate);
+            this.generateDashletZoneIds(); // fix : if not given zoneId, moving dashlet to the zone cannot work.
+
         }
 
     }
@@ -970,7 +984,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         var existingPos = this.getElementPosition(dashletElement);
 
         if (dashletElement.panel.parentElement == zoneToAdd) {
-            dashletElement.panel.remove();
+           // dashletElement.panel.remove();
             to = this.normalizePosition(to);
         }
 
@@ -992,11 +1006,20 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
             zoneToAdd.insertBefore(dashletElement.panel || dashletElement, nearestDashlet.panel);
         else zoneToAdd.appendChild(dashletElement.panel || dashletElement);
 
+
         // todo : parent to sub-group movements control
         // if (existingPos.zone && existingPos.zone != to.zone) {
         //     this.autoArrangeElements(existingPos.zone, 'j-dashlet');
         // }
         this.autoArrangeElements(to.zone, 'j-dashlet');
+
+        var placeEventArgs = {
+            zone: zoneToAdd,
+            dashlet: dashletElement
+        }
+
+        Helper.fireEvent(document, "jdash:dashlet.after-place", placeEventArgs);
+        Helper.fireEvent(dashletElement, "after-place", placeEventArgs);
 
         if (this.viewMode == LayoutViewMode.editable || this.viewMode == LayoutViewMode.dashletedit) {
             this.createDashletDropzones();
