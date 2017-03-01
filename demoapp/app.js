@@ -11,8 +11,14 @@
     }
 
     var getDemoToken = function (email) {
+        var url = 'https://app.jdash.io/api/v1';
+
+        //removeIf(production) 
+        url = '/api/v1'
+        //endRemoveIf(production) 
+
         var instance = jdash.Http.default.create({
-            baseURL: '/api/v1'
+            baseURL: url
         });
         var posted = instance.post('/user/startdemo', {
             email: email
