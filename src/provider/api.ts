@@ -19,13 +19,13 @@ export class ApiProvider implements IClientProvider {
     private tokenProvider: ITokenProvider;
     private currentUserToken: string;
 
-    static getUrl() {
-        var url = 'https://app.jdash.io/jdash/api/v1';
-        //removeIf(production) 
-        url = 'http://localhost:3000/jdash/api/v1'
-        //endRemoveIf(production) 
-        return url;
-    }
+    // static getUrl() {
+    //     var url = 'https://app.jdash.io/jdash/api/v1';
+    //     //removeIf(production) 
+    //     url = 'http://localhost:3000/jdash/api/v1'
+    //     //endRemoveIf(production) 
+    //     return url;
+    // }
 
     init(tokenProvider: ITokenProvider) {
         this.tokenProvider = tokenProvider;
@@ -58,7 +58,7 @@ export class ApiProvider implements IClientProvider {
         var headers = <IJDashRequestHeader>{};
 
         var config = <axios.AxiosRequestConfig>{
-            baseURL: ApiProvider.getUrl(),
+            baseURL: ApiProvider['url'],
             url: url,
             headers: headers
         };
@@ -153,4 +153,12 @@ export class ApiProvider implements IClientProvider {
 }
 
 
-
+Object.defineProperty(ApiProvider, 'url', {
+    get: function () {
+        var url = 'https://app.jdash.io/jdash/api/v1';
+        //removeIf(production) 
+        url = 'http://localhost:3000/jdash/api/v1'
+        //endRemoveIf(production) 
+        return url;
+    }
+})

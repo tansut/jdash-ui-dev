@@ -22,7 +22,6 @@ export var JDash = {
     DashletModule: DashletModule,
     DashletPanel: DashletPanel,
     DashletEditorPanel: DashletEditorPanel,
-    LocalStorageProvider: LocalStorageProvider,
     GenericLayout: GenericLayout,
     GridLayout: GridLayout,
     DashboardLayout: DashboardLayout,
