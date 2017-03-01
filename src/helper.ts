@@ -383,10 +383,10 @@ export default class Helper {
         var allItems = container.querySelectorAll(selector);
         var notIncludingContainerItems = container.querySelectorAll(excludeContainerSelector);
         var excludedItemList = [];
-        for(var i = 0; i< notIncludingContainerItems.length ; i++){
+        for (var i = 0; i < notIncludingContainerItems.length; i++) {
             var subContainer = notIncludingContainerItems[i];
             var notToIncludeItems = subContainer.querySelectorAll(selector);
-            for(var j = 0; j< notToIncludeItems.length; j++){
+            for (var j = 0; j < notToIncludeItems.length; j++) {
                 excludedItemList.push(notToIncludeItems[j]);
             }
         }
@@ -413,6 +413,22 @@ export default class Helper {
             node = node.parentElement;
         }
         return null;
+    }
+
+    static getContainingAttr(el: HTMLElement, attr: string, attrValue?: string) {
+        var node = el.parentElement;
+        while (node) {
+            if (node.hasAttribute(attr)) {
+                if (!attrValue) {
+                    return node;
+                }
+                else if (attrValue && node.getAttribute(attr) == attrValue) {
+                    return node;
+                }
+
+            }
+            node = node.parentElement;
+        }
     }
 
     static makeid() {
