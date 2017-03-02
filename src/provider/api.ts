@@ -49,7 +49,6 @@ export class ApiProvider implements IClientProvider {
             } catch (err) {
                 reject(err);
             }
-
         });
     }
 
