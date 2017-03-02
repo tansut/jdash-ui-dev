@@ -7,7 +7,7 @@ export type fnType = (callback: Function) => string;
 
 export interface ITokenProvider {
     apikey: string | fnType;
-    getUserToken: fnType;
+    userToken: string | fnType;
 }
 
 interface IJDashRequestHeader {
@@ -39,7 +39,10 @@ export class ApiProvider implements IClientProvider {
         var self = this;
         return new Promise((resolve, reject) => {
             try {
-                self.tokenProvider.getUserToken((function (userToken) {
+                var fn = typeof self.tokenProvider.userToken == 'string' ?
+                    function (done) { done(self.tokenProvider.userToken) } :
+                    self.tokenProvider.userToken;
+                fn((function (userToken) {
                     self.currentUserToken = userToken;
                     resolve(userToken);
                 }))
