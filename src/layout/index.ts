@@ -810,7 +810,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
             var content = Helper.extractTemplate(template);
             this.insertBefore(content, contentTemplate);
             //this.generateDashletZoneIds(); // fix : if not given zoneId, moving dashlet to the zone cannot work.
-        } else {
+        } else { 
             Helper.instantiateTemplate(contentTemplate);
             //this.generateDashletZoneIds(); // fix : if not given zoneId, moving dashlet to the zone cannot work.
 
@@ -984,7 +984,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         var existingPos = this.getElementPosition(dashletElement);
 
         if (dashletElement.panel.parentElement == zoneToAdd) {
-            dashletElement.panel.remove();
+            dashletElement.panel.remove(); /* remove olduğu için disconnect oluyor */ 
             to = this.normalizePosition(to);
         }
 
