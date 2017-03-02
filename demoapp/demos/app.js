@@ -17,7 +17,7 @@
         url = 'http://localhost:3000/api/v1'
         //endRemoveIf(production) 
 
-        var url = 'https://app.jdash.io/api/v1';
+        // var url = 'https://app.jdash.io/api/v1';
 
         var instance = jdash.Http.default.create({
             baseURL: url
