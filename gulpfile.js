@@ -220,7 +220,7 @@ gulp.task('dev', ['ts2js-dev', 'polyfills', 'sass', 'vulcanize', 'webserver'], f
 
 gulp.task('npm:clean', [], function () {
     return del([
-        npmDir + '/**/*',
+        npmDir + '/dist/**/*',
         '!' + npmDir + 'package.json',
         './dist/jdash.lean.min.js',
     ], {
@@ -238,7 +238,7 @@ gulp.task('deploy:clean', [], function (done) {
 
 gulp.task('tsc-def', ['npm:clean', 'deploy'], function () {
     var tsProject = ts.createProject('tsconfig.json', {
-        declaration: true
+        declaration: false
     });
     var tsResult = tsProject.src()
         .pipe(tsProject());
