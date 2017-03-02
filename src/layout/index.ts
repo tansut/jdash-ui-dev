@@ -196,9 +196,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         var container = Helper.getContainingType(section, "j-layout-content");
         section.remove();
         if (!container.querySelector('[j-type="j-layout-section"]')) {
-            container.remove();
-            this.generateLayoutContent();
-            this.setLayoutEditMode(true);
+            this.reset();
         }
         this.save();
     }
@@ -810,7 +808,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
             var content = Helper.extractTemplate(template);
             this.insertBefore(content, contentTemplate);
             this.generateDashletZoneIds(); // fix : if not given zoneId, moving dashlet to the zone cannot work.
-        } else { 
+        } else {
             Helper.instantiateTemplate(contentTemplate);
             this.generateDashletZoneIds(); // fix : if not given zoneId, moving dashlet to the zone cannot work.
 
@@ -984,7 +982,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         var existingPos = this.getElementPosition(dashletElement);
 
         if (dashletElement.panel.parentElement == zoneToAdd) {
-            dashletElement.panel.remove(); /* remove olduğu için disconnect oluyor */ 
+            dashletElement.panel.remove(); /* remove olduğu için disconnect oluyor */
             to = this.normalizePosition(to);
         }
 
@@ -1017,7 +1015,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
             zone: zoneToAdd,
             dashlet: dashletElement
         }
-        
+
         Helper.fireEvent(document, "jdash:dashlet.after-place", placeEventArgs);
         Helper.fireEvent(dashletElement, "after-place", placeEventArgs);
 
@@ -1061,14 +1059,34 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         })
     }
 
+    normalizeDashletZones(){
+        var zoneGroups = this.querySelectorAll("[j-type='j-dashlet-zone-group']");
+        for(var i=0;i<zoneGroups.length;i++){
+            var zoneGroup = zoneGroups[i];
+            var dashletZones = <any>Helper.getElementsNotIn(zoneGroup,"[j-dashlet-zone]","j-dashlet-zone-group");
+            this.setColumnWidths4Zones(dashletZones);
+        }
+    }
+
     reset(newMode?: string) {
         var dashlets = this.querySelectorAll('[j-type="j-dashlet"]');
         for (var i = 0; i < dashlets.length; i++)
             (((<IDashletElement>dashlets[i]).panel) || dashlets[i]).remove();
+
+        var layoutContainer = this.querySelector("[j-type='j-layout-content']:not(template)");
+        if (layoutContainer) {
+            layoutContainer.remove();
+        }
+        
+        this.generateLayoutContent();
+     
+
         newMode = newMode || this.viewMode;
         if (this.viewMode == newMode)
             this.setViewMode(newMode);
         else this.viewMode = newMode;
+
+           this.normalizeDashletZones();
     }
 
     getElementPosition(el: Element) {
