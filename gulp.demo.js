@@ -23,7 +23,7 @@ gulp.task('demo.deploy.xcopy', ['demo.deploy:clean'], function () {
 
 gulp.task('demo.deploy:clean', [], function (done) {
     del([
-        './demoapp-deploy'
+        '../jdash-demo/css/**', '../jdash-demo/index.html', '../jdash-demo/demos/**'
     ], {
             force: true
         }).then(() => done()).catch(err => done(err))
