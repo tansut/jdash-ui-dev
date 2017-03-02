@@ -809,10 +809,10 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
             template.setAttribute('j-type', 'j-layout-content');
             var content = Helper.extractTemplate(template);
             this.insertBefore(content, contentTemplate);
-            this.generateDashletZoneIds(); // fix : if not given zoneId, moving dashlet to the zone cannot work.
+            //this.generateDashletZoneIds(); // fix : if not given zoneId, moving dashlet to the zone cannot work.
         } else {
             Helper.instantiateTemplate(contentTemplate);
-            this.generateDashletZoneIds(); // fix : if not given zoneId, moving dashlet to the zone cannot work.
+            //this.generateDashletZoneIds(); // fix : if not given zoneId, moving dashlet to the zone cannot work.
 
         }
 
@@ -984,7 +984,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         var existingPos = this.getElementPosition(dashletElement);
 
         if (dashletElement.panel.parentElement == zoneToAdd) {
-           // dashletElement.panel.remove();
+            dashletElement.panel.remove();
             to = this.normalizePosition(to);
         }
 
@@ -1017,7 +1017,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
             zone: zoneToAdd,
             dashlet: dashletElement
         }
-
+        
         Helper.fireEvent(document, "jdash:dashlet.after-place", placeEventArgs);
         Helper.fireEvent(dashletElement, "after-place", placeEventArgs);
 

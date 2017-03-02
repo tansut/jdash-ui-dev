@@ -399,7 +399,7 @@ export class DashletModule extends Component {
         Object.keys(modules).forEach((k) => {
             var elementInfo = modules[k];
             if (elementInfo instanceof DashletModule)
-                list.push(elementInfo);
+                list.push(elementInfo); 
         });
         return list;
     }
