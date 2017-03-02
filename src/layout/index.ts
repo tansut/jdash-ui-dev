@@ -809,10 +809,10 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
             template.setAttribute('j-type', 'j-layout-content');
             var content = Helper.extractTemplate(template);
             this.insertBefore(content, contentTemplate);
-            //this.generateDashletZoneIds(); // fix : if not given zoneId, moving dashlet to the zone cannot work.
+            this.generateDashletZoneIds(); // fix : if not given zoneId, moving dashlet to the zone cannot work.
         } else { 
             Helper.instantiateTemplate(contentTemplate);
-            //this.generateDashletZoneIds(); // fix : if not given zoneId, moving dashlet to the zone cannot work.
+            this.generateDashletZoneIds(); // fix : if not given zoneId, moving dashlet to the zone cannot work.
 
         }
 
