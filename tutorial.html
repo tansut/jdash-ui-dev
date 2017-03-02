@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>JDash Tutorial</title>
+
+    <!-- jdash client library -->
+    <script src="node_modules/jdash-ui/dist/jdash.min.js"></script>
+
+    <!-- jdash theme & elements -->
+    <!--<link rel="import" href="node_modules/jdash-ui/dist/components/jdash.html">-->
+
+    <!--removeIf(production)-->
+    <script src="debug/polyfills.js"></script>
+    <script src="bower_components/interactjs/interact.js"></script>
+    <script src="node_modules/jdash-core/lib/index.js"></script>
+    <script src="debug/jdash.lean.js"></script>
+    <link rel="import" href="debug/components/jdash.html">
+    <!--endRemoveIf(production)-->
+
+</head>
+
+<body class="j-light-gray j-padding">
+    <!-- Use j-dashlet to define a dashlet -->
+    <j-dashlet id="hello-world" title="Hello world!">
+        <template>
+            <!-- This will be the HTML content of your dashlet  -->
+            <h1></h1>
+        </template>
+        <script>
+            jdash.define(function () {
+
+                this.initialized = function () {
+                    // Dom is ready!
+                    var h1 = this.querySelector('h1')
+                    h1.textContent = 'Hello World!';
+                }
+
+            })
+        </script>
+    </j-dashlet>
+
+    <button id="createDashboardBtn">Create Dashboard</button>
+    <button id="addDashletBtn">Add Dashlet</button>
+
+    <j-dashboard id="dashboard" j-view-mode="dashletedit">
+        <h2 j-bind="title"></h2>
+    </j-dashboard>
+
+    <script>
+        jdash.ready(function () {
+
+            jdash.Provider.init({
+                apiKey: '3e2ab509-a3a1-40e6-9908-90eb54a4eaa6',
+                userToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXIiOiJ0ZXN0IHVzZXIifSwiaWF0IjoxNDg4NDY0Nzk3LCJleHAiOjE1MzE2NjQ3OTcsImlzcyI6ImFwaS5qZGFzaC5pbyIsInN1YiI6IjNlMmFiNTA5LWEzYTEtNDBlNi05OTA4LTkwZWI1NGE0ZWFhNiJ9.dnrjC6eXOCvCtlHyLCXYzYvF4pcFx9Yo_sSlHG_vHj0'
+            })
+
+
+            var dashboard = document.querySelector('#dashboard');
+
+            document.querySelector('#createDashboardBtn').addEventListener('click', function () {
+                var title = window.prompt('Set a title for new dashboard');
+
+                dashboard.provider.createDashboard({
+                    title: title
+                }).then(function (result) {
+                    console.log('Dashboard created with id:' + result.id);
+                    dashboard.load(result.id)
+                }).catch(function (err) {
+                    alert('There was an error creating dashboard: ', err.message || err)
+                })
+            })
+
+            document.querySelector('#addDashletBtn').addEventListener('click', function (e) {
+                dashboard.addDashlet('hello-world');
+            })
+        })
+    </script>
+</body>
+
+</html>

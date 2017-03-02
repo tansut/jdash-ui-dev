@@ -1,3 +1,4 @@
+import { Dashboard } from '../dashboard';
 import { IClientProvider, GetDashboardResult, DashboardCreateModel, DashboardUpdateModel, ISearchDashboards, DashboardModel, CreateResult, Query, QueryResult, DashletCreateModel, DashletUpdateModel, DashletModel, DashletPositionModel } from 'jdash-core';
 import * as axios from 'axios';
 
@@ -111,6 +112,10 @@ export class ApiProvider implements IClientProvider {
     }
 
     createDashboard(model: DashboardCreateModel): Promise<CreateResult> {
+        if (!model.layout)
+            model.layout = {
+                moduleId: Dashboard.defaultLayoutModule
+            }
         return this.post(`/dashboard/create`, model);
     }
 
@@ -154,6 +159,9 @@ Object.defineProperty(ApiProvider, 'url', {
         //removeIf(production) 
         url = 'http://localhost:3000/jdash/api/v1'
         //endRemoveIf(production) 
+
+        var url = 'https://app.jdash.io/jdash/api/v1';
+
         return url;
     }
 })
