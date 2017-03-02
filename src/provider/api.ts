@@ -19,14 +19,6 @@ export class ApiProvider implements IClientProvider {
     private tokenProvider: ITokenProvider;
     private currentUserToken: string;
 
-    // static getUrl() {
-    //     var url = 'https://app.jdash.io/jdash/api/v1';
-    //     //removeIf(production) 
-    //     url = 'http://localhost:3000/jdash/api/v1'
-    //     //endRemoveIf(production) 
-    //     return url;
-    // }
-
     init(tokenProvider: ITokenProvider) {
         this.tokenProvider = tokenProvider;
     }
@@ -40,9 +32,10 @@ export class ApiProvider implements IClientProvider {
         return new Promise((resolve, reject) => {
             try {
                 var fn = typeof self.tokenProvider.userToken == 'string' ?
-                    function (done) { done(self.tokenProvider.userToken) } :
+                    function (done) { done(null, self.tokenProvider.userToken) } :
                     self.tokenProvider.userToken;
-                fn((function (userToken) {
+                fn((function (err, userToken) {
+                    if (err) return reject(err)
                     self.currentUserToken = userToken;
                     resolve(userToken);
                 }))

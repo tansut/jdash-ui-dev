@@ -73,10 +73,10 @@
 
 
         window.jdash.Provider.init({
-            getUserToken: function (cb) {
+            userToken: function (cb) {
                 getDemoToken(self.query.mail).then(function (token) {
-                    cb(token);
-                });
+                    cb(null, token);
+                }).catch(function (err) { cb(err) });
             }
         })
         this.go();
