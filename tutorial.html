@@ -44,6 +44,7 @@
 
     <button id="createDashboardBtn">Create Dashboard</button>
     <button id="addDashletBtn">Add Dashlet</button>
+    <div id="dashboardList"></div>
 
     <j-dashboard id="dashboard" j-view-mode="dashletedit">
         <h2 j-bind="title"></h2>
@@ -52,22 +53,40 @@
     <script>
         jdash.ready(function () {
 
+            var dashboard = document.querySelector('#dashboard');
+
+            function createDashboardList() {
+                var container = document.querySelector('#dashboardList');
+                container.innerHTML = '';
+                return jdash.Provider.getMyDashboards().then(function (result) {
+                    for (var i = 0; i < result.data.length; i++) {
+                        var btn = document.createElement('button');
+                        btn.textContent = result.data[i].title;
+                        btn.id = result.data[i].id;
+                        container.appendChild(btn);
+                        btn.addEventListener('click', function (e) {
+                            var idToLoad = e.target.id;
+                            dashboard.load(idToLoad);
+                        })
+                    }
+                })
+            }
+
             jdash.Provider.init({
                 apiKey: '3e2ab509-a3a1-40e6-9908-90eb54a4eaa6',
                 userToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXIiOiJ0ZXN0IHVzZXIifSwiaWF0IjoxNDg4NDY0Nzk3LCJleHAiOjE1MzE2NjQ3OTcsImlzcyI6ImFwaS5qZGFzaC5pbyIsInN1YiI6IjNlMmFiNTA5LWEzYTEtNDBlNi05OTA4LTkwZWI1NGE0ZWFhNiJ9.dnrjC6eXOCvCtlHyLCXYzYvF4pcFx9Yo_sSlHG_vHj0'
             })
 
 
-            var dashboard = document.querySelector('#dashboard');
-
             document.querySelector('#createDashboardBtn').addEventListener('click', function () {
                 var title = window.prompt('Set a title for new dashboard');
 
-                dashboard.provider.createDashboard({
+                jdash.Provider.createDashboard({
                     title: title
                 }).then(function (result) {
                     console.log('Dashboard created with id:' + result.id);
-                    dashboard.load(result.id)
+                    createDashboardList();
+                    dashboard.load(result.id);
                 }).catch(function (err) {
                     alert('There was an error creating dashboard: ', err.message || err)
                 })
@@ -76,6 +95,8 @@
             document.querySelector('#addDashletBtn').addEventListener('click', function (e) {
                 dashboard.addDashlet('hello-world');
             })
+
+            createDashboardList();
         })
     </script>
 </body>
