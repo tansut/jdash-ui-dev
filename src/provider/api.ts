@@ -44,6 +44,8 @@ export class ApiProvider implements IClientProvider {
                     resolve(userToken);
                 }))
             } catch (err) {
+                console.error("jdash.Provider must be initted with an object that has a getUserToken((function (userToken) { }) callback for authorization purposes.");
+                console.warn && console.warn("See https://docs.jdash.io/ for details");
                 reject(err);
             }
 
