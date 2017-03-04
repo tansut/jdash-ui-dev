@@ -26,6 +26,7 @@ export class Dashboard extends TemplatedElement {
     protected _layout: DashboardLayout;
     private _model: DashboardModel;
     public _state: string = DashboardState.none;
+    static defaultLayoutModule = 'j-grid-layout';
 
     static get observedAttributes() {
         return ['j-provider', 'j-provider-id', 'j-layout', 'j-view-mode', 'title'];
@@ -180,7 +181,7 @@ export class Dashboard extends TemplatedElement {
 
 
     createDefaultLayout() {
-        var layout = <GenericLayout>document.createElement('j-grid-layout');
+        var layout = <GenericLayout>document.createElement(Dashboard.defaultLayoutModule);
         return layout;
     }
 
