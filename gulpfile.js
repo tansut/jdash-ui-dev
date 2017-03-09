@@ -268,7 +268,7 @@ gulp.task('npm.git.push', [], function () {
 })
 
 
-gulp.task('shorthand', shell.task([
+gulp.task('npm.git.push', ['npm.deploy'], shell.task([
     npmDir + 'push.sh'
 ]))
 
