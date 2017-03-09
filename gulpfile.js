@@ -17,8 +17,8 @@ var vinylPaths = require('vinyl-paths');
 var ts = require('gulp-typescript');
 var demo = require('./gulp.demo');
 var removeCode = require('gulp-remove-code');
-
-
+var git = require('gulp-git');
+const shell = require('gulp-shell')
 
 var npmDir = '../jdash-ui/';
 
@@ -245,8 +245,31 @@ gulp.task('tsc-def', ['npm:clean', 'deploy'], function () {
 
 });
 
-gulp.task('npm-deploy', ['npm:clean', 'deploy', 'tsc-def'], function () {
+gulp.task('npm.deploy', ['npm:clean', 'deploy', 'tsc-def'], function () {
     return merge([gulp.src(['!./dist/jdash.lean.min.js', './dist/**/*']).pipe(gulp.dest(npmDir + 'dist'))])
 })
+
+// gulp.task('npm.git.add', function () {
+//     return gulp.src(npmDir + '*')
+//         .pipe(git.add({ args: '-f -i -p' }));
+// });
+
+// gulp.task('npm.git.commit', ['npm.git.add'], function () {
+//     return gulp.src(npmDir + '*')
+//         .pipe(git.commit('new version', { emitData: true })
+//             .on('data', function (data) {
+//                 console.log(data);
+//             }));
+// });
+
+gulp.task('npm.git.push', [], function () {
+    // return gulp.src(npmDir + 'push.sh', { read: false }).pipe(shell.task(['echo <%= file.path %>']));
+    return
+})
+
+
+gulp.task('shorthand', shell.task([
+    npmDir + 'push.sh'
+]))
 
 gulp.task('deploy', ['deploy-native-only', 'deploy-full', 'sass-deploy', 'vulcanize-deploy']);

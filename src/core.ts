@@ -76,11 +76,14 @@ export class HtmlElement extends HTMLElement {
         this.created && this.created.apply(this, args);
     }
 
-    callUserCallback(cb: string, args?: Array<any>) {
+    callUserCallback(cb: string, args?: Array<any>, async: boolean = true) {
         var self = this, fn = <Function>this[cb];
-        setTimeout(function () {
+        if (!async)
             fn && fn.apply(self, args);
-        });
+        else
+            setTimeout(function () {
+                fn && fn.apply(self, args);
+            });
     }
 
     getType() {
