@@ -43,7 +43,7 @@ export var JDash = {
     },
 
     ready: function (fn) {
-        window.customElements.flush && window.customElements.flush();
+        window.customElements["flush"] && window.customElements["flush"]();
 
         if (document.readyState != 'loading')
             fn();

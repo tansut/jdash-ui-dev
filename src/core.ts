@@ -2,9 +2,19 @@ import Helper from './helper';
 
 export type KeyValue<T> = { [key: string]: T }
 
+interface ElementDefinitionOptions {
+    extends: string;
+}
+
+interface CustomElementRegistry {
+    define(name: string, constructor: Function, options?: ElementDefinitionOptions): void;
+    get(name: string): any;
+    whenDefined(name: string): PromiseLike<void>;
+}
+
 declare global {
     interface Window {
-        customElements: any;
+        customElements: CustomElementRegistry;
     }
 }
 
@@ -13,7 +23,6 @@ export class Configuration {
 
     set(key: string, value: any) {
         var oldVal = this[key];
-
         if (this.changeCallback && oldVal !== value) {
             var res = this.changeCallback.apply(this, [key, value, oldVal]);
             if (res === false) return false;
