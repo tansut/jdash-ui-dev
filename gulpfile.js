@@ -249,24 +249,6 @@ gulp.task('npm.deploy', ['npm:clean', 'deploy', 'tsc-def'], function () {
     return merge([gulp.src(['!./dist/jdash.lean.min.js', './dist/**/*']).pipe(gulp.dest(npmDir + 'dist'))])
 })
 
-// gulp.task('npm.git.add', function () {
-//     return gulp.src(npmDir + '*')
-//         .pipe(git.add({ args: '-f -i -p' }));
-// });
-
-// gulp.task('npm.git.commit', ['npm.git.add'], function () {
-//     return gulp.src(npmDir + '*')
-//         .pipe(git.commit('new version', { emitData: true })
-//             .on('data', function (data) {
-//                 console.log(data);
-//             }));
-// });
-
-gulp.task('npm.git.push', [], function () {
-    // return gulp.src(npmDir + 'push.sh', { read: false }).pipe(shell.task(['echo <%= file.path %>']));
-    return
-})
-
 
 gulp.task('npm.git.push', ['npm.deploy'], shell.task([
     npmDir + 'push.sh'
