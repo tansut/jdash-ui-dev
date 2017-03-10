@@ -111,7 +111,7 @@ export class Dashboard extends TemplatedElement {
     }
 
 
-    load(id: string | DashboardModel): Promise<any> {
+    load(id: string | DashboardModel): Promise<DashboardModel> {
         if (this.state == DashboardState.loaded)
             this.unload();
         if (this.state == DashboardState.loading)
