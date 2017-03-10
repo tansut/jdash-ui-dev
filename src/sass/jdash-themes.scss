@@ -8,8 +8,17 @@
     color: #000 ;
 }
 
+
+    .j-dropzone-enter {
+        border-color: #8fc400!important;
+    }
+
+    .j-drop-zone {
+        border-style: dashed !important;
+    }
+
 .j-theme-jdash-dark {
-    .j-theme-l5 {color:#d6d6d6 !important; background-color:#222222 !important}
+ .j-theme-l5 {color:#d6d6d6 !important; background-color:#222222 !important}
     .j-theme-l4 {color:#d6d6d6 !important; background-color:#222222 !important}
     .j-theme-l3 {color:#d6d6d6 !important; background-color:#222222 !important}
     .j-theme-l2 {color:#d6d6d6 !important; background-color:#222222 !important}
@@ -39,36 +48,46 @@
         color: #d6d6d6 !important; 
         background-color:#1e1e1e !important 
     }
-    .j-card-2 {
-        box-shadow: 0 1px 2px 0 #2c2c2c, 0 1px 5px 0 #2c2c2c !important;
+    j-dashlet-panel > div {
+        border: 6px solid  #303030!important;
+
     }
+
+    .j-drop-zone {
+        border-color: #3e3e3e!important;
+    }
+
+    .j-dropzone-enter {
+        border-color: #006e2e!important;
+    }
+   
 }
 
 
 .j-theme-jdash {
-.j-theme-l5 {color:#000 !important; background-color:#fcfcfc !important}
-.j-theme-l4 {color:#000 !important; background-color:#f6f6f6 !important}
-.j-theme-l3 {color:#000 !important; background-color:#ededed !important}
-.j-theme-l2 {color:#000 !important; background-color:#e3e3e3 !important}
-.j-theme-l1 {color:#000 !important; background-color:#dadada !important}
-.j-theme-d1 {color:#000 !important; background-color:#bcbcbc !important}
-.j-theme-d2 {color:#000 !important; background-color:#a7a7a7 !important}
-.j-theme-d3 {color:#fff !important; background-color:#929292 !important}
-.j-theme-d4 {color:#fff !important; background-color:#7d7d7d !important}
-.j-theme-d5 {color:#fff !important; background-color:#696969 !important}
+.j-theme-l5 {color:#000 !important; background-color:#f2fafd !important}
+.j-theme-l4 {color:#000 !important; background-color:#d4eef9 !important}
+.j-theme-l3 {color:#000 !important; background-color:#a9ddf3 !important}
+.j-theme-l2 {color:#000 !important; background-color:#7ecced !important}
+.j-theme-l1 {color:#fff !important; background-color:#53bbe7 !important}
+.j-theme-d1 {color:#fff !important; background-color:#1d9cd2 !important}
+.j-theme-d2 {color:#fff !important; background-color:#198abb !important}
+.j-theme-d3 {color:#fff !important; background-color:#1679a3 !important}
+.j-theme-d4 {color:#fff !important; background-color:#13688c !important}
+.j-theme-d5 {color:#fff !important; background-color:#105675 !important}
 
-.j-theme-light {color:#000 !important; background-color:#fcfcfc !important}
-.j-theme-dark {color:#fff !important; background-color:#696969 !important}
-.j-theme-action {color:#fff !important; background-color:#696969 !important}
 
-.j-theme {color:#000 !important; background-color:#d2d2d2 !important}
-.j-text-theme {color:#d2d2d2 !important}
-.j-border-theme {border-color:#d2d2d2 !important}
+.j-theme-light {color:#000 !important; background-color:#f2fafd !important}
+.j-theme-dark {color:#fff !important; background-color:#105675 !important}
+.j-theme-action {color:#fff !important; background-color:#105675 !important}
 
-.j-hover-theme:hover {color:#000 !important; background-color:#d2d2d2 !important}
-.j-hover-text-theme {color:#d2d2d2 !important}
-.j-hover-border-theme:hover {border-color:#d2d2d2 !important}
+.j-theme {color:#fff !important; background-color:#29abe2 !important}
+.j-text-theme {color:#29abe2 !important}
+.j-border-theme {border-color:#29abe2 !important}
 
+.j-hover-theme:hover {color:#fff !important; background-color:#29abe2 !important}
+.j-hover-text-theme {color:#29abe2 !important}
+.j-hover-border-theme:hover {border-color:#29abe2 !important}
 
 }
 

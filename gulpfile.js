@@ -213,7 +213,7 @@ gulp.task('vulcanize-deploy', ['sass-deploy', 'deploy:clean'], function () {
 
 gulp.task('dev', ['ts2js-dev', 'polyfills', 'sass', 'vulcanize', 'webserver'], function () {
     gulp.watch('src/**/*.ts', ['ts2js-dev']);
-    gulp.watch('src/sass/**/*.scss', ['sass']);
+    gulp.watch('src/sass/**/*.scss', ['sass', 'vulcanize']);
     gulp.watch('src/**/*.html', ['vulcanize']);
 });
 
