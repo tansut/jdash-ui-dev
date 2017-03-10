@@ -17,8 +17,8 @@ var vinylPaths = require('vinyl-paths');
 var ts = require('gulp-typescript');
 var demo = require('./gulp.demo');
 var removeCode = require('gulp-remove-code');
-
-
+var git = require('gulp-git');
+const shell = require('gulp-shell')
 
 var npmDir = '../jdash-ui/';
 
@@ -124,7 +124,6 @@ gulp.task('deploy-full', ['deploy:clean'], function (cb) {
 });
 
 gulp.task('polyfills', function () {
-    console.log("test");
     return gulp.src([
         'bower_components/custom-elements/src/native-shim.js',
         'bower_components/custom-elements/custom-elements.min.js',
@@ -246,8 +245,13 @@ gulp.task('tsc-def', ['npm:clean', 'deploy'], function () {
 
 });
 
-gulp.task('npm-deploy', ['npm:clean', 'deploy', 'tsc-def'], function () {
+gulp.task('npm.deploy', ['npm:clean', 'deploy', 'tsc-def'], function () {
     return merge([gulp.src(['!./dist/jdash.lean.min.js', './dist/**/*']).pipe(gulp.dest(npmDir + 'dist'))])
 })
+
+
+gulp.task('npm.git.push', ['npm.deploy'], shell.task([
+    npmDir + 'push.sh'
+]))
 
 gulp.task('deploy', ['deploy-native-only', 'deploy-full', 'sass-deploy', 'vulcanize-deploy']);

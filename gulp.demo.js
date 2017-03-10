@@ -11,6 +11,7 @@ var merge = require('merge-stream');
 var del = require('del');
 var webRoot = exports.WEBROOT = __dirname + '/';
 var removeCode = require('gulp-remove-code');
+const shell = require('gulp-shell')
 
 
 
@@ -31,6 +32,10 @@ gulp.task('demo.deploy:clean', [], function (done) {
 
 gulp.task('demo.deploy', ['demo.deploy.xcopy'], () => {
 })
+
+gulp.task('demo.git.push', ['demo.deploy'], shell.task([
+    '../jdash-demo/' + 'push.sh'
+]))
 
 
 gulp.task('demo.dev', ['demo.deploy'], () => {
