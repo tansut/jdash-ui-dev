@@ -50,11 +50,6 @@ export class Dashlet extends ComponentGeneratedElement<DashletModule> implements
     private _provider: IClientProvider;
     public _model: DashletModel;
 
-    // set title(val: string) {
-    //     super.title = val;
-    //     this.model && (this.model.title = val);
-    // }
-
     get canBeConfigured(): boolean {
         var editorTag = this.getAttribute('j-editor') || `${this.tagName.toLowerCase()}-editor`;
         if (editorTag == 'none') return false;
@@ -65,8 +60,6 @@ export class Dashlet extends ComponentGeneratedElement<DashletModule> implements
     get model() {
         return this._model;
     }
-
-
 
     set model(val: DashletModel) {
         if (val.id) {
@@ -218,14 +211,13 @@ export class Dashlet extends ComponentGeneratedElement<DashletModule> implements
     }
 
     saveConfiguration() {
-        var detail = <any>{};
-        var res = this.executeAction('saveconfig', detail);
-        if (res == false)
-            Promise.reject('cancel');
-        return Promise.resolve(detail.$waitFor).then(() => {
-            if (!this.Provider)
-                return Promise.reject('no provider');
-            return this.Provider.saveDashlet(this.getAttribute('j-provider-id') || this.id, { configuration: this.config });
+        if (!this.Provider)
+            return Promise.reject('no provider');
+
+        return this.Provider.saveDashlet(this.getAttribute('j-provider-id') || this.id, { configuration: this.config }).then(() => {
+            var detail = <any>{};
+            var res = this.executeAction('configsaved', detail);
+            this.callUserCallback('loadConfig', [], false);
         });
     }
 
@@ -339,7 +331,6 @@ export class Dashlet extends ComponentGeneratedElement<DashletModule> implements
         
         Helper.addActionListener('setdashlettitle', this.editDashletTitleActionHandler.bind(this), this);
 
-
         Helper.addActionListener('configurationchange', this.configurationChangeHandler.bind(this), this);
         Helper.addActionListener('configurationsave', this.configurationSaveHandler.bind(this), this);
     }
@@ -353,6 +344,7 @@ export class Dashlet extends ComponentGeneratedElement<DashletModule> implements
         this.arrangeTitleNodes();
         this.panel && this.panel.classList.add(this.tagName.toLowerCase() + '-panel');
         Helper.setBindings(this.panel || this, this);
+        this.callUserCallback('loadConfig', [], false);
     }
 
     connectedCallback() {
@@ -398,7 +390,7 @@ export class DashletModule extends Component {
         Object.keys(modules).forEach((k) => {
             var elementInfo = modules[k];
             if (elementInfo instanceof DashletModule)
-                list.push(elementInfo); 
+                list.push(elementInfo);
         });
         return list;
     }
