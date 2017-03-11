@@ -3,8 +3,13 @@
         display: block;
     }
 </style>
-<j-component id="j-dashboard">
+<j-component id="j-dashboard" delay-register="true">
     <template>
         <slot name="layout"></slot>
     </template>
+    <script>
+        jdash.define({
+            elementClass: jdash.Dashboard
+        })
+    </script>
 </j-component>

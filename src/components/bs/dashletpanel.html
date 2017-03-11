@@ -10,10 +10,10 @@
     .dashlet-action {
         display: block;
         margin-top: 5px;
-        background: #fff;        
+        background: #fff;
     }
     
-    .dashlet-action > .glyphicon {
+    .dashlet-action>.glyphicon {
         padding: 5px;
     }
     
@@ -21,14 +21,14 @@
         padding: 0.6em;
         cursor: move;
         display: block;
-        background: #fff;        
+        background: #fff;
     }
     
     [j-type="j-dashlet-container"] {
         background: #fff;
     }
 </style>
-<j-component id="j-dashlet-panel">
+<j-component id="j-dashlet-panel" delay-register="true">
     <template>
         <div class="j-margin-bottom">
             <template j-drag-handle j-type="j-dashlet-header" class="j-container j-theme" j-target-tag="header">
@@ -46,4 +46,9 @@
             </div>
         </div>
     </template>
+    <script>
+        jdash.define({
+            elementClass: jdash.bs.DashletPanel
+        })
+    </script>
 </j-component>

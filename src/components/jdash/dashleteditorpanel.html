@@ -3,7 +3,7 @@
         display: block;
     }
 </style>
-<j-component id="j-dashlet-editor-panel">
+<j-component id="j-dashlet-editor-panel" delay-register="true">
     <template>
         <div class="j-modal">
             <div class="j-modal-content j-animate-zoom j-card-8 j-round">
@@ -23,5 +23,9 @@
             </div>
         </div>
     </template>
-
+    <script>
+        jdash.define({
+            elementClass: jdash.DashletEditorPanel
+        })
+    </script>
 </j-component>

@@ -3,7 +3,7 @@
         display: block;
     }
 </style>
-<j-component id="j-dashlet-panel">
+<j-component id="j-dashlet-panel" delay-register="true">
     <template>
         <div class="j-margin-bottom j-theme-content j-round-large">
             <template j-drag-handle j-type="j-dashlet-header" class="j-container j-theme" j-target-tag="header">
@@ -21,4 +21,9 @@
             </div>
         </div>
     </template>
+    <script>
+        jdash.define({
+            elementClass: jdash.DashletPanel
+        })
+    </script>
 </j-component>

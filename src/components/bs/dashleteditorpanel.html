@@ -3,7 +3,7 @@
         display: block;
     }
 </style>
-<j-component id="j-dashlet-editor-panel">
+<j-component id="j-dashlet-editor-panel" delay-register="true">
     <template>
         <div class="modal fade">
             <div class="j-modal modal-dialog">
@@ -23,15 +23,9 @@
                 </div>
             </div>
         </div>
-        <script j-activate="" type="text/template">
-            var modal = $(this.firstElementChild).modal('show');
-            modal.on('hidden.bs.modal', function () {
-                this.remove();
-            }.bind(this));
-              
-            modal.on('hidden', function () {
-                this.remove();
-            }.bind(this))
-        </script>
+
     </template>
+    <script>
+        jdash.define({ elementClass: jdash.bs.DashletEditorPanel })
+    </script>
 </j-component>

@@ -58,6 +58,6 @@ export class GridLayout extends DashboardLayout {
     }
 }
 
-Component.define('j-grid-layout', {
-    elementClass: GridLayout
-})
+// Component.define('j-grid-layout', {
+//     elementClass: GridLayout
+// })

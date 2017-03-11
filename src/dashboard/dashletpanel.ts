@@ -42,6 +42,6 @@ export class DashletPanelModule extends Component {
     }
 }
 
-Component.define('j-dashlet-panel', {
-    elementClass: DashletPanel
-})
+// Component.define('j-dashlet-panel', {
+//     elementClass: DashletPanel
+// })

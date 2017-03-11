@@ -11,6 +11,6 @@ export default {
         window.customElements.define('j-component', Component);
         window.customElements.define('j-dashlet', DashletModule);
         window.customElements.define('j-dashlet-editor', DashletEditorModule);
-        window.customElements.define('j-layout', GenericLayout);
+        // window.customElements.define('j-layout', GenericLayout);
     }
 }

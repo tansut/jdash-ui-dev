@@ -3,7 +3,7 @@
         display: block;
     }
 </style>
-<j-component id="j-grid-layout">
+<j-component id="j-grid-layout" delay-register="true">
     <template>
         <template j-type="j-layout-content">
             <div j-persist="">
@@ -121,4 +121,10 @@
             </div>
         </template>
     </template>
+
+    <script>
+        jdash.define({
+            elementClass: jdash.GridLayout
+        })
+    </script>
 </j-component>

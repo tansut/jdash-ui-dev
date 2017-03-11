@@ -34,10 +34,14 @@ export class DashletEditorPanel extends ComponentGeneratedElement<DashletEditorP
         })
     }
 
+    showEditor() {
+        (<HTMLElement>this.firstElementChild).style.display = 'block';
+    }
+
     initializeElement() {
         Helper.addActionListener('closeeditor', this.closeEditorActionHandler.bind(this), this.editor);
         Helper.addActionListener('setconfig', this.saveConfigActionHandler.bind(this), this.editor);
-        (<HTMLElement>this.firstElementChild).style.display = 'block';
+        this.showEditor();
     }
 
     createChildren(parent: HTMLElement) {
@@ -55,12 +59,17 @@ export class DashletEditorPanel extends ComponentGeneratedElement<DashletEditorP
     }
 }
 
+// export class DashletEditorPanel extends BaseDashletEditorPanel {
+
+// }
+
+
 export class DashletEditorPanelModule extends Component {
     getBaseElementClass() {
         return DashletEditorPanel;
     }
 }
 
-Component.define('j-dashlet-editor-panel', {
-    elementClass: DashletEditorPanel
-})
+// Component.define('j-dashlet-editor-panel', {
+//     elementClass: DashletEditorPanel
+// })

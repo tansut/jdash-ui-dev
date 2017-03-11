@@ -255,7 +255,7 @@ export class Dashboard extends TemplatedElement {
     }
 }
 
-Component.define('j-dashboard', {
-    elementClass: Dashboard
-})
+// Component.define('j-dashboard', {
+//     elementClass: Dashboard
+// })
 

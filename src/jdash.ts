@@ -1,3 +1,6 @@
+import { BsGridLayout } from './layout/ext/bsgridlayout';
+import { BsDashletPanel } from './dashboard/ext/bsdashletpanel';
+import { BsDashletEditorPanel } from './dashboard/ext/bsdashleteditorpanel';
 import { IClientProvider } from 'jdash-core/lib/definitions';
 import { Dashboard } from './dashboard';
 import * as axios from 'axios';
@@ -29,6 +32,12 @@ export var JDash = {
     ThemeManager: ThemeManager,
     Dashboard: Dashboard,
     Http: axios,
+
+    bs: {
+        DashletEditorPanel: BsDashletEditorPanel,
+        DashletPanel: BsDashletPanel,
+        GridLayout: BsGridLayout
+    },
     //Provider: new LocalStorageProvider(),
     Provider: new ApiProvider(),
 
