@@ -5,23 +5,33 @@
 </style>
 <j-component id="j-dashlet-editor-panel">
     <template>
-        <div class="j-modal">
-            <div class="j-modal-content j-animate-zoom j-card-8 j-round">
-                <header class="j-container j-theme handle">
-                    <span j-action="closeeditor" class="j-closebtn">&times;</span>
-                    <h2 j-bind="title" class="j-truncate" j-type="j-dashlet-title">
-                        Configure
-                    </h2>
-                </header>
-                <div class="j-content-theme">
-                    <slot name="body"></slot>
-                </div>
-                <div class="j-container j-border-top j-padding-16 j-theme-light">
-                    <a j-action="setconfig" class="j-btn j-theme-action">Done</a>
-
+        <div class="modal fade">
+            <div class="j-modal modal-dialog">
+                <div class="j-modal-content j-animate-zoom j-card-8 j-round modal-content">
+                    <header class="j-container j-theme handle modal-header">
+                        <button type="button" class="close" j-action="closeeditor" data-dismiss="modal">&times;</button>
+                        <h2 j-bind="title" class="j-truncate" j-type="j-dashlet-title">
+                            Configure
+                        </h2>
+                    </header>
+                    <div class="j-content-theme modal-body">
+                        <slot name="body"></slot>
+                    </div>
+                    <div class="j-container j-border-top j-padding-16 j-theme-light modal-footer">
+                        <a j-action="setconfig" class="j-btn j-theme-action btn btn-default" data-dismiss="modal">Done</a>
+                    </div>
                 </div>
             </div>
         </div>
+        <script j-activate="" type="text/template">
+            var modal = $(this.firstElementChild).modal('show');
+            modal.on('hidden.bs.modal', function () {
+                this.remove();
+            }.bind(this));
+              
+            modal.on('hidden', function () {
+                this.remove();
+            }.bind(this))
+        </script>
     </template>
-
 </j-component>

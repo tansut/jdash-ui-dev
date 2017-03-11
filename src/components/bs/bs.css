@@ -1,0 +1,14 @@
+
+    div.j-margin-bottom {
+        margin-bottom: 5px;
+    }
+    
+    [j-action] > .glyphicon {
+        padding: 5px;
+    }
+    
+    [j-type="j-dashlet-header"] {
+        background-color: rgb(239, 239, 239);
+        padding: 0.6em;
+        cursor: move;
+    }

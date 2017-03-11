@@ -5,53 +5,33 @@
 </style>
 <j-component id="j-grid-layout">
     <template>
-        <section title="Another section" j-type="j-layout-section">
-            <div class="j-container" j-type="j-layout-section-header">
-                <h2 j-type="j-layout-section-title">Another section</h2>
+        <template j-type="j-layout-content">
+            <div j-persist="">
+                <section j-persist="" title="Another section" j-type="j-layout-section">
+                    <div j-persist="" class="j-container" j-type="j-layout-section-header">
+                        <h2 j-persist="" j-type="j-layout-section-title">Another section</h2>
+                    </div>
+                    <div j-persist="" class="j-row-padding j-container" j-type="j-dashlet-zone-group">
+                        <div j-persist="" j-dashlet-zone="">
+                        </div>
+                    </div>
+                </section>
             </div>
-            <div class="j-row-padding j-container" j-type="j-dashlet-zone-group">
-                <div j-dashlet-zone="z1-2">
-                </div>
-                <div j-dashlet-zone="z1-3">
-                </div>
-            </div>
-        </section>
-        <section j-type="j-layout-section">
-
-            <div class="j-container" j-type="j-layout-section-header">
-                <h2 j-type="j-layout-section-title">Some section</h2>
-            </div>
-
-            <div class="j-row-padding j-container">
-                <div j-dashlet-zone="z2-1">
-                </div>
-                <div j-dashlet-zone="z2-2">
-                </div>
-                <div j-dashlet-zone="z2-3">
-
-                </div>
-                <div j-dashlet-zone="z2-4">
-
-                </div>
-            </div>
-
-        </section>
-
+        </template>
 
 
         <template j-type="j-dropzone" class="j-panel j-border j-drop-zone j-padding-12">
         </template>
 
-        <template j-type="j-zone-editor" class="j-center j-panel j-border  j-theme-l5 j-padding-top">
+        <template j-type="j-zone-editor" class="text-center  j-theme-l5 j-padding-top">
 
-            <a j-action="movezone" j-action-params="direction:prev" class="j-btn j-margin-bottom  j-round-large  j-theme-l5 "><i class="fa fa-arrow-left"></i></a>
-            <a j-action="movezone" j-action-params="direction:next" class="j-btn j-margin-bottom j-round-large  j-theme-l5 "><i class="fa fa-arrow-right"></i></a>
-            <a j-action="resizezone" j-action-params="inc:1" class="j-btn j-margin-bottom j-round-large  j-theme-l5 "><i class="fa fa-expand"></i></a>
-            <a j-action="resizezone" j-action-params="inc:-1" class="j-btn j-margin-bottom j-round-large  j-theme-l5 "><i class="fa fa-compress"></i></a>
-
-            <a j-action="makezonegroup" class="j-btn j-margin-bottom  j-round-large j-theme-l5 "><i class="fa fa-th-large"></i></a>
-            <a j-action="clonezone" class="j-btn j-margin-bottom j-round-large  j-theme-l5 "><i class="fa fa-clone"></i></a>
-            <a j-action="removezone" class="j-btn j-margin-bottom j-round-large  j-theme-l5 "><i class="fa fa-trash"></i></a>
+            <button type="button" j-action="movezone" j-action-params="direction:prev" class="btn btn-default j-theme-l5 "><i class="glyphicon glyphicon-arrow-left"></i></button>
+            <button type="button" j-action="movezone" j-action-params="direction:next" class="btn btn-default j-theme-l5 "><i class="glyphicon glyphicon-arrow-right"></i></button>
+            <button type="button" j-action="resizezone" j-action-params="inc:1" class="btn btn-default j-theme-l5 "><i class="glyphicon glyphicon-resize-small"></i></button>
+            <button type="button" j-action="resizezone" j-action-params="inc:-1" class="btn btn-default j-theme-l5 "><i class="glyphicon glyphicon-resize-full"></i></button>
+            <button type="button" j-action="makezonegroup" class="btn btn-default j-theme-l5 "><i class="glyphicon glyphicon-more-items"></i></button>
+            <button type="button" j-action="clonezone" class="btn btn-default j-theme-l5 "><i class="glyphicon glypicon-unchecked"></i></button>
+            <button type="button" j-action="removezone" class="btn btn-default j-theme-l5 "><i class="glyphicon glyphicon-remove-sign"></i></button>
 
         </template>
 
@@ -61,16 +41,13 @@
                 <h4 j-type="j-layout-section-title"></h4>
             </div>
 
-            <div class="j-container j-layout-col j-layout-middle j-right-align">
-                <button j-action="movesection" j-action-params="direction:prev" class="j-btn j-round-large j-theme-l5"><i class="fa fa-arrow-up"></i></button>
-                <button j-action="movesection" j-action-params="direction:next" class="j-btn j-round-large j-theme-l5"><i class="fa fa-arrow-down"></i></button>
-                <button j-action="clonesection" class="j-btn  j-round-large j-theme-l5"><i class="fa fa-clone"></i></button>
-                <button j-action="editsectiontitle" class="j-btn  j-round-large j-theme-l5"><i class="fa fa-pencil-square-o"></i></button>
-                <button j-action="resetsection" class="j-btn  j-round-large j-theme-l5"><i class="fa fa-rotate-left"></i></button>
-                <button j-action="removesection" class="j-btn j-round-large j-theme-l5"><i class="fa fa-trash"></i></button>
-
-
-
+            <div class="pull-right ">
+                <button type="button" j-action="movesection" j-action-params="direction:prev" class="btn btn-default j-theme-l5"><i class="glyphicon glyphicon-arrow-up"></i></button>
+                <button type="button" j-action="movesection" j-action-params="direction:next" class="btn btn-default j-theme-l5"><i class="glyphicon glyphicon-arrow-down"></i></button>
+                <button type="button" j-action="clonesection" class="btn btn-default j-theme-l5"><i class="glyphicon glyphicon-unchecked"></i></button>
+                <button type="button" j-action="editsectiontitle" class="btn btn-default j-theme-l5"><i class="glyphicon glyphicon-edit"></i></button>
+                <button type="button" j-action="resetsection" class="btn btn-default j-theme-l5"><i class="glyphicon glyphicon-refresh"></i></button>
+                <button type="button" j-action="removesection" class="btn btn-default j-theme-l5"><i class="glyphicon glyphicon-remove-sign"></i></button>
             </div>
 
 
@@ -94,7 +71,7 @@
                     <div class="j-btn-group j-show-inline-block">
                         <button j-action="clonezonegroup" class="j-btn j-theme-l5"><i class="fa fa-clone"></i></button>
                         <button j-action="editzonegrouptitle" class="j-btn  j-theme-l5"><i class="fa fa-pencil-square-o"></i></button>
-                        <button j-action="removezonegroup" class="j-btn  j-theme-l5"><i class="fa fa-trash"></i></button>
+                        <button j-action="removezonegroup" class="j-btn  j-theme-l5"><i class="glyphicon glyphicon-remove-sign"></i></button>
 
                     </div>
 
@@ -110,16 +87,16 @@
 
         </template>
 
-        <template j-type="j-dashlet-zone-group" class="j-container j-theme-l5 j-border j-border-theme  j-margin-bottom">
+        <template j-type="j-dashlet-zone-group" j-persist="" class="j-container j-theme-l5 j-border j-border-theme  j-margin-bottom">
 
-            <div j-type="j-dashlet-zone-group-header">
-                <h3 class="j-center" j-type="j-dashlet-zone-group-title">
+            <div j-persist="" j-type="j-dashlet-zone-group-header">
+                <h3 j-persist="" class="j-center" j-type="j-dashlet-zone-group-title">
                     My group
                 </h3>
             </div>
-            <div class="j-row-padding j-margin-bottom">
-                <div j-dashlet-zone></div>
-                <div j-dashlet-zone></div>
+            <div j-persist="" class="j-row-padding j-margin-bottom">
+                <div j-persist="" j-dashlet-zone></div>
+                <div j-persist="" j-dashlet-zone></div>
             </div>
 
 

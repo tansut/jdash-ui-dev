@@ -336,9 +336,8 @@ export class Dashlet extends ComponentGeneratedElement<DashletModule> implements
         Helper.addActionListener('configuredashlet', this.configureDashletActionHandler.bind(this), this);
         Helper.addActionListener('clonedashlet', this.cloneDashletActionHandler.bind(this), this);
         Helper.addActionListener('removedashlet', this.removeDashletActionHandler.bind(this), this);
+        
         Helper.addActionListener('setdashlettitle', this.editDashletTitleActionHandler.bind(this), this);
-
-
 
 
         Helper.addActionListener('configurationchange', this.configurationChangeHandler.bind(this), this);

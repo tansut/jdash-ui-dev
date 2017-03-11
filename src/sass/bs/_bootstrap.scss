@@ -54,3 +54,105 @@
 // Utility classes
 @import "bootstrap/utilities";
 @import "bootstrap/responsive-utilities";
+
+
+    div.j-margin-bottom {
+        margin-bottom: 5px;
+    }
+    
+    [j-action] > .glyphicon {
+        padding: 5px;
+    }
+    
+    [j-type="j-dashlet-header"] {
+        background-color: rgb(239, 239, 239);
+        padding: 0.6em;
+        cursor: move;
+    }
+
+@media only screen and (min-width: 601px) {
+    .j-col.m1 {
+        width: 8.33333%
+    }
+    .j-col.m2 {
+        width: 16.66666%
+    }
+    .j-col.m3,
+    .j-quarter {
+        width: 24.99999%
+    }
+    .j-col.m4,
+    .j-third {
+        width: 33.33333%
+    }
+    .j-col.m5 {
+        width: 41.66666%
+    }
+    .j-col.m6,
+    .j-half {
+        width: 49.99999%
+    }
+    .j-col.m7 {
+        width: 58.33333%
+    }
+    .j-col.m8,
+    .j-twothird {
+        width: 66.66666%
+    }
+    .j-col.m9,
+    .j-threequarter {
+        width: 74.99999%
+    }
+    .j-col.m10 {
+        width: 83.33333%
+    }
+    .j-col.m11 {
+        width: 91.66666%
+    }
+    .j-col.m12 {
+        width: 99.99999%
+    }
+}
+@media only screen and (min-width: 993px) {
+    .j-col.l1 {
+        width: 8.33333%
+    }
+    .j-col.l2 {
+        width: 16.66666%
+    }
+    .j-col.l3,
+    .j-quarter {
+        width: 24.99999%
+    }
+    .j-col.l4,
+    .j-third {
+        width: 33.33333%
+    }
+    .j-col.l5 {
+        width: 41.66666%
+    }
+    .j-col.l6,
+    .j-half {
+        width: 49.99999%
+    }
+    .j-col.l7 {
+        width: 58.33333%
+    }
+    .j-col.l8,
+    .j-twothird {
+        width: 66.66666%
+    }
+    .j-col.l9,
+    .j-threequarter {
+        width: 74.99999%
+    }
+    .j-col.l10 {
+        width: 83.33333%
+    }
+    .j-col.l11 {
+        width: 91.66666%
+    }
+    .j-col.l12 {
+        width: 99.99999%
+    }
+}

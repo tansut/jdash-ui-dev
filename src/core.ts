@@ -192,11 +192,20 @@ export class TemplatedElement extends HtmlElement {
         }
     }
 
+    evaulateActivationContext() {
+        var activationInstances = this.querySelectorAll("script[j-activate]");
+        for (var i = 0; i < activationInstances.length; i++) {
+            var activator = activationInstances[i];
+            eval(activator["innerText"]);
+        }
+    }
+
     connectedCallback() {
         if (!this.isInitialized) {
             this.useShadow = this.getAttribute('j-attach-shadow') == 'true'
             this.elementContent = this.useShadow ? this.createShadowRoot() : this;
             this.createChildren(this.elementContent);
+            this.evaulateActivationContext();
         }
         super.connectedCallback();
     }
