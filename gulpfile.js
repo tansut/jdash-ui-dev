@@ -164,9 +164,10 @@ gulp.task('sass', ['fonts'], function () {
         gulp.src('./src/sass/**/jdash.scss')
             .pipe(sass().on('error', sass.logError))
             .pipe(cleanCSS())
-            .pipe(gulp.dest('./src/components/jdash'))
+            .pipe(gulp.dest('./src/components/sass'))
     );
 });
+
 
 gulp.task('vulcanize', ['sass'], function () {
     return merge(gulp.src('./src/components/jdash/index.html')
@@ -211,7 +212,7 @@ gulp.task('vulcanize-deploy', ['sass-deploy', 'deploy:clean'], function () {
 });
 
 
-gulp.task('dev', ['ts2js-dev', 'polyfills', 'sass', 'vulcanize', 'webserver'], function () {
+gulp.task('dev', ['ts2js-dev', 'polyfills','sass', 'vulcanize', 'webserver'], function () {
     gulp.watch('src/**/*.ts', ['ts2js-dev']);
     gulp.watch('src/sass/**/*.scss', ['sass', 'vulcanize']);
     gulp.watch('src/**/*.html', ['vulcanize']);

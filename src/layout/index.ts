@@ -820,6 +820,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         super.createChildren(parent);
         this.generateLayoutContent();
         this.setColumnWidths();
+
     }
 
     listenforActions() {
@@ -872,6 +873,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
                     // scroll bug fix hack
                     setTimeout(function () {
                         event.target.style.left = (event.pageX - 25) + "px";
+                        event.target.style.top = (event.pageY - 25) + "px";               
                     });
                 },
                 onmove: function (event) {
@@ -1059,11 +1061,11 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         })
     }
 
-    normalizeDashletZones(){
+    normalizeDashletZones() {
         var zoneGroups = this.querySelectorAll("[j-type='j-dashlet-zone-group']");
-        for(var i=0;i<zoneGroups.length;i++){
+        for (var i = 0; i < zoneGroups.length; i++) {
             var zoneGroup = zoneGroups[i];
-            var dashletZones = <any>Helper.getElementsNotIn(zoneGroup,"[j-dashlet-zone]","j-dashlet-zone-group");
+            var dashletZones = <any>Helper.getElementsNotIn(zoneGroup, "[j-dashlet-zone]", "j-dashlet-zone-group");
             this.setColumnWidths4Zones(dashletZones);
         }
     }
@@ -1077,16 +1079,16 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         if (layoutContainer) {
             layoutContainer.remove();
         }
-        
+
         this.generateLayoutContent();
-     
+
 
         newMode = newMode || this.viewMode;
         if (this.viewMode == newMode)
             this.setViewMode(newMode);
         else this.viewMode = newMode;
 
-           this.normalizeDashletZones();
+        this.normalizeDashletZones();
     }
 
     getElementPosition(el: Element) {

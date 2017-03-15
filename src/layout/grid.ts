@@ -50,7 +50,6 @@ export class GridLayout extends DashboardLayout {
 
     createChildren(parent: HTMLElement) {
         super.createChildren(parent);
-
     }
 
     connectedCallback() {

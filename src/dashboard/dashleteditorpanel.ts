@@ -54,10 +54,7 @@ export class DashletEditorPanel extends ComponentGeneratedElement<DashletEditorP
         Helper.bindActions(this, { dashlet: this.editor.dashlet }, this.editor);
     }
 
-    connectedCallback() {
-        super.connectedCallback();
-    }
-}
+}   
 
 // export class DashletEditorPanel extends BaseDashletEditorPanel {
 

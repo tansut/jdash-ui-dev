@@ -344,13 +344,11 @@ export class Dashlet extends ComponentGeneratedElement<DashletModule> implements
         this.arrangeTitleNodes();
         this.panel && this.panel.classList.add(this.tagName.toLowerCase() + '-panel');
         Helper.setBindings(this.panel || this, this);
+                this.model && (this.title = this.model.title);
         this.callUserCallback('loadConfig', [], false);
     }
 
-    connectedCallback() {
-        super.connectedCallback();
-        this.model && (this.title = this.model.title);
-    }
+
 
     attributeChangedCallback(name: string, oldVal: string, newVal: string) {
         if (name == 'title' && this.isInitialized) {

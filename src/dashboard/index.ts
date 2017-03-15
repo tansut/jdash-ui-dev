@@ -151,9 +151,6 @@ export class Dashboard extends TemplatedElement {
         return this.layout.getElementPosition(dashletElement);
     }
 
-    connectedCallback() {
-        super.connectedCallback();
-    }
 
     locateProvider(): IClientProvider {
         //var providerAtAttribute = this.getAttribute('j-provider');

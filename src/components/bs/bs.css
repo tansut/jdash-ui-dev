@@ -1,14 +1,41 @@
+.j-dropzone {
+    border: 1px dashed #ccc;
+}
 
-    div.j-margin-bottom {
-        margin-bottom: 5px;
-    }
-    
-    [j-action] > .glyphicon {
-        padding: 5px;
-    }
-    
-    [j-type="j-dashlet-header"] {
-        background-color: rgb(239, 239, 239);
-        padding: 0.6em;
-        cursor: move;
-    }
+.j-pad-12 {
+    padding: 12px 0 12px 0;
+}
+
+.j-padding-top {
+    padding-top: 0.2em;
+}
+
+.j-padding-bottom {
+    padding-bottom: 0.2em;
+}
+.j-pad-right-25{
+    padding-right: 25px;
+}
+
+.j-pad {
+    padding: 0.2em;
+}
+
+.j-margin-top {
+    margin-top: 0.3em;
+}
+
+.j-border {
+    border: 1px solid rgba(175,175,175,0.6); 
+    border-radius: 2px;   
+}
+
+.j-editor-pane {
+    background: rgba(225, 225, 225, 0.25);
+}
+
+[j-type="j-dashlet-zone-group"]::after{
+    display: table;
+    content: '';
+    clear: both;
+}

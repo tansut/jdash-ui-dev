@@ -31,9 +31,6 @@ export class DashletPanel extends ComponentGeneratedElement<DashletPanelModule> 
         return 'j-dashlet-panel';
     }
 
-    connectedCallback() {
-        super.connectedCallback();
-    }
 }
 
 export class DashletPanelModule extends Component {
