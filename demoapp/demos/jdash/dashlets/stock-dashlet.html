@@ -14,9 +14,7 @@
         display: none;
     }
 </style>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-    crossorigin="anonymous"></script>
-<!--<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>-->
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="//code.highcharts.com/stock/highstock.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="//code.highcharts.com/modules/exporting.js"></script>
@@ -33,6 +31,7 @@
     <script>
         jdash.define(function () {
             this.initialized = function () {
+
                 Highcharts.setOptions({
                     global: {
                         useUTC: false
@@ -278,6 +277,11 @@
                         ]
                     }]
                 });
+
+
+
+
+
             }
 
         })
