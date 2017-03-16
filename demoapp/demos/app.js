@@ -255,7 +255,7 @@
 
 
     app.prototype.createDashboard = function () {
-        var title = window.prompt();
+        var title = window.prompt("Set Dashboard Title");
         if (title) {
             var model = {
                 title: title,

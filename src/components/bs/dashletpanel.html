@@ -21,15 +21,15 @@
 </style>
 <j-component id="j-dashlet-panel" delay-register="true">
     <template>
-        <div class="panel panel-default j-margin-top">
-            <div j-drag-handle class="panel-heading" j-type="j-dashlet-header">
+        <div class="panel panel-default">
+            <div j-drag-handle class="panel-heading  j-theme" j-type="j-dashlet-header">
                 <h3 class="panel-title" j-bind="title" j-bind-default="&nbsp" j-type="j-dashlet-title"></h3>
             </div>
-            <template j-type="j-dashlet-configuration-tools" class="text-center dashlet-action">
-                <button type="button" class="btn btn-default" j-action="configuredashlet"><span class="glyphicon glyphicon-pencil"></span></button>
-                <button type="button" class="btn btn-default" j-action="setdashlettitle"><span class="glyphicon glyphicon-font"></span></button>
-                <button type="button" class="btn btn-default" j-action="clonedashlet"><span class="glyphicon glyphicon-tint"></span></button>
-                <button type="button" class="btn btn-default" j-action="removedashlet"><span class="glyphicon glyphicon-remove"></span></button>
+            <template j-type="j-dashlet-configuration-tools" class="text-center dashlet-action j-theme-alternate">
+                <button type="button" class="btn btn-default j-theme" j-action="configuredashlet"><span class="glyphicon glyphicon-pencil"></span></button>
+                <button type="button" class="btn btn-default j-theme" j-action="setdashlettitle"><span class="glyphicon glyphicon-font"></span></button>
+                <button type="button" class="btn btn-default j-theme" j-action="clonedashlet"><span class="glyphicon glyphicon-tint"></span></button>
+                <button type="button" class="btn btn-default j-theme" j-action="removedashlet"><span class="glyphicon glyphicon-remove"></span></button>
             </template>
             <div class="panel-body" j-type="j-dashlet-container">
                 <slot name="body"></slot>
