@@ -90,3 +90,16 @@ ThemeManager.registerDefinition('jdash', [
     { cssClass: 'j-theme-black', name: 'Black' },
     { cssClass: 'j-theme-gray', name: 'Gray' }
 ])
+
+
+ThemeManager.registerDefinition('bootstrap', [
+    { cssClass: 'j-bootstrap-theme-default', name: 'JDash' },
+    { cssClass: 'j-bootstrap-theme-dark', name: 'JDash Dark' },
+    { cssClass: 'j-bootstrap-theme-red', name: 'Red' },
+    { cssClass: 'j-bootstrap-theme-green', name: 'Green' },
+    { cssClass: 'j-bootstrap-theme-blue', name: 'Blue' },
+    { cssClass: 'j-bootstrap-theme-yellow', name: 'Yellow' },
+    { cssClass: 'j-bootstrap-theme-black', name: 'Black' },
+    { cssClass: 'j-bootstrap-theme-gray', name: 'Gray' },
+    { cssClass: 'j-bootstrap-no-theme', name: 'No Theme' }
+])

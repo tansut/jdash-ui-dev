@@ -20,53 +20,53 @@
         </template>
 
 
-        <template j-type="j-dropzone" class="panel panel-default j-pad-12 j-dropzone">
+        <template j-type="j-dropzone" class="panel panel-default j-pad-12 j-dropzone j-theme-l4">
         </template>
 
         <template j-type="j-zone-editor" class="text-center j-padding-bottom j-margin-top j-border j-pad">
-            <button type="button" j-action="movezone" j-action-params="direction:prev" class="btn btn-default j-theme-l5 "><i class="glyphicon glyphicon-arrow-left"></i></button>
-            <button type="button" j-action="movezone" j-action-params="direction:next" class="btn btn-default j-theme-l5 "><i class="glyphicon glyphicon-arrow-right"></i></button>
-            <button type="button" j-action="resizezone" j-action-params="inc:1" class="btn btn-default j-theme-l5 "><i class="glyphicon glyphicon-resize-full"></i></button>
-            <button type="button" j-action="resizezone" j-action-params="inc:-1" class="btn btn-default j-theme-l5 "><i class="glyphicon glyphicon-resize-small"></i></button>
-            <button type="button" j-action="makezonegroup" class="btn btn-default j-theme-l5 "><i class="glyphicon glyphicon-modal-window"></i></button>
-            <button type="button" j-action="clonezone" class="btn btn-default j-theme-l5 "><i class="glyphicon glyphicon-copyright-mark"></i></button>
-            <button type="button" j-action="removezone" class="btn btn-default j-theme-l5 "><i class="glyphicon glyphicon-remove-sign"></i></button>
+            <button type="button" j-action="movezone" j-action-params="direction:prev" class="btn btn-default j-theme-action "><i class="glyphicon glyphicon-arrow-left"></i></button>
+            <button type="button" j-action="movezone" j-action-params="direction:next" class="btn btn-default j-theme-action "><i class="glyphicon glyphicon-arrow-right"></i></button>
+            <button type="button" j-action="resizezone" j-action-params="inc:1" class="btn btn-default j-theme-action "><i class="glyphicon glyphicon-resize-full"></i></button>
+            <button type="button" j-action="resizezone" j-action-params="inc:-1" class="btn btn-default j-theme-action "><i class="glyphicon glyphicon-resize-small"></i></button>
+            <button type="button" j-action="makezonegroup" class="btn btn-default j-theme-action "><i class="glyphicon glyphicon-modal-window"></i></button>
+            <button type="button" j-action="clonezone" class="btn btn-default j-theme-action "><i class="glyphicon glyphicon-copyright-mark"></i></button>
+            <button type="button" j-action="removezone" class="btn btn-default j-theme-action "><i class="glyphicon glyphicon-remove-sign"></i></button>
         </template>
 
-        <template j-type="j-section-editor" class="row j-pad j-border j-margin-top j-editor-pane">
+        <template j-type="j-section-editor" class="row j-pad j-border j-margin-top j-editor-pane j-theme">
             <div class="col-md-3">
                 <h4 j-type="j-layout-section-title"></h4>
             </div>
             <div class="pull-right ">
-                <button type="button" j-action="movesection" j-action-params="direction:prev" class="btn btn-default j-theme-l5"><i class="glyphicon glyphicon-arrow-up"></i></button>
-                <button type="button" j-action="movesection" j-action-params="direction:next" class="btn btn-default j-theme-l5"><i class="glyphicon glyphicon-arrow-down"></i></button>
-                <button type="button" j-action="clonesection" class="btn btn-default j-theme-l5"><i class="glyphicon glyphicon-unchecked"></i></button>
-                <button type="button" j-action="editsectiontitle" class="btn btn-default j-theme-l5"><i class="glyphicon glyphicon-edit"></i></button>
-                <button type="button" j-action="resetsection" class="btn btn-default j-theme-l5"><i class="glyphicon glyphicon-refresh"></i></button>
-                <button type="button" j-action="removesection" class="btn btn-default j-theme-l5"><i class="glyphicon glyphicon-remove-sign"></i></button>
+                <button type="button" j-action="movesection" j-action-params="direction:prev" class="btn btn-default j-theme-action"><i class="glyphicon glyphicon-arrow-up"></i></button>
+                <button type="button" j-action="movesection" j-action-params="direction:next" class="btn btn-default j-theme-action"><i class="glyphicon glyphicon-arrow-down"></i></button>
+                <button type="button" j-action="clonesection" class="btn btn-default j-theme-action"><i class="glyphicon glyphicon-unchecked"></i></button>
+                <button type="button" j-action="editsectiontitle" class="btn btn-default j-theme-action"><i class="glyphicon glyphicon-edit"></i></button>
+                <button type="button" j-action="resetsection" class="btn btn-default j-theme-action"><i class="glyphicon glyphicon-refresh"></i></button>
+                <button type="button" j-action="removesection" class="btn btn-default j-theme-action"><i class="glyphicon glyphicon-remove-sign"></i></button>
             </div>
 
 
 
         </template>
 
-        <template j-type="j-dashlet-zone-group-editor" class="container-fluid j-pad j-margin-top j-editor-pane">
+        <template j-type="j-dashlet-zone-group-editor" class="container-fluid j-pad j-margin-top j-editor-pane j-theme">
             <div class="col-md-3 text-center">
                 <h5 j-type="j-dashlet-zone-group-title"></h5>
             </div>
 
             <div class="container-fluid pull-right">
-                <button type="button" j-action="movezonegroup" j-action-params="direction:prev" class="btn btn-default j-theme-l5"><i class="glyphicon glyphicon-arrow-up"></i></button>
-                <button type="button" j-action="movezonegroup" j-action-params="direction:next" class="btn btn-defaul j-theme-l5t"><i class="glyphicon glyphicon-arrow-down"></i></button>
-                <button type="button" j-action="clonezonegroup" class="btn btn-default j-theme-l5"><i class="glyphicon glyphicon-unchecked"></i></button>
-                <button type="button" j-action="editzonegrouptitle" class="btn btn-default j-theme-l5"><i class="glyphicon glyphicon-edit"></i></button>
-                <button type="button" j-action="removezonegroup" class="btn btn-default j-theme-l5"><i class="glyphicon glyphicon-remove-sign"></i></button>
+                <button type="button" j-action="movezonegroup" j-action-params="direction:prev" class="btn btn-default j-theme-action"><i class="glyphicon glyphicon-arrow-up"></i></button>
+                <button type="button" j-action="movezonegroup" j-action-params="direction:next" class="btn btn-defaul j-theme-action"><i class="glyphicon glyphicon-arrow-down"></i></button>
+                <button type="button" j-action="clonezonegroup" class="btn btn-default j-theme-action"><i class="glyphicon glyphicon-unchecked"></i></button>
+                <button type="button" j-action="editzonegrouptitle" class="btn btn-default j-theme-action"><i class="glyphicon glyphicon-edit"></i></button>
+                <button type="button" j-action="removezonegroup" class="btn btn-default j-theme-action"><i class="glyphicon glyphicon-remove-sign"></i></button>
             </div>
         </template>
 
-        <template j-type="j-dashlet-zone-group" j-persist="" class=" j-border j-editor-pane j-margin-bottom ">
+        <template j-type="j-dashlet-zone-group" j-persist="" class=" j-border j-editor-pane j-margin-bottom">
 
-            <div j-persist="" j-type="j-dashlet-zone-group-header" class="j-theme">
+            <div j-persist="" j-type="j-dashlet-zone-group-header" class="">
                 <h3 j-persist="" class="j-center" j-type="j-dashlet-zone-group-title">
                     My group
                 </h3>

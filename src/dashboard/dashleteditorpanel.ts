@@ -35,7 +35,7 @@ export class DashletEditorPanel extends ComponentGeneratedElement<DashletEditorP
     }
 
     showEditor() {
-        (<HTMLElement>this.firstElementChild).style.display = 'block';
+        (<HTMLElement>Helper.getFirstElementChild(this)).style.display = 'block';
     }
 
     initializeElement() {
@@ -54,7 +54,7 @@ export class DashletEditorPanel extends ComponentGeneratedElement<DashletEditorP
         Helper.bindActions(this, { dashlet: this.editor.dashlet }, this.editor);
     }
 
-}   
+}
 
 // export class DashletEditorPanel extends BaseDashletEditorPanel {
 

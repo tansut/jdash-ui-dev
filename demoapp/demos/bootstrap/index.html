@@ -87,16 +87,16 @@
             <!-- /.navbar-collapse -->
         </nav>
 
-        <div id="page-wrapper">
+        <div id="page-wrapper"  class="j-theme-l3">
 
             <div class="container-fluid">
                 <div class="row">
                     <div class="pull-right dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button"  id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="true">
                             Theme
                             <span class="caret"></span>
-                        </button> 
+                        </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="themes">
 
                         </ul>
@@ -133,19 +133,19 @@
                 <div class=" " id="dashlet-list" style="margin-top: 5px;">
                     <template id="dashlet-list-item-template">
                         <div class="pull-left" style="margin-left: 5px;">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading" j-drag-handle>
+                            <div class="panel panel-primary ">
+                                <div class="panel-heading j-theme-l4" j-drag-handle>
                                     <div class="row">
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-2 j-theme-l4">
                                             <i class="fa fa-cube fa-5x"></i>
                                         </div>
-                                        <div class="col-xs-9 text-right">
+                                        <div class="col-xs-6 col-xs-offset-3 text-right  j-theme-l4">
                                             <div dashlet-title-element></div>
                                         </div>
                                     </div>
                                 </div>
                                 <a href="javascript:;">
-                                    <div class="panel-footer">
+                                    <div class="panel-footer  j-theme-l2">
                                         <span class="pull-left" dashlet-add-btn>Add</span>
                                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                         <div class="clearfix"></div>
@@ -157,13 +157,62 @@
                 </div>
                 <!-- /.row -->
                 <div class="row">
-                    <j-dashboard id="mydashboard" j-view-mode="dashletedit" style="display: none" class="j-theme-dashboard">
+                    <j-dashboard id="mydashboard" j-view-mode="readonly" style="display: none" class="j-theme-dashboard">
                     </j-dashboard>
-                    <j-provider id="localstorageprovider" type="localstorage" storage="session"></j-provider>
+                    <j-provider></j-provider>
                 </div>
             </div>
             <!-- /.container-fluid -->
 
+            <!-- Footer -->
+            <footer class="">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3>ABOUT JDASH</h3>
+                        <p>Jdash provides fully customizable javascript + backend platform for adding end user designable dashboards
+                            to your web application.</p>
+                        <p>You can use <a target="_blank" href="https://app.jdash.io">Jdash Cloud</a> or easily integrate Jdash
+                            backend platform into your server application.</p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h3>UNIQUE FEATURES</h3>
+                        <ul class="footer-ul">
+                            <li class="j-pad-12">
+                                <span>DEAD SIMPLE</span><br>
+                                <span>Start using Jdash in minutes! </span>
+                            </li>
+                            <li class="j-pad-12">
+                                <span>FITS YOUR APP</span><br>
+                                <span>Fully customizable with no dependencies. </span>
+                            </li>
+                            <li class="j-pad-12">
+                                <span>COMPLETE</span><br>
+                                <span>Javascript library + backend platform. </span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h3>POPULAR TAGS</h3>
+                        <p>
+                            <span class="tag text-white text-small j-margin-bottom">Angular Dashboard</span>
+                            <span class="tag text-white text-small j-margin-bottom">Bootstrap Dashboard</span>
+                            <span class="tag text-white text-small j-margin-bottom">Javascript Dashboard</span>
+                            <span class="tag text-white text-small j-margin-bottom">HTML5 Dashboard</span>
+                            <span class="tag text-white text-small j-margin-bottom">Dashboard Framework</span>
+                            <span class="tag text-white text-small j-margin-bottom">Drag-Drop Dashboard</span>
+                            <span class="tag text-white text-small j-margin-bottom">Asp.Net Dashboard</span>
+                            <span class="tag text-white text-small j-margin-bottom">NodeJS Dashboard</span>
+                            <span class="tag text-white text-small j-margin-bottom">Drag-Drop Portal</span>
+                            <span class="tag text-white text-small j-margin-bottom">React Dashboard</span>
+                        </p>
+                    </div>
+
+                </div>
+                <div class="text-center j-pad-12">Powered by <a href="http://jdash.io" title="j.CSS" target="_blank" class="j-hover-opacity">jdash</a></div>
+
+            </footer>
         </div>
         <!-- /#page-wrapper -->
 

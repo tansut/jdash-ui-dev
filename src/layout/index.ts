@@ -736,6 +736,13 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
 
                 },
                 autoScroll: true,
+                onstart: function (event) {
+                    // scroll bug fix hack
+                    setTimeout(function () {
+                        event.target.style.left = "";
+                        event.target.style.top = "";
+                    });
+                },
                 onmove: function (event) {
                     dragMoveListener.apply(this, [event])
                 },

@@ -15,9 +15,23 @@ export let TemplateInstantiatePosition = {
 }
 
 export default class Helper {
+
+    static getElementChildren(parent: Element): Array<Element> {
+        var children = [];
+        for (var i = 0; i < parent.childNodes.length; i++) {
+            var child = parent.childNodes[i];
+            if (child instanceof Element)
+                children.push(child);
+        }
+        return children;
+    }
+
+
+
     static elementIndex(parent: Element, child: Element) {
-        for (var i = 0; i < parent.children.length; i++)
-            if (parent.children[i] == child) return i;
+        var parentChilds = Helper.getElementChildren(parent);
+        for (var i = 0; i < parentChilds.length; i++)
+            if (parentChilds[i] == child) return i;
         return -1;
     }
 
@@ -225,8 +239,9 @@ export default class Helper {
         var result: Array<HTMLElement> = [];
         var findType = (el: HTMLElement) => {
             if (!deep && result.length > 0) return;
-            for (var i = 0; i < el.children.length; i++) {
-                var child = <HTMLElement>el.children[i];
+            var elChildren = Helper.getElementChildren(el);
+            for (var i = 0; i < elChildren.length; i++) {
+                var child = <HTMLElement>elChildren[i];
                 findType(child);
                 if (child instanceof type)
                     result.push(child);
@@ -258,18 +273,37 @@ export default class Helper {
     static extractTemplate(template: HTMLTemplateElement) {
         var clone = <HTMLElement>document.importNode(template.content, true);
         var topEl: HTMLElement;
-        if (clone.children.length > 1 || template.getAttribute('j-target-tag')) {
+        var cloneChildren = Helper.getElementChildren(clone);
+        if (cloneChildren.length > 1 || template.getAttribute('j-target-tag')) {
             topEl = document.createElement(template.getAttribute('j-target-tag') || 'div');
             topEl.appendChild(clone);
-        } else if (clone.children.length < 1) {
+        } else if (cloneChildren.length < 1) {
             topEl = document.createElement(template.getAttribute('j-target-tag') || 'div');
-        } else topEl = <HTMLElement>clone.children[0];
+        } else topEl = <HTMLElement>cloneChildren[0];
         topEl.className = topEl.className + (template.className || '');
         for (var i = 0; i < template.attributes.length; i++) {
             topEl.setAttribute(template.attributes[i].name, template.attributes[i].value);
         }
         topEl.setAttribute('j-template-generated', '');
         return topEl;
+    }
+
+    static getFirstElementChild(node: HTMLElement): Element {
+        if (!node.hasChildNodes()) {
+            return null;
+        }
+        // We have native support
+        if (node.firstElementChild) {
+            return node.firstElementChild;
+        }
+
+        for (var i = 0; i < node.childNodes.length; i++) {
+            var child = node.childNodes[i];
+            if (child.nodeType === Node.ELEMENT_NODE)
+                return <Element>child;
+        }
+
+        return undefined;
     }
 
     static instantiateTemplate(template: HTMLTemplateElement, targets?: string | Node | NodeListOf<any>, options?: InstantiateTemplateOptions) {
@@ -300,7 +334,7 @@ export default class Helper {
                 if (position == TemplateInstantiatePosition.append)
                     el.appendChild(topEl);
                 else if (position == TemplateInstantiatePosition.insert) {
-                    var firstChild = el.firstElementChild;
+                    var firstChild = Helper.getFirstElementChild(el);
                     firstChild ? el.insertBefore(topEl, firstChild) : el.appendChild(topEl);
                 } else if (position == TemplateInstantiatePosition.auto) {
                     var parent = el.parentElement;
