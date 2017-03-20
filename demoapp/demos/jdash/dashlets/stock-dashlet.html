@@ -14,16 +14,11 @@
         display: none;
     }
 </style>
-
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="//code.highcharts.com/stock/highstock.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="//code.highcharts.com/modules/exporting.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/json2/20150503/json2.min.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-
-
 
 <j-dashlet id="j-stock" title="Stock Prices">
     <template>
@@ -36,6 +31,7 @@
     <script>
         jdash.define(function () {
             this.initialized = function () {
+
                 Highcharts.setOptions({
                     global: {
                         useUTC: false
@@ -281,6 +277,11 @@
                         ]
                     }]
                 });
+
+
+
+
+
             }
 
         })
