@@ -8,7 +8,7 @@
         padding-bottom: 20px;
     }
     
-    j-news .container {
+    j-news .news-container {
         max-height: 400px;
         overflow-y: auto;
         margin-left: 5px;
@@ -58,7 +58,7 @@
 
 <j-dashlet id="j-news" title="News Feed">
     <template>
-        <div class="container"></div>
+        <div class="news-container"></div>
         <template id="article-template">
             <div class="news">
                 <div class="article-image-cnt">
@@ -81,7 +81,7 @@
                 request.onreadystatechange = function () {
                     if (request.status == 200 && request.readyState == 4) {
                         var data = JSON.parse(request.responseText);
-                        self.querySelector('.container').innerHTML = '';
+                        self.querySelector('.news-container').innerHTML = '';
                         data.articles.forEach(function (article) {
                             var artTemp = self.querySelector('#article-template');
                             var cloned = document.importNode(artTemp.content, true);
@@ -89,7 +89,7 @@
                             cloned.querySelector('.article-link').href = article.url;
                             cloned.querySelector('.article-link').innerText = article.title.toUpperCase();
                             cloned.querySelector('.description').innerText = article.description;
-                            self.querySelector('.container').appendChild(cloned);
+                            self.querySelector('.news-container').appendChild(cloned);
                         });
                     }
                 }
