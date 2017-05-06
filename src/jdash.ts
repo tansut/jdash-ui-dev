@@ -38,8 +38,8 @@ export var JDash = {
         DashletPanel: BsDashletPanel,
         GridLayout: BsGridLayout
     },
-    //Provider: new LocalStorageProvider(),
-    Provider: new ApiProvider(),
+    Provider: new LocalStorageProvider(),
+    //Provider: new ApiProvider(),
 
     dashlet: function (id: string | Function | Object, handler: Function | Object) {
         var args = Array.prototype.slice.call(arguments);
@@ -58,8 +58,8 @@ export var JDash = {
             fn();
         else document.addEventListener('DOMContentLoaded', () => {
             if (window['HTMLImports'])
-                window['HTMLImports']['whenReady'](() => setTimeout(function () {
-                    fn()
+                window['HTMLImports']['whenReady'](() => setTimeout(function () {             
+                    fn()                         
                 }));
             else fn();
         });
@@ -78,7 +78,7 @@ declare global {
     // var jdash = window['jdash'] = (window['jdash'] || {});
     // for(var prop in JDash)
     //   jdash[prop] = JDash[prop] || jdash[prop];
-    register.elements();
+       register.elements();
     JDash.ready(() => ThemeManager.init())
 })(window)
 

@@ -748,7 +748,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
                 },
                 onend: function (event) {
                     var zone = event['dropzone'];
-                    if (!zone) {
+                    if (!zone) { 
                         var el = event.target;
                         self.dropEndForElement(el);
                         var dashlet = event.target.querySelector('[j-type="j-dashlet"]');
@@ -880,7 +880,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
                     // scroll bug fix hack
                     setTimeout(function () {
                         event.target.style.left = (event.pageX - 25) + "px";
-                        event.target.style.top = (event.pageY - 25) + "px";               
+                        event.target.style.top = (event.pageY - 25) + "px";
                     });
                 },
                 onmove: function (event) {
@@ -996,7 +996,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         }
 
         var dashletsInZone = Helper.getElementsNotIn(zoneToAdd, '[j-type="j-dashlet"]', '[j-type="j-dashlet-zone-group"]');
-
+        debugger;
         var nearestDashlet: IDashletElement = undefined;
         this.setElementPosition(dashletElement, to);
         this.setDashletProperties(dashletElement);
