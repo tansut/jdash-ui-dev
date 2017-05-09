@@ -60,7 +60,7 @@ export class ThemeManager {
     static clearCurrentTheme() {
         var currentTheme = this.getCurrentTheme();
         if (currentTheme) {
-            document.body.classList.remove(currentTheme.theme.cssClass);
+            document.body && document.body.classList.remove(currentTheme.theme.cssClass);
         }
     }
 

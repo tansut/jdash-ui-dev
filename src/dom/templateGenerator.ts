@@ -1,5 +1,5 @@
 export class TemplateGenerator {
-    private manipulatingElement: Element;
+    private manipulatingElement: HTMLElement;
 
     wrapWith(element: HTMLElement) {
         element.appendChild(this.manipulatingElement);

@@ -248,11 +248,23 @@ export interface ComponentOptions {
 }
 
 export class Component extends HtmlElement {
-    template: HTMLTemplateElement;
+    _template: HTMLTemplateElement;
     options: ComponentOptions;
     elementRegistered = false;
     elementClass: typeof HTMLElement;
     defineScriptExecuted = false;
+
+    locateTemplate() {
+        return this.querySelector('template');
+    }
+
+    get template() {
+        return this._template || (this._template = this.locateTemplate());
+    }
+
+    // set template(value: HTMLTemplateElement) {
+    //     this._template = value;
+    // }
 
     static definedElements: KeyValue<Component> = {};
     static reservedAttributes = ['id', 'name', 'is'];
@@ -335,7 +347,7 @@ export class Component extends HtmlElement {
     }
 
     connectedCallback() {
-        this.template = this.querySelector('template');
+        //this.template = this.querySelector('template');
 
         Helper.fireEvent(window, 'jdash:component.connected', {
             component: this
