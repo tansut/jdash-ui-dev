@@ -56,7 +56,7 @@ export class ApiProvider implements IClientProvider {
         var headers = <IJDashRequestHeader>{};
 
         var config = <axios.AxiosRequestConfig>{
-            baseURL: ApiProvider['url'],
+            baseURL: CloudProvider['url'],
             url: url,
             headers: headers
         };
@@ -155,7 +155,7 @@ export class ApiProvider implements IClientProvider {
 }
 
 
-Object.defineProperty(ApiProvider, 'url', {
+Object.defineProperty(CloudProvider, 'url', {
     get: function () {
         var url = 'https://app.jdash.io/jdash/api/v1';
         //removeIf(production) 
@@ -166,4 +166,6 @@ Object.defineProperty(ApiProvider, 'url', {
 
         return url;
     }
+
+
 })

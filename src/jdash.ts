@@ -1,3 +1,4 @@
+import { PremiseProvider } from './provider/premise';
 import { BsGridLayout } from './layout/ext/bsgridlayout';
 import { BsDashletPanel } from './dashboard/ext/bsdashletpanel';
 import { BsDashletEditorPanel } from './dashboard/ext/bsdashleteditorpanel';
@@ -7,7 +8,7 @@ import * as axios from 'axios';
 import { ThemeManager } from './theme';
 import { DashletModule } from './dashboard/dashlet';
 import { LocalStorageProvider } from './provider/localstorage';
-import { ApiProvider } from './provider/api';
+import { CloudProvider } from './provider/api';
 import { DashletPanel } from './dashboard/dashletpanel';
 import { DashletEditorPanel } from './dashboard/dashleteditorpanel';
 import { Component, ComponentOptions, ComponentElement } from './core';
@@ -38,8 +39,14 @@ export var JDash = {
         DashletPanel: BsDashletPanel,
         GridLayout: BsGridLayout
     },
+
+    ProviderTypes: {
+        Cloud: CloudProvider,
+        OnPremise: PremiseProvider
+    },
+
     Provider: new LocalStorageProvider(),
-    //Provider: new ApiProvider(),
+    //Provider: new CloudProvider(),
 
     dashlet: function (id: string | Function | Object, handler: Function | Object) {
         var args = Array.prototype.slice.call(arguments);
@@ -58,8 +65,8 @@ export var JDash = {
             fn();
         else document.addEventListener('DOMContentLoaded', () => {
             if (window['HTMLImports'])
-                window['HTMLImports']['whenReady'](() => setTimeout(function () {             
-                    fn()                         
+                window['HTMLImports']['whenReady'](() => setTimeout(function () {
+                    fn()
                 }));
             else fn();
         });
@@ -78,7 +85,7 @@ declare global {
     // var jdash = window['jdash'] = (window['jdash'] || {});
     // for(var prop in JDash)
     //   jdash[prop] = JDash[prop] || jdash[prop];
-       register.elements();
+    register.elements();
     JDash.ready(() => ThemeManager.init())
 })(window)
 
