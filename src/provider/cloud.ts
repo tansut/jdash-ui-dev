@@ -5,16 +5,17 @@ import { ApiProvider, IJDashRequestHeader } from './api';
 
 
 
- 
+
 export class CloudProvider extends ApiProvider {
 
     protected getDefaultRequestConfig(url: string): Promise<axios.AxiosRequestConfig> {
         var headers = <IJDashRequestHeader>{};
 
         var config = <axios.AxiosRequestConfig>{
-            baseURL: ApiProvider['url'],
+            baseURL: CloudProvider['url'],
             url: url,
             headers: headers
+
         };
 
         if (!this.currentUserToken) {
