@@ -11,14 +11,14 @@ export interface ITokenProvider {
     userToken: string | fnType;
 }
 
-interface IJDashRequestHeader {
+export interface IJDashRequestHeader {
     Authorization?: string;
 }
 
 
 export class ApiProvider implements IClientProvider {
-    private tokenProvider: ITokenProvider;
-    private currentUserToken: string;
+    protected tokenProvider: ITokenProvider;
+    protected currentUserToken: string;
 
     init(tokenProvider: ITokenProvider) {
         this.tokenProvider = tokenProvider;
@@ -28,7 +28,7 @@ export class ApiProvider implements IClientProvider {
 
     }
 
-    private refreshUserToken(): Promise<any> {
+    protected refreshUserToken(): Promise<any> {
         var self = this;
         return new Promise((resolve, reject) => {
             try {
@@ -48,15 +48,14 @@ export class ApiProvider implements IClientProvider {
         });
     }
 
-    private getAuthorizationHeaderContent() {
+    protected getAuthorizationHeaderContent() {
         return "Bearer " + this.currentUserToken;
     }
 
-    private getDefaultRequestConfig(url: string): Promise<axios.AxiosRequestConfig> {
+    protected getDefaultRequestConfig(url: string): Promise<axios.AxiosRequestConfig> {
         var headers = <IJDashRequestHeader>{};
 
         var config = <axios.AxiosRequestConfig>{
-            baseURL: CloudProvider['url'],
             url: url,
             headers: headers
         };
@@ -155,17 +154,4 @@ export class ApiProvider implements IClientProvider {
 }
 
 
-Object.defineProperty(CloudProvider, 'url', {
-    get: function () {
-        var url = 'https://app.jdash.io/jdash/api/v1';
-        //removeIf(production) 
-        url = 'http://localhost:3000/jdash/api/v1'
-        //endRemoveIf(production) 
-
-        //var url = 'https://app.jdash.io/jdash/api/v1';
-
-        return url;
-    }
-
-
-})
+ 

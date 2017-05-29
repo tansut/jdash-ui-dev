@@ -1,4 +1,3 @@
-import { PremiseProvider } from './provider/premise';
 import { BsGridLayout } from './layout/ext/bsgridlayout';
 import { BsDashletPanel } from './dashboard/ext/bsdashletpanel';
 import { BsDashletEditorPanel } from './dashboard/ext/bsdashleteditorpanel';
@@ -8,7 +7,8 @@ import * as axios from 'axios';
 import { ThemeManager } from './theme';
 import { DashletModule } from './dashboard/dashlet';
 import { LocalStorageProvider } from './provider/localstorage';
-import { CloudProvider } from './provider/api';
+import { CloudProvider } from './provider/cloud';
+import { PremiseProvider } from './provider/premise';
 import { DashletPanel } from './dashboard/dashletpanel';
 import { DashletEditorPanel } from './dashboard/dashleteditorpanel';
 import { Component, ComponentOptions, ComponentElement } from './core';
@@ -21,7 +21,7 @@ import register from './register';
 
 export var JDash = {
     HtmlElement: HtmlElement,
-    Helper: Helper,
+    Helper: Helper, 
     Component: Component,
     DashletModule: DashletModule,
     DashletPanel: DashletPanel,
@@ -45,8 +45,8 @@ export var JDash = {
         OnPremise: PremiseProvider
     },
 
-    Provider: new LocalStorageProvider(),
-    //Provider: new CloudProvider(),
+    //Provider: new LocalStorageProvider(),
+    Provider: new CloudProvider(),
 
     dashlet: function (id: string | Function | Object, handler: Function | Object) {
         var args = Array.prototype.slice.call(arguments);
@@ -75,7 +75,7 @@ export var JDash = {
 
 
 declare global {
-    interface Window {
+    interface Window { 
         jdash: any
     }
 }
