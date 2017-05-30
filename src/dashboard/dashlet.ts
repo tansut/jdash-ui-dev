@@ -178,16 +178,20 @@ export class Dashlet extends ComponentGeneratedElement<DashletModule> implements
         var target = container.querySelector('[j-type="j-dashlet-configuration-tools"]:not(template)');
         var configureTemplate = Helper.locateTemplate(this, 'j-dashlet-configuration-tools', true);
         if (enable) {
-            configureTemplate && Helper.instantiateTemplate(configureTemplate, target, {
-                position: TemplateInstantiatePosition.insert,
-                preProcess: (clone: HTMLElement, el: HTMLElement) => {
-                    Helper.bindActions(clone, {
-                        'zone': el
-                    }, this);
-                    Helper.setBindings(clone);
-                    target && Helper.hideElements(target, false);
-                }
-            });
+            if (target) {
+                Helper.hideElements(target, false);
+            } else {
+                configureTemplate && Helper.instantiateTemplate(configureTemplate, target, {
+                    position: TemplateInstantiatePosition.insert,
+                    preProcess: (clone: HTMLElement, el: HTMLElement) => {
+                        Helper.bindActions(clone, {
+                            'zone': el
+                        }, this);
+                        Helper.setBindings(clone);
+                        target && Helper.hideElements(target, false);
+                    }
+                });
+            }
         } else {
             configureTemplate && Helper.removeTemplateInstances(container, configureTemplate);
             target && Helper.hideElements(target, true);
@@ -328,7 +332,7 @@ export class Dashlet extends ComponentGeneratedElement<DashletModule> implements
         Helper.addActionListener('configuredashlet', this.configureDashletActionHandler.bind(this), this);
         Helper.addActionListener('clonedashlet', this.cloneDashletActionHandler.bind(this), this);
         Helper.addActionListener('removedashlet', this.removeDashletActionHandler.bind(this), this);
-        
+
         Helper.addActionListener('setdashlettitle', this.editDashletTitleActionHandler.bind(this), this);
 
         Helper.addActionListener('configurationchange', this.configurationChangeHandler.bind(this), this);
@@ -344,7 +348,7 @@ export class Dashlet extends ComponentGeneratedElement<DashletModule> implements
         this.arrangeTitleNodes();
         this.panel && this.panel.classList.add(this.tagName.toLowerCase() + '-panel');
         Helper.setBindings(this.panel || this, this);
-                this.model && (this.title = this.model.title);
+        this.model && (this.title = this.model.title);
         this.callUserCallback('loadConfig', [], false);
     }
 
