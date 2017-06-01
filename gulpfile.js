@@ -20,7 +20,7 @@ var removeCode = require('gulp-remove-code');
 var git = require('gulp-git');
 const shell = require('gulp-shell')
 
-var npmDir = '../jdash-ui/';
+var npmDir = '../deploy/jdash-ui/';
 
 gulp.task('webserver', function () {
     return gulp.src('./')
@@ -212,7 +212,7 @@ gulp.task('vulcanize-deploy', ['sass-deploy', 'deploy:clean'], function () {
 });
 
 
-gulp.task('dev', ['ts2js-dev', 'polyfills','sass', 'vulcanize', 'webserver'], function () {
+gulp.task('dev', ['ts2js-dev', 'polyfills', 'sass', 'vulcanize', 'webserver'], function () {
     gulp.watch('src/**/*.ts', ['ts2js-dev']);
     gulp.watch('src/sass/**/*.scss', ['sass', 'vulcanize']);
     gulp.watch('src/**/*.html', ['vulcanize']);
