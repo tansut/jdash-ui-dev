@@ -12,6 +12,7 @@ interface IPremiseProviderOptions extends IProviderOptions {
 export class PremiseProvider extends ApiProvider {
     constructor(public options: IPremiseProviderOptions) {
         super(options);
+        this.options = this.options || { url: '/jdash/api/v1' };
     }
 
 
