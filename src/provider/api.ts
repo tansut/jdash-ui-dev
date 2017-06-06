@@ -4,85 +4,32 @@ import * as axios from 'axios';
 
 
 
-export type fnType = (callback: Function) => string;
+export type requestConfigCallback = (config: axios.AxiosRequestConfig) => void;
 
-export interface ITokenProvider {
-    apikey: string | fnType;
-    userToken: string | fnType;
+export interface IProviderOptions {
+    configRequest?: requestConfigCallback;
 }
-
-export interface IJDashRequestHeader {
-    Authorization?: string;
-}
-
 
 export class ApiProvider implements IClientProvider {
-    protected tokenProvider: ITokenProvider;
-    protected currentUserToken: string;
 
-    init(tokenProvider: ITokenProvider) {
-        this.tokenProvider = tokenProvider;
+
+    constructor(protected options?: IProviderOptions) {
+        this.options = options || {};
     }
 
-    constructor() {
-
-    }
-
-    protected refreshUserToken(): Promise<any> {
-        var self = this;
-        return new Promise((resolve, reject) => {
-            try {
-                var fn = typeof self.tokenProvider.userToken == 'string' ?
-                    function (done) { done(null, self.tokenProvider.userToken) } :
-                    self.tokenProvider.userToken;
-                fn((function (err, userToken) {
-                    if (err) return reject(err)
-                    self.currentUserToken = userToken;
-                    resolve(userToken);
-                }))
-            } catch (err) {
-                console.error("jdash.Provider must be initted with an object that has a getUserToken((function (userToken) { }) callback for authorization purposes.");
-                console.warn && console.warn("See https://docs.jdash.io/ for details");
-                reject(err);
-            }
-        });
-    }
-
-    protected getAuthorizationHeaderContent() {
-        return "Bearer " + this.currentUserToken;
-    }
 
     protected getDefaultRequestConfig(url: string): Promise<axios.AxiosRequestConfig> {
-        var headers = <IJDashRequestHeader>{};
+
+        var headers = {};
 
         var config = <axios.AxiosRequestConfig>{
             url: url,
             headers: headers
         };
 
-        if (!this.currentUserToken) {
-            return this.refreshUserToken().then(() => {
-                headers.Authorization = this.getAuthorizationHeaderContent()
-                return config;
-            });
-        } else {
-            headers.Authorization = this.getAuthorizationHeaderContent();
-            return Promise.resolve(config);
-        }
+        this.options && this.options.configRequest && this.options.configRequest(config);
 
-
-    }
-
-    private ensureTokenReceived(err: axios.AxiosError, config: axios.AxiosRequestConfig) {
-        if (err.response.status !== 401 || err.config["authRetry"]) {
-            throw err;
-        }
-
-        return this.refreshUserToken().then(() => {
-            config.headers.Authorization = this.getAuthorizationHeaderContent();
-            config["authRetry"] = true;
-            return this.makeRequest(config);
-        });
+        return Promise.resolve(config);
     }
 
 
@@ -101,11 +48,8 @@ export class ApiProvider implements IClientProvider {
         });
     }
 
-    private makeRequest(config: axios.AxiosRequestConfig): Promise<axios.AxiosResponse> {
-        var request = (<Promise<axios.AxiosResponse>>axios["request"](config)).catch((err: axios.AxiosError) => {
-            return this.ensureTokenReceived(err, config);
-        });
-        return request;
+    protected makeRequest(config: axios.AxiosRequestConfig): Promise<axios.AxiosResponse> {
+        return (<Promise<axios.AxiosResponse>>axios["request"](config));
     }
 
     getDashboard(id: string): Promise<GetDashboardResult> {
@@ -154,4 +98,3 @@ export class ApiProvider implements IClientProvider {
 }
 
 
- 

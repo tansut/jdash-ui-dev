@@ -1,40 +1,25 @@
 import { Dashboard } from '../dashboard';
 import { IClientProvider, GetDashboardResult, DashboardCreateModel, DashboardUpdateModel, ISearchDashboards, DashboardModel, CreateResult, Query, QueryResult, DashletCreateModel, DashletUpdateModel, DashletModel, DashletPositionModel } from 'jdash-core';
 import * as axios from 'axios';
-import { ApiProvider, IJDashRequestHeader } from './api';
+import { ApiProvider, IProviderOptions } from './api';
 
 
-interface PremiseProviderOptions {
+interface IPremiseProviderOptions extends IProviderOptions {
     url: string
 }
 
 
 export class PremiseProvider extends ApiProvider {
-    constructor(public options: PremiseProviderOptions) {
-        super();
+    constructor(public options: IPremiseProviderOptions) {
+        super(options);
     }
 
 
     protected getDefaultRequestConfig(url: string): Promise<axios.AxiosRequestConfig> {
-        var headers = <IJDashRequestHeader>{};
-
-        var config = <axios.AxiosRequestConfig>{
-            baseURL: this.options.url,
-            url: url,
-            headers: headers
-        };
-
-        if (!this.currentUserToken) {
-            return this.refreshUserToken().then(() => {
-                headers.Authorization = this.getAuthorizationHeaderContent()
-                return config;
-            });
-        } else {
-            headers.Authorization = this.getAuthorizationHeaderContent();
-            return Promise.resolve(config);
-        }
-
-
+        return super.getDefaultRequestConfig(url).then(config => {
+            config.baseURL = this.options.url;
+            return config;
+        })
     }
 }
 
