@@ -32,6 +32,9 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+     <script src="../../node_modules/jdash-ui/dist/jdash.min.js"></script>
+     <link rel="import" href="../../node_modules/jdash-ui/dist/components/jdash.html">
+
     <!--removeIf(production)-->
     <script src="../../../debug/polyfills.js"></script>
     <script src="../../../bower_components/interactjs/interact.js"></script>
@@ -39,6 +42,10 @@
     <script src="../../../debug/jdash.lean.js"></script>
     <link rel="import" href="../../../debug/components/bs.html">
     <!--endRemoveIf(production)-->
+
+    <!--removeIf(netcoredemo)-->
+        <script src="../demoapp.js"></script>
+    <!--endRemoveIf(netcoredemo)-->
 
     <link rel="import" href="dashlets/rss-dashlet.html">
     <link rel="import" href="dashlets/nasa-apod.html">

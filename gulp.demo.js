@@ -17,7 +17,7 @@ const shell = require('gulp-shell')
 
 gulp.task('demo.deploy.xcopy', ['demo.deploy:clean'], function () {
     return gulp.src(['demoapp/**/*', '!demoapp/**/*dev*'])
-        .pipe(removeCode({ production: true }))
+        .pipe(removeCode({ production: true , netcoredemo: true }))
         .pipe(gulp.dest('../jdash-demo'))
 })
 
