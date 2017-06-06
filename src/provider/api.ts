@@ -3,7 +3,7 @@ import { IClientProvider, GetDashboardResult, DashboardCreateModel, DashboardUpd
 import * as axios from 'axios';
 
 
-
+// fn types
 export type requestConfigCallback = (config: axios.AxiosRequestConfig) => void;
 
 export interface IProviderOptions {
