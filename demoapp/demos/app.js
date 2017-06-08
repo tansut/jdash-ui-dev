@@ -74,8 +74,6 @@
 
         window.jdash.Provider.init({
             userToken: function (cb) {
-                //tansu: Removed
-                //cb(null,"-");
                 getDemoToken(self.query.mail).then(function (token) {
                     cb(null, token);
                 }).catch(function (err) { cb(err) });
