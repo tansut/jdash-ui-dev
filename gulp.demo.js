@@ -17,7 +17,7 @@ const demodir = '../deploy/jdash-demo';
 
 gulp.task('demo.deploy.xcopy', ['demo.deploy:clean'], function () {
     return gulp.src(['demoapp/**/*', '!demoapp/**/*dev*'])
-        .pipe(removeCode({ nodev: true, noprod: false }))
+        .pipe(removeCode({ nodev: true, noprod: false, netcoredemo: true }))
         .pipe(gulp.dest(demodir))
 })
 

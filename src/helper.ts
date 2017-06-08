@@ -403,7 +403,7 @@ export default class Helper {
             hide ? (el.style.display = 'none') : (el.style.display = '');
         }
     }
-
+ 
     static removeElements(targets: Node | NodeListOf<any>) {
         var elements = targets instanceof NodeList ? targets : [targets];
 

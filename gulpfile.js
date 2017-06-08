@@ -16,6 +16,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var vinylPaths = require('vinyl-paths');
 var ts = require('gulp-typescript');
 var demo = require('./gulp.demo');
+var netcoredemo = require('./gulp.netcore.demo');
 var removeCode = require('gulp-remove-code');
 var git = require('gulp-git');
 const shell = require('gulp-shell');
@@ -85,7 +86,7 @@ gulp.task('deploy-native-only', ['deploy:clean'], function (cb) {
             min: true,
             main: 'src/jdash.ts',
             out: 'dist/jdash.lean.min.js',
-            remove: { production: true }
+            remove: { production: true, netcoredemo: true }
         })]
     }
 
@@ -110,7 +111,7 @@ gulp.task('deploy-full', ['deploy:clean'], function (cb) {
             min: true,
             main: 'src/jdash.ts',
             out: 'dist/jdash.lean.min.js',
-            remove: { production: true }
+            remove: { production: true, netcoredemo: true }
         })]
     }
 
