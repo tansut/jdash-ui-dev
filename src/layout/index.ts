@@ -189,6 +189,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
 
     editSectionTitleActionHandler(event: CustomEvent) {
         this.editSectionTitle(event.detail.section, 'Set section title');
+        this.save();
     }
 
     removeSectionActionHandler(event: CustomEvent) {
@@ -242,6 +243,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
 
     editZoneGroupTitleActionHandler(event: CustomEvent) {
         this.editzoneGroupTitle(event.detail.group, 'Set group title');
+        this.save();
     }
 
     removeZoneGroupActionHandler(event: CustomEvent) {
