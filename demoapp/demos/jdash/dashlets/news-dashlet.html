@@ -125,7 +125,7 @@
             }
 
             this.addEventListener('setconfig', function (event) {
-                var inputEl = this.querySelector('option'), value = inputEl.value;
+                var inputEl = this.querySelector('select'), value = inputEl.value;
                 if (!value) {
                     alert('Set a valid value please!');
                     event.preventDefault();
