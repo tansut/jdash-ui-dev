@@ -19,7 +19,8 @@ var demo = require('./gulp.demo');
 var netcoredemo = require('./gulp.netcore.demo');
 var removeCode = require('gulp-remove-code');
 var git = require('gulp-git');
-const shell = require('gulp-shell')
+const shell = require('gulp-shell');
+var rename = require("gulp-rename");
 
 var npmDir = '../deploy/jdash-ui/';
 
@@ -71,6 +72,13 @@ gulp.task('ts2js-dev', function () {
             .pipe(gulp.dest('./debug/'));
     });
 });
+
+gulp.task('contentfiles', [], function () {
+    return gulp.src('./demoapp/index.html')
+        .pipe(removeCode({ noprod: true }))
+        .pipe(rename('dev.autogen.html'))
+        .pipe(gulp.dest('./demoapp/'))
+})
 
 gulp.task('deploy-native-only', ['deploy:clean'], function (cb) {
     var doit = function () {
@@ -213,7 +221,7 @@ gulp.task('vulcanize-deploy', ['sass-deploy', 'deploy:clean'], function () {
 });
 
 
-gulp.task('dev', ['ts2js-dev', 'polyfills', 'sass', 'vulcanize', 'webserver'], function () {
+gulp.task('dev', ['ts2js-dev', 'contentfiles', 'polyfills', 'sass', 'vulcanize', 'webserver'], function () {
     gulp.watch('src/**/*.ts', ['ts2js-dev']);
     gulp.watch('src/sass/**/*.scss', ['sass', 'vulcanize']);
     gulp.watch('src/**/*.html', ['vulcanize']);

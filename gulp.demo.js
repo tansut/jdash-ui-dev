@@ -11,20 +11,20 @@ var merge = require('merge-stream');
 var del = require('del');
 var webRoot = exports.WEBROOT = __dirname + '/';
 var removeCode = require('gulp-remove-code');
-const shell = require('gulp-shell')
+const shell = require('gulp-shell');
 
-
+const demodir = '../deploy/jdash-demo';
 
 gulp.task('demo.deploy.xcopy', ['demo.deploy:clean'], function () {
     return gulp.src(['demoapp/**/*', '!demoapp/**/*dev*'])
-        .pipe(removeCode({ production: true , netcoredemo: true }))
-        .pipe(gulp.dest('../jdash-demo'))
+        .pipe(removeCode({ nodev: true, noprod: false, netcoredemo: true }))
+        .pipe(gulp.dest(demodir))
 })
 
 
 gulp.task('demo.deploy:clean', [], function (done) {
     del([
-        '../jdash-demo/css/**', '../jdash-demo/index.html', '../jdash-demo/demos/**'
+        demodir + '/css/**', demodir + 'index.html', demodir + 'demos/**'
     ], {
             force: true
         }).then(() => done()).catch(err => done(err))
@@ -34,7 +34,7 @@ gulp.task('demo.deploy', ['demo.deploy.xcopy'], () => {
 })
 
 gulp.task('demo.git.push', ['demo.deploy'], shell.task([
-    '../jdash-demo/' + 'push.sh'
+    demodir + 'push.sh'
 ]))
 
 

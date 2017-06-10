@@ -15,6 +15,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-git": "^2.0.1",
     "gulp-remove-code": "^1.0.2",
+    "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.0.0",
     "gulp-shell": "^0.6.3",
     "gulp-sourcemaps": "^2.4.1",
