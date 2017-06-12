@@ -191,6 +191,7 @@
         jdash.ThemeManager.getThemes().forEach(function (theme) {
             var op = document.createElement('a');
             op.textContent = theme.name;
+            op.style.cursor = "pointer"
             this.themesEl.appendChild(op);
             op.addEventListener('click', this.changeTheme.bind(this, theme))
         }.bind(this))
