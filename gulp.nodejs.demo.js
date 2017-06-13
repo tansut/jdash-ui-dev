@@ -15,23 +15,23 @@ const shell = require('gulp-shell')
 
 
 
-gulp.task('demo.netcore.deploy.xcopy', ['demo.netcore.deploy:clean'], function () {
+gulp.task('demo.nodejs.deploy.xcopy', ['demo.nodejs.deploy:clean'], function () {
     return gulp.src(['demoapp/**/*', '!demoapp/**/*dev*'])
         .pipe(removeCode({ nodev: true, noprod: true, nopremise: false }))
-        .pipe(gulp.dest('../jdash-netcore-demoapp/wwwroot'))
+        .pipe(gulp.dest('../jdash-nodejs-demoapp'))
 })
 
 
-gulp.task('demo.netcore.deploy:clean', [], function (done) {
+gulp.task('demo.nodejs.deploy:clean', [], function (done) {
     del([
-        '../jdash-netcore-demoapp/wwwroot/assets/**',
-        '../jdash-netcore-demoapp/wwwroot/css/**',
-        '../jdash-netcore-demoapp/wwwroot/demos/**',
-        '../jdash-netcore-demoapp/wwwroot/index.html'
+        '../jdash-nodejs-demoapp/assets/**',
+        '../jdash-nodejs-demoapp/css/**',
+        '../jdash-nodejs-demoapp/demos/**',
+        '../jdash-nodejs-demoapp/index.html'
     ], {
             force: true
         }).then(() => done()).catch(err => done(err))
 })
 
-gulp.task('demo.netcore.deploy', ['demo.netcore.deploy.xcopy'], () => {
+gulp.task('demo.nodejs.deploy', ['demo.nodejs.deploy.xcopy'], () => {
 })
