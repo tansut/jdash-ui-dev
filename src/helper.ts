@@ -271,7 +271,7 @@ export default class Helper {
     }
 
     static extractTemplate(template: HTMLTemplateElement) {
-        var clone = <HTMLElement>document.importNode(template.content, true);
+        var clone = <any>document.importNode(template.content, true);
         var topEl: HTMLElement;
         var cloneChildren = Helper.getElementChildren(clone);
         if (cloneChildren.length > 1 || template.getAttribute('j-target-tag')) {
