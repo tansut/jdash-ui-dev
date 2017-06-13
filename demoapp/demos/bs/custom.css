@@ -6,3 +6,22 @@
 .dashboard-control-last {
     margin-bottom: 10px !important;
 }
+
+
+
+
+
+
+.dashlet-list {
+    white-space: nowrap;
+    width:100%;
+    overflow: auto;
+}
+
+.dashlet-list div {
+    width: 250px;
+    display: inline-block;
+    height: 150px;
+    overflow: hidden;
+    margin-right: 5px;
+}
