@@ -75,9 +75,9 @@
 
             <div class="sidebar-wrapper">
                 <div class="logo">
-                    <a href="#" class="simple-text">
-                    JDash Bootstrap
-                </a>
+                    <h2 class="simple-text">
+                        JDash Bootstrap
+                    </h2>
                 </div>
 
                 <ul class="nav">
@@ -87,6 +87,14 @@
                         <p>Dashboard 1</p>
                     </a>
                     </li>
+                    <template id="dashboard-list-item-template">
+                        <li>
+                            <a href="dashboard.html">
+                        <i class="pe-7s-graph"></i>
+                        <p>Dashboard 1</p>
+                            </a>
+                        </li>
+                    </template>
                 </ul>
             </div>
         </div>
@@ -101,7 +109,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                        <h2 class="navbar-brand"><i class="fa fa-dashboard"></i> <span id="#dashboard-title">Dashboard</span></h2>
+                        <h2 class="navbar-brand"><i class="fa fa-dashboard"></i> <span id="#dashboard-title" style="margin-left: 5px;">Dashboard</span></h2>
                     </div>
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-left">
@@ -125,7 +133,7 @@
                             </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><button id="#create-dashboard-btn" class="btn btn-primary btn-fill" href="#"><i class="pe-7s-plus"></i> Create New Dashboard</button></li>
+                            <li><button id="#create-dashboard-btn" class="btn btn-primary btn-fill" href="#"><i class="fa fa-plus"></i> Create New Dashboard</button></li>
                         </ul>
 
                     </div>
@@ -135,20 +143,25 @@
 
             <div class="content">
                 <div class="container-fluid">
+
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-xs-6">
                             <button id="#readonly" class="btn btn-success btn-fill"><i class="fa fa-eye"></i> View</button>
                             <button id="#dashletedit" class="btn btn-primary btn-fill"><i class="fa fa-hand-pointer-o"></i> Edit</button>
                             <button id="#layoutedit" class="btn btn-warning btn-fill"><i class="fa fa-edit"></i> Design</button>
 
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-xs-6">
                             <button id="#delete-dashboard-btn" class="btn btn-danger btn-fill pull-right"><i class="fa fa-trash"></i> Delete Dashboard</button>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="dashlet-list">
 
+                </div>
+            </div>
 
             <footer class="footer">
                 <div class="container-fluid">
