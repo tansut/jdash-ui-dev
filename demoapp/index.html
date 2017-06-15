@@ -50,7 +50,7 @@
                     <input class="j-input j-border j-round-large" type="email" id="email" required>
 
                     <div class="j-center j-padding">
-                        <button type="button" id="start-btn" class="j-btn j-green" onclick="startTrial()">Start Demo</button>
+                        <button type="button" id="start-btn" class="j-btn j-green">Start Demo</button>
                     </div>
                 </form>
             </div>
@@ -124,7 +124,12 @@
 
     function startTrial() {
         var mail = document.querySelector('#email').value;
-        window.location = 'demos/' + demos[selected] + '/index.html?mail=' + encodeURIComponent(mail);
+        console.log(mail.length);
+        if (mail.length) {
+            window.location = 'demos/' + demos[selected] + '/index.html?mail=' + encodeURIComponent(mail);
+        } else {
+            window.alert('E-mail address cannot be empty.');
+        }
     }
 
 </script>

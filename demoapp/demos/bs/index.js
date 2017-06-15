@@ -318,7 +318,10 @@ $(document).ready(function () {
     }
 
     app.prototype.setEditMode = function (mode) {
-        this.dashboard.setAttribute('j-view-mode', mode);
+        var oldMode = this.dashboard.getAttribute('j-view-mode');
+        if (oldMode !== mode) {
+            this.dashboard.setAttribute('j-view-mode', mode);
+        }
     }
 
 
