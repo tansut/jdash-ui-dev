@@ -74,11 +74,17 @@ gulp.task('ts2js-dev', function () {
     });
 });
 
+// gulp.task('contentfiles', [], function () {
+//     return gulp.src('./demoapp/index.html')
+//         .pipe(removeCode({ nopremise: true, noprod: true }))
+//         .pipe(rename('dev.autogen.html'))
+//         .pipe(gulp.dest('./demoapp/'))
+// })
+
 gulp.task('contentfiles', [], function () {
-    return gulp.src('./demoapp/index.html')
+    return gulp.src('./demoapp/**/*')
         .pipe(removeCode({ nopremise: true, noprod: true }))
-        .pipe(rename('dev.autogen.html'))
-        .pipe(gulp.dest('./demoapp/'))
+        .pipe(gulp.dest('./debugapp/'))
 })
 
 gulp.task('deploy-native-only', ['deploy:clean'], function (cb) {
@@ -226,6 +232,7 @@ gulp.task('dev', ['ts2js-dev', 'contentfiles', 'polyfills', 'sass', 'vulcanize',
     gulp.watch('src/**/*.ts', ['ts2js-dev']);
     gulp.watch('src/sass/**/*.scss', ['sass', 'vulcanize']);
     gulp.watch('src/**/*.html', ['vulcanize']);
+    gulp.watch('demoapp/**/*', ['contentfiles']);
 });
 
 gulp.task('npm:clean', [], function () {

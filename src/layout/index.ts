@@ -79,6 +79,7 @@ export let LayoutViewMode = {
 
 export class DashboardLayout extends ComponentElement implements IDashboardLayout {
     public _viewMode: string = LayoutViewMode.readonly;
+    public _viewMode2: string = LayoutViewMode.readonly;
     public dashletsHidden: boolean;
     public dashletsCollapsed: boolean;
     public _layoutStyle: string;
@@ -406,7 +407,11 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         return this._viewMode;
     }
 
-    set viewMode(value: string) {
+    get viewMode2() {
+        return this._viewMode2;
+    }
+
+    set viewMode2(value: string) {
         debugger;
         console.log(`View mode change req: ${this.viewMode} -> ${value}`);
         if (this.viewMode != value) {
@@ -418,7 +423,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
             console.log(`View mode changed: ${this._viewMode} -> ${value}`);
 
             if (this.isInitialized) {
-                this.setViewMode(value);
+                this.setViewModeXXX(value);
                 console.log(`After call to setViewMode: ${this._viewMode},  -> ${this.viewMode}`);
 
             }
@@ -426,7 +431,11 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         } else console.log('Canceled values are same')
     }
 
-    setViewMode(newVal: string) {
+    set viewMode(value: string) {
+        this.viewMode2 = value;
+    }
+
+    setViewModeXXX(newVal: string) {
         this.clearDropZones('j-dashlet');
         this.setAttribute('j-view-mode', newVal);
         switch (newVal) {
@@ -470,7 +479,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         (<any>interact).dynamicDrop(true);
         this.listenforActions();
         Helper.ensureId(this, 'j-dashlet-zone');
-        this.setViewMode(this.viewMode);
+        this.setViewModeXXX(this.viewMode);
     }
 
 
@@ -1103,7 +1112,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
 
         newMode = newMode || this.viewMode;
         if (this.viewMode == newMode)
-            this.setViewMode(newMode);
+            this.setViewModeXXX(newMode);
         else this.viewMode = newMode;
 
         this.normalizeDashletZones();

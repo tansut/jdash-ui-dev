@@ -318,8 +318,7 @@ $(document).ready(function () {
     }
 
     app.prototype.setEditMode = function (mode) {
-        debugger;
-        this.dashboard.layout.viewMode = mode;
+        this.dashboard.setAttribute('j-view-mode', mode);
     }
 
 
