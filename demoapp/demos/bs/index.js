@@ -258,7 +258,7 @@ $(document).ready(function () {
             a.addEventListener('click', this.loadDashboard.bind(this, dashboard, null));
 
 
-            a.innerHTML = '<i class="pe-7s-graph"></i> <h4 class="each-title"><a href="javascript:;">' + dashboard.title + '</a></h4>';
+            a.innerHTML = '<i class="fa fa-pie-chart"></i> <h4 class="each-title"><a href="javascript:;">' + dashboard.title + '</a></h4>';
 
             // a.textContent = dashboard.title;
             a.setAttribute('dashboard-id', dashboard.id);
