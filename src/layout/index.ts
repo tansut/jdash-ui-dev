@@ -411,20 +411,16 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         return this._viewMode2;
     }
 
-    set viewMode2(value: string) {
-        debugger;
-        console.log(`View mode change req: ${this.viewMode} -> ${value}`);
-        if (this.viewMode != value) {
+    set viewMode2(value: string) { 
+        if (this._viewMode != value) {
             this.fireEvent('viewmode-change', {
                 oldVal: this.viewMode,
                 newVal: value
             }, false, true)
-            this._viewMode = value;
-            console.log(`View mode changed: ${this._viewMode} -> ${value}`);
+            this._viewMode = value; 
 
             if (this.isInitialized) {
-                this.setViewModeXXX(value);
-                console.log(`After call to setViewMode: ${this._viewMode},  -> ${this.viewMode}`);
+                this.setViewMode(value); 
 
             }
 
@@ -435,7 +431,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         this.viewMode2 = value;
     }
 
-    setViewModeXXX(newVal: string) {
+    setViewMode(newVal: string) {
         this.clearDropZones('j-dashlet');
         this.setAttribute('j-view-mode', newVal);
         switch (newVal) {
@@ -479,7 +475,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         (<any>interact).dynamicDrop(true);
         this.listenforActions();
         Helper.ensureId(this, 'j-dashlet-zone');
-        this.setViewModeXXX(this.viewMode);
+        this.setViewMode(this.viewMode);
     }
 
 
@@ -1112,7 +1108,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
 
         newMode = newMode || this.viewMode;
         if (this.viewMode == newMode)
-            this.setViewModeXXX(newMode);
+            this.setViewMode(newMode);
         else this.viewMode = newMode;
 
         this.normalizeDashletZones();
