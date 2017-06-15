@@ -25,5 +25,4 @@ export class BsGridLayout extends GridLayout {
         }
 
     }
-
 }

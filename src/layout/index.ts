@@ -406,6 +406,26 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         return this._viewMode;
     }
 
+    set viewMode(value: string) {
+        debugger;
+        console.log(`View mode change req: ${this.viewMode} -> ${value}`);
+        if (this.viewMode != value) {
+            this.fireEvent('viewmode-change', {
+                oldVal: this.viewMode,
+                newVal: value
+            }, false, true)
+            this._viewMode = value;
+            console.log(`View mode changed: ${this._viewMode} -> ${value}`);
+
+            if (this.isInitialized) {
+                this.setViewMode(value);
+                console.log(`After call to setViewMode: ${this._viewMode},  -> ${this.viewMode}`);
+
+            }
+
+        } else console.log('Canceled values are same')
+    }
+
     setViewMode(newVal: string) {
         this.clearDropZones('j-dashlet');
         this.setAttribute('j-view-mode', newVal);
@@ -435,17 +455,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
 
     }
 
-    set viewMode(newVal: string) {
-        if (this.viewMode != newVal) {
-            this.fireEvent('viewmode-change', {
-                oldVal: this.viewMode,
-                newVal: newVal
-            }, false, true)
-            this._viewMode = newVal;
-            if (this.isInitialized)
-                this.setViewMode(newVal);
-        }
-    }
+
 
     initializeElement() {
         var styles = this.getStyles(), style = null;

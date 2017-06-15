@@ -39,8 +39,8 @@
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 
 
-    <script src="../../../node_modules/jdash-ui/dist/jdash.min.js"></script>
-    <link rel="import" href="../../../node_modules/jdash-ui/dist/components/jdash.html">
+    <!--<script src="../../node_modules/jdash-ui/dist/jdash.min.js"></script>
+    <link rel="import" href="../../node_modules/jdash-ui/dist/components/jdash.html">-->
 
     <!--removeIf(nodev)-->
     <script src="../../../debug/polyfills.js"></script>
@@ -86,20 +86,27 @@
                     </h2>
                 </div>
 
-                <ul class="nav" id="dashboard-list">
+                <ul class="nav">
                     <!--<li class="active">
                         <a href="dashboard.html">
                         <i class="pe-7s-graph"></i>
                         <p>Dashboard 1</p>
                     </a>
                     </li>-->
-                    <template id="dashboard-list-item-template">
-                        <li>
-                            <a href="javascript:;">
-                        <i class="pe-7s-graph"></i>
+                    <li>
+                        <h3 id="dash-title">Dashboards</h3>
+                    </li>
+                    <li id="dashboard-list">
+                        <template id="dashboard-list-item-template">
+                            <li>
+                                <i class="pe-7s-graph"></i>
+
+                                <a href="javascript:;">
                             </a>
-                        </li>
-                    </template>
+                            </li>
+                        </template>
+                    </li>
+
                 </ul>
             </div>
         </div>
@@ -114,7 +121,8 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                        <h1 id="dashboard-title" class="navbar-brand"><i class="fa fa-dashboard"></i> <b style="margin-left: 5px;">Dashboard</b></h1>
+
+                        <h1 class="navbar-brand"><i class="fa fa-dashboard"></i> <b id="dashboard-title" style="margin-left: 5px;">Dashboard</b></h1>
                     </div>
                     <div class="collapse navbar-collapse">
 
@@ -130,11 +138,7 @@
             <div class="content">
                 <div class="container-fluid">
 
-                    <div class="row">
-                        <!--<div class="dashlet-list">
 
-                </div>-->
-                    </div>
 
                     <div class="row">
                         <div class="col-xs-12" id="dashboard-edit-tools">
@@ -159,12 +163,17 @@
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="row dashlet-row">
+                    <div id="dashlet-list" style="display: flex; overflow: auto">
 
-            <div class="row">
-                <j-dashboard id="mydashboard" j-view-mode="dashletedit" style="display: none" class="j-theme-dashboard">
+                    </div>
+                </div>
+                <div class="row dashboard-row">
+                    <j-dashboard id="mydashboard" j-view-mode="dashletedit" style="display: none" class="j-theme-dashboard">
 
-                </j-dashboard>
+                    </j-dashboard>
+                </div>
+
             </div>
 
 
@@ -204,16 +213,35 @@
 
 
 
-    <!--<template id="dashlet-list-item-template">
-        <div class="j-theme j-center">
+    <template id="dashlet-list-item-template">
+        <div class="card" style="width: 20rem;">
             <i j-drag-handle class="fa fa-arrows j-show-block j-margin j-xlarge j-right-align j-drag-handle"></i>
-            <h4 class="j-truncate" dashlet-title-element></h4>
-            <a dashlet-add-btn class="j-btn j-center">Add</a>
+
+            <div class="j-theme j-center">
+                <h4 class="j-truncate bs-dashlet-title" dashlet-title-element><strong>Card title</strong></h4>
+
+                <a dashlet-add-btn class="btn btn-primary btn-fill btn-block j-btn j-center" flex>Add</a>
+            </div>
+        </div>
+
+    </template>
+
+
+    <!--<template id="dashlet-list-item-template">
+
+        <div class="panel panel-primary">
+
+            <div class="panel-heading">
+                <h3 dashlet-title-element class=" panel-title"></h3>
+            </div>
+            <div class="panel-body">
+                <i j-drag-handle class="fa fa-arrows j-show-block j-margin j-xlarge j-right-align j-drag-handle"></i>
+
+                <a dashlet-add-btn class="btn btn-primary btn-fill j-btn j-center" flex>Add</a>
+
+            </div>
         </div>
     </template>-->
-
-
-
 
     <!--  Notifications Plugin    -->
     <script src="assets/js/bootstrap-notify.js"></script>

@@ -103,7 +103,7 @@ $(document).ready(function () {
         //endRemoveIf(nodev)
 
         //removeIf(nopremise)
-        jdash.Provider = new jdash.ProviderTypes.OnPremise({ url: '/jdash/api/v1' });
+        // jdash.Provider = new jdash.ProviderTypes.OnPremise({ url: '/jdash/api/v1' });
         //endRemoveIf(nopremise)
 
         this.go();
@@ -207,19 +207,20 @@ $(document).ready(function () {
             }
             var container = document.createElement('div');
             container.appendChild(el);
+            container.style.minWidth = '200px';
 
             this.dashletList.appendChild(container);
         }
     }
 
     app.prototype.loadThemes = function () {
-        jdash.ThemeManager.getThemes().forEach(function (theme) {
-            var op = document.createElement('a');
-            op.textContent = theme.name;
-            op.style.cursor = "pointer"
-            this.themesEl.appendChild(op);
-            op.addEventListener('click', this.changeTheme.bind(this, theme))
-        }.bind(this))
+        // jdash.ThemeManager.getThemes().forEach(function (theme) {
+        //     var op = document.createElement('a');
+        //     op.textContent = theme.name;
+        //     op.style.cursor = "pointer"
+        //     this.themesEl.appendChild(op);
+        //     op.addEventListener('click', this.changeTheme.bind(this, theme))
+        // }.bind(this))
     }
 
     app.prototype.viewModeChangeHandler = function (newMode) {
@@ -242,7 +243,7 @@ $(document).ready(function () {
             this.toggleDashletsBtn.style.display = '';
             this.deleteDashboardBtn.style.display = '';
         }
-        // newMode == 'dashletedit' ? (this.dashletList.style.display = 'inline-block') : (this.dashletList.style.display = 'none')
+        newMode == 'dashletedit' ? (this.dashletList.style.display = 'flex') : (this.dashletList.style.display = 'none')
     }
 
     // app.prototype.changeTheme = function (theme) {
@@ -256,7 +257,10 @@ $(document).ready(function () {
             var a = jdash.Helper.getFirstElementChild(el);
             a.addEventListener('click', this.loadDashboard.bind(this, dashboard, null));
 
-            a.textContent = dashboard.title;
+
+            a.innerHTML = '<i class="pe-7s-graph"></i> <h4 class="each-title"><a href="javascript:;">' + dashboard.title + '</a></h4>';
+
+            // a.textContent = dashboard.title;
             a.setAttribute('dashboard-id', dashboard.id);
             this.dashboardListContainer.appendChild(a);
         }.bind(this))
@@ -314,7 +318,8 @@ $(document).ready(function () {
     }
 
     app.prototype.setEditMode = function (mode) {
-        this.dashboard.setAttribute('j-view-mode', mode);
+        debugger;
+        this.dashboard.layout.viewMode = mode;
     }
 
 
