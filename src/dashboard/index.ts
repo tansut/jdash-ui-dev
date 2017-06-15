@@ -203,7 +203,7 @@ export class Dashboard extends TemplatedElement {
             Helper.setBindings(this, this);
         }
         if (name.toLowerCase() == 'j-view-mode' && this.layout)
-            this.layout.viewMode = newVal;
+            this.layout.viewMode2 = newVal;
         if (name.toLowerCase() == 'j-style' && this.layout)
             this.layout.layoutStyle = newVal;
         if (name.toLowerCase() == 'j-layout') {
