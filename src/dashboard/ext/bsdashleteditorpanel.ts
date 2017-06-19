@@ -22,7 +22,7 @@ export class BsDashletEditorPanel extends DashletEditorPanel {
 
         var modal = window.$(Helper.getFirstElementChild(this)).modal('show');
         modal.on('hidden.bs.modal', function () { this.remove(); }.bind(this));
-        modal.on('hidden', function () { this.remove(); }.bind(this))
+        modal.on('hidden', function () { this.remove(); }.bind(this));
     }
 
   
