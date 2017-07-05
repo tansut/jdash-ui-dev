@@ -3,8 +3,13 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="../../node_modules/jdash-ui/dist/jdash.min.js"></script>
-    <link rel="import" href="../../node_modules/jdash-ui/dist/components/jdash.html">
+
+    <!--removeIf(noprod)-->
+    <script src="../../../node_modules/jdash-ui/dist/jdash.min.js"></script>
+    <link rel="import" href="../../../node_modules/jdash-ui/dist/components/jdash.html">
+    <!--endRemoveIf(noprod)-->
+
+
 
     <!--removeIf(nodev)-->
     <script src="../../../debug/polyfills.js"></script>
@@ -16,10 +21,6 @@
 
     <script src="index.js"></script>
     <script src="../app.js"></script>
-
-    <!--removeIf(netcoredemo)-->
-    <script src="../demoapp.js"></script>
-    <!--endRemoveIf(netcoredemo)-->
 
     <link rel="stylesheet" href="./app.css">
 
@@ -40,6 +41,7 @@
     <link rel="import" href="dashlets/stockquote-dashlet.html">
 
     <script>
+        window.demoDashboardType = "jdash";
         jdash.ready(function () {
             app.init();
         })
@@ -207,6 +209,7 @@
 
 </body>
 
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 
 

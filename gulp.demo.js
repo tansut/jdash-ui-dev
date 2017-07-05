@@ -15,14 +15,19 @@ const shell = require('gulp-shell');
 
 const demodir = '../deploy/jdash-demo';
 
-gulp.task('demo.deploy.xcopy', ['demo.deploy:clean'], function () {
-    return gulp.src(['demoapp/**/*', '!demoapp/**/*dev*'])
-        .pipe(removeCode({ nodev: true, noprod: false, netcoredemo: true }))
-        .pipe(gulp.dest(demodir))
+gulp.task('demo.deploy:copy-assets', [], function() {
+    return gulp.src(['demoapp/assets/**/*']).pipe(gulp.dest(demodir + '/assets'));
+});
+
+gulp.task('demo.deploy.xcopy', ['demo.deploy:clean', 'demo.deploy:copy-assets'], function() {
+    return gulp.src(['demoapp/**/*', '!demoapp/**/*dev*', '!demoapp/assets/**/*'])
+        .pipe(removeCode({ nodev: true, noprod: false, nopremise: true }))
+        .pipe(gulp.dest(demodir));
+
 })
 
 
-gulp.task('demo.deploy:clean', [], function (done) {
+gulp.task('demo.deploy:clean', [], function(done) {
     del([
         demodir + '/css/**', demodir + 'index.html', demodir + 'demos/**'
     ], {

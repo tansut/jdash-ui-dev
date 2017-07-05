@@ -19,7 +19,7 @@ export class TemplateGenerator {
     }
 
     constructor(private template: HTMLTemplateElement) {
-        var clone = <HTMLElement>document.importNode(this.template.content, true);
+        var clone = <any>document.importNode(this.template.content, true);
         this.manipulatingElement = clone;
     }
 }

@@ -17,6 +17,7 @@ var vinylPaths = require('vinyl-paths');
 var ts = require('gulp-typescript');
 var demo = require('./gulp.demo');
 var netcoredemo = require('./gulp.netcore.demo');
+var nodedemo = require('./gulp.nodejs.demo');
 var removeCode = require('gulp-remove-code');
 var git = require('gulp-git');
 const shell = require('gulp-shell');
@@ -73,11 +74,17 @@ gulp.task('ts2js-dev', function () {
     });
 });
 
+// gulp.task('contentfiles', [], function () {
+//     return gulp.src('./demoapp/index.html')
+//         .pipe(removeCode({ nopremise: true, noprod: true }))
+//         .pipe(rename('dev.autogen.html'))
+//         .pipe(gulp.dest('./demoapp/'))
+// })
+
 gulp.task('contentfiles', [], function () {
-    return gulp.src('./demoapp/index.html')
-        .pipe(removeCode({ noprod: true }))
-        .pipe(rename('dev.autogen.html'))
-        .pipe(gulp.dest('./demoapp/'))
+    return gulp.src('./demoapp/**/*')
+        .pipe(removeCode({ nopremise: true, noprod: true }))
+        .pipe(gulp.dest('./debugapp/'))
 })
 
 gulp.task('deploy-native-only', ['deploy:clean'], function (cb) {
@@ -86,7 +93,7 @@ gulp.task('deploy-native-only', ['deploy:clean'], function (cb) {
             min: true,
             main: 'src/jdash.ts',
             out: 'dist/jdash.lean.min.js',
-            remove: { production: true, netcoredemo: true }
+            remove: { production: true, nopremise: true }
         })]
     }
 
@@ -111,7 +118,7 @@ gulp.task('deploy-full', ['deploy:clean'], function (cb) {
             min: true,
             main: 'src/jdash.ts',
             out: 'dist/jdash.lean.min.js',
-            remove: { production: true, netcoredemo: true }
+            remove: { production: true, nopremise: true }
         })]
     }
 
@@ -225,6 +232,7 @@ gulp.task('dev', ['ts2js-dev', 'contentfiles', 'polyfills', 'sass', 'vulcanize',
     gulp.watch('src/**/*.ts', ['ts2js-dev']);
     gulp.watch('src/sass/**/*.scss', ['sass', 'vulcanize']);
     gulp.watch('src/**/*.html', ['vulcanize']);
+    gulp.watch('demoapp/**/*', ['contentfiles']);
 });
 
 gulp.task('npm:clean', [], function () {

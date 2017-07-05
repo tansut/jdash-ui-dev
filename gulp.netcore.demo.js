@@ -17,7 +17,7 @@ const shell = require('gulp-shell')
 
 gulp.task('demo.netcore.deploy.xcopy', ['demo.netcore.deploy:clean'], function () {
     return gulp.src(['demoapp/**/*', '!demoapp/**/*dev*'])
-        .pipe(removeCode({ production: true, netcoredemo: false }))
+        .pipe(removeCode({ nodev: true, noprod: true, nopremise: false }))
         .pipe(gulp.dest('../jdash-netcore-demoapp/wwwroot'))
 })
 
@@ -27,7 +27,7 @@ gulp.task('demo.netcore.deploy:clean', [], function (done) {
         '../jdash-netcore-demoapp/wwwroot/assets/**',
         '../jdash-netcore-demoapp/wwwroot/css/**',
         '../jdash-netcore-demoapp/wwwroot/demos/**',
-        '../jdash-netcore-demoapp/wwwroot/index.html'       
+        '../jdash-netcore-demoapp/wwwroot/index.html'
     ], {
             force: true
         }).then(() => done()).catch(err => done(err))

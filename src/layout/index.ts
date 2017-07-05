@@ -79,6 +79,7 @@ export let LayoutViewMode = {
 
 export class DashboardLayout extends ComponentElement implements IDashboardLayout {
     public _viewMode: string = LayoutViewMode.readonly;
+    public _viewMode2: string = LayoutViewMode.readonly;
     public dashletsHidden: boolean;
     public dashletsCollapsed: boolean;
     public _layoutStyle: string;
@@ -189,6 +190,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
 
     editSectionTitleActionHandler(event: CustomEvent) {
         this.editSectionTitle(event.detail.section, 'Set section title');
+        this.save();
     }
 
     removeSectionActionHandler(event: CustomEvent) {
@@ -242,6 +244,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
 
     editZoneGroupTitleActionHandler(event: CustomEvent) {
         this.editzoneGroupTitle(event.detail.group, 'Set group title');
+        this.save();
     }
 
     removeZoneGroupActionHandler(event: CustomEvent) {
@@ -404,6 +407,30 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         return this._viewMode;
     }
 
+    get viewMode2() {
+        return this._viewMode2;
+    }
+
+    set viewMode2(value: string) { 
+        if (this._viewMode != value) {
+            this.fireEvent('viewmode-change', {
+                oldVal: this.viewMode,
+                newVal: value
+            }, false, true)
+            this._viewMode = value; 
+
+            if (this.isInitialized) {
+                this.setViewMode(value); 
+
+            }
+
+        } else console.log('Canceled values are same')
+    }
+
+    set viewMode(value: string) {
+        this.viewMode2 = value;
+    }
+
     setViewMode(newVal: string) {
         this.clearDropZones('j-dashlet');
         this.setAttribute('j-view-mode', newVal);
@@ -433,17 +460,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
 
     }
 
-    set viewMode(newVal: string) {
-        if (this.viewMode != newVal) {
-            this.fireEvent('viewmode-change', {
-                oldVal: this.viewMode,
-                newVal: newVal
-            }, false, true)
-            this._viewMode = newVal;
-            if (this.isInitialized)
-                this.setViewMode(newVal);
-        }
-    }
+
 
     initializeElement() {
         var styles = this.getStyles(), style = null;
