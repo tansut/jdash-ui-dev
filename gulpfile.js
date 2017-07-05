@@ -268,8 +268,4 @@ gulp.task('npm.deploy', ['npm:clean', 'deploy', 'tsc-def'], function () {
 })
 
 
-gulp.task('npm.git.push', ['npm.deploy'], shell.task([
-    npmDir + 'push.sh'
-]))
-
 gulp.task('deploy', ['deploy-native-only', 'deploy-full', 'sass-deploy', 'vulcanize-deploy']);
