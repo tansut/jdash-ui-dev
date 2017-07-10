@@ -34,14 +34,14 @@
 
 
     <!--     Fonts and icons     -->
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 
 
     <!--removeIf(noprod)-->
     <script src="../../../node_modules/jdash-ui/dist/jdash.min.js"></script>
-    <link rel="import" href="../../../node_modules/jdash-ui/dist/components/jdash.html">
+    <link rel="import" href="../../../node_modules/jdash-ui/dist/components/bs.html">
     <!--endRemoveIf(noprod)-->
 
     <!--removeIf(nodev)-->
@@ -101,10 +101,11 @@
                     <li id="dashboard-list">
                         <template id="dashboard-list-item-template">
                             <li>
-                                <i class="pe-7s-graph"></i>
+                                <i class="fa fa-pie-chart"></i>
+                                <!--<i class="pe-7s-graph"></i>-->
 
                                 <a href="javascript:;">
-                            </a>
+                                </a>
                             </li>
                         </template>
                     </li>
@@ -158,8 +159,6 @@
                                     <button id="toggledashlets" class="btn btn-info btn-fill dashboard-control"><i class="fa fa-low-vision"></i> Toggle Dashlets</button>
                                     <button id="delete-dashboard-btn" class="btn btn-danger btn-fill dashboard-control-last"><i class="fa fa-trash"></i> Delete Dashboard</button>
                                 </li>
-                                <!--<li class="pull-right dashboard-control-last"><button id="delete-dashboard-btn" class="btn btn-danger btn-fill"><i class="fa fa-trash"></i> Delete Dashboard</button></li>
-                                <li class="pull-right dashboard-control"><button id="toggledashlets" class="btn btn-info btn-fill"><i class="fa fa-low-vision"></i> Toggle Dashlets</button></li>-->
 
                             </ul>
                         </div>
@@ -216,13 +215,13 @@
 
 
     <template id="dashlet-list-item-template">
-        <div class="card" style="width: 20rem;">
-            <i j-drag-handle class="fa fa-arrows j-show-block j-margin j-xlarge j-right-align j-drag-handle"></i>
+        <div class="card">
+            <i j-drag-handle class="fa fa-arrows"></i>
 
-            <div class="j-theme j-center">
+            <div class="">
                 <h4 class="j-truncate bs-dashlet-title" dashlet-title-element><strong>Card title</strong></h4>
 
-                <a dashlet-add-btn class="btn btn-primary btn-fill btn-block j-btn j-center" flex>Add</a>
+                <a dashlet-add-btn class="btn btn-primary btn-fill btn-block">Add</a>
             </div>
         </div>
 
@@ -255,6 +254,7 @@
 
 
     <script>
+        window.demoDashboardType = "bootstrap";
         jdash.ready(function () {
             app.init();
         })
