@@ -16,19 +16,18 @@ import { HtmlElement, KeyValue, Component, ComponentElement, TemplatedElement } 
 import Helper from '../helper';
 import { TemplateInstantiatePosition } from '../helper';
 
+function findTopLeft(element) {
+  var rec = element.getBoundingClientRect();
+  return {top: rec.top + window.scrollY, left: rec.left + window.scrollX};
+}
 
 function dragMoveListener(event) {
     var target = event.target,
-        x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-    var body = document.body.getBoundingClientRect();
-    var dy = (Math.round(body.height) - window.screen.height, 0);
-    var dx = (Math.round(body.width) - window.screen.width, 0);
-    target.style.webkitTransform =
-        target.style.transform =
-        'translate(' + (x + dx) + 'px, ' + (y + dy) + 'px)';
-    target.setAttribute('data-x', x + dx);
-    target.setAttribute('data-y', y + dy);
+        x = event.pageX,
+        y = event.pageY;
+        target.style.position = 'fixed';
+        target.style.left = (event.pageX - (window.scrollX || window.pageXOffset)) + 'px';
+        target.style.top =   (event.pageY - (window.scrollY  || window.pageYOffset )) + 'px';
 }
 
 function getAbsoluteBoundingRect(el) {
@@ -755,10 +754,11 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
                 autoScroll: true,
                 onstart: function (event) {
                     // scroll bug fix hack
-                    setTimeout(function () {
-                        event.target.style.left = "";
-                        event.target.style.top = "";
-                    });
+
+                    // setTimeout(function () {
+                    //     event.target.style.left = "";
+                    //     event.target.style.top = "";
+                    // });
                 },
                 onmove: function (event) {
                     dragMoveListener.apply(this, [event])
@@ -895,10 +895,11 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
                 },
                 onstart: function (event) {
                     // scroll bug fix hack
-                    setTimeout(function () {
-                        event.target.style.left = (event.pageX - 25) + "px";
-                        event.target.style.top = (event.pageY - 25) + "px";
-                    });
+
+                    // setTimeout(function () {
+                    //     event.target.style.left = (event.pageX - 25) + "px";
+                    //     event.target.style.top = (event.pageY - 25) + "px";
+                    // });
                 },
                 onmove: function (event) {
                     dragMoveListener.apply(this, [event])
