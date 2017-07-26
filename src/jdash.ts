@@ -18,6 +18,7 @@ import { GenericLayout } from './layout/generic';
 import { DashboardLayout } from './layout';
 import Helper from './helper';
 import register from './register';
+import { InitialConfigurator } from "./lib/initialConfigurator";
 
 export var JDash = {
     HtmlElement: HtmlElement,
@@ -82,6 +83,7 @@ declare global {
 
 (function (window: Window) {
     window['jdash'] = JDash;
+    InitialConfigurator.JDashConfiguratorAttributes();
     // var jdash = window['jdash'] = (window['jdash'] || {});
     // for(var prop in JDash)
     //   jdash[prop] = JDash[prop] || jdash[prop];

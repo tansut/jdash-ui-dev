@@ -99,6 +99,7 @@ gulp.task('deploy-native-only', ['deploy:clean'], function (cb) {
 
     return Promise.all(doit()).then(() => {
         var jdash = gulp.src([
+            './src/lib/polyfillConfigurations/customElements.js',
             'bower_components/custom-elements/src/native-shim.js',
             'bower_components/interactjs/dist/interact.min.js',
             'node_modules/axios/dist/axios.min.js',
@@ -124,6 +125,7 @@ gulp.task('deploy-full', ['deploy:clean'], function (cb) {
 
     return Promise.all(doit()).then(() => {
         var jdash = gulp.src([
+            './src/lib/polyfillConfigurations/customElements.js',
             'bower_components/custom-elements/custom-elements.min.js',
             'bower_components/webcomponentsjs/HTMLImports.min.js',
             'bower_components/custom-elements/src/native-shim.js',
@@ -141,6 +143,7 @@ gulp.task('deploy-full', ['deploy:clean'], function (cb) {
 
 gulp.task('polyfills', function () {
     return gulp.src([
+        './src/lib/polyfillConfigurations/customElements.js',
         'bower_components/custom-elements/src/native-shim.js',
         'bower_components/custom-elements/custom-elements.min.js',
         'bower_components/webcomponentsjs/HTMLImports.min.js',
