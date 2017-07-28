@@ -124,3 +124,7 @@
 .introjs-disabled:hover {
     cursor: not-allowed;
 }
+
+.introjs-helperLayer  {
+    opacity: 0.5
+}
