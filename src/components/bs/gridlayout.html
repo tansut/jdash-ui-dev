@@ -6,17 +6,28 @@
 <j-component id="j-grid-layout" delay-register="true">
     <template>
         <template j-type="j-layout-content">
-            <div j-persist="">
-                <section j-persist="" title="Another section" class="container-fluid" j-type="j-layout-section">
-                    <div j-persist="" j-type="j-layout-section-header">
-                        <h2 j-persist="" j-type="j-layout-section-title">Another section</h2>
+            <section j-persist title="First Section" class="container-fluid" j-type="j-layout-section">
+                <div j-persist j-type="j-layout-section-header">
+                    <h2 j-persist j-type="j-layout-section-title">First section</h2>
+                </div>
+                <div j-persist j-type="j-dashlet-zone-group">
+                    <div j-persist j-dashlet-zone j-weight="2">
                     </div>
-                    <div j-persist="" j-type="j-dashlet-zone-group">
-                        <div j-persist="" j-dashlet-zone="">
-                        </div>
+                    <div j-persist j-dashlet-zone j-weight="2">
                     </div>
-                </section>
-            </div>
+                </div>
+            </section>
+            <section j-persist title="Another section" class="container-fluid" j-type="j-layout-section">
+                <div j-persist j-type="j-layout-section-header">
+                    <h2 j-persist j-type="j-layout-section-title">Another section</h2>
+                </div>
+                <div j-persist j-type="j-dashlet-zone-group">
+                    <div j-persist j-dashlet-zone j-weight="3">
+                    </div>
+                    <div j-persist j-dashlet-zone j-weight="2">
+                    </div>
+                </div>
+            </section>
         </template>
 
 
