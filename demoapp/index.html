@@ -149,7 +149,7 @@
         jdashdemo: 'jdash',
         bsdemo: 'bs'
     }
-    document.querySelector('#start-form').style.display = 'block';
+    // document.querySelector('#start-form').style.display = 'block';
 
     function selectDemo(demo) {
         for (var k in demos) {
@@ -159,6 +159,7 @@
         }
         document.querySelector('#' + demo).classList.add('j-blue');
         document.querySelector('#' + demo).classList.add('j-card-6');
+        document.querySelector('#start-form').style.display = 'block';
         selected = demo;
         document.querySelector('#email').focus();
 
