@@ -214,6 +214,11 @@ export class Dashlet extends ComponentGeneratedElement<DashletModule> implements
 
     }
 
+
+    getDashletSize() {
+        return this.getBoundingClientRect();
+    }
+
     saveConfiguration() {
         if (!this.Provider)
             return Promise.reject('no provider');

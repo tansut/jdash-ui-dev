@@ -174,6 +174,11 @@
     }
 
     app.prototype.createDashletModuleEls = function () {
+        this.dashletModules.sort(function (a, b) {
+            var firstOrder = parseInt(a.attributes["data-order"].value);
+            var secondOrder = parseInt(b.attributes["data-order"].value);
+            return firstOrder - secondOrder;
+        })
         for (var i = 0; i < this.dashletModules.length; i++) {
             var module = this.dashletModules[i];
             var el = document.importNode(this.dashletListItemTemplate.content, true);
