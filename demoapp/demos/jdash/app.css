@@ -44,8 +44,8 @@
 
 .custom-btn {
     color: #ffffff; 
-    background-color: #E88C2A; 
-    border-color: #E88C2A; 
+    background-color: #87CB16; 
+    border-color: #87CB16; 
     padding: 14px;
     border-radius: 4px;
     text-decoration: none;
@@ -53,8 +53,8 @@
    
 .custom-btn:hover, .custom-btn:focus { 
     color: #ffffff; 
-    background-color: #D47E33; 
-    border-color: #E88C2A; 
+    background-color: #4cae4c; 
+    border-color: #4cae4c; 
 } 
 
 @media screen and (max-width: 600px) {
