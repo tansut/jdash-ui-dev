@@ -22,10 +22,18 @@
 
 <j-dashlet id="j-stock" title="Stock Prices" data-order="11">
     <template>
-        <div class="stock-container">
-            <div id="donut-chart"></div>
-            <div id="area-chart"></div>
-            <div id="bar-chart"></div>
+        <div class="j-row">
+            <div class="j-col s6">
+                <div id="donut-chart"></div>
+            </div>
+            <div class="j-col s6">
+                <div id="area-chart"></div>
+            </div>
+        </div>
+        <div class="j-row">
+            <div class="j-col j-center">
+                <div id="bar-chart"></div>
+            </div>
         </div>
     </template>
     <script>
