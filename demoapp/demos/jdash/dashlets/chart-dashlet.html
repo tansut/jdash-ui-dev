@@ -160,7 +160,7 @@
             this.setChartSize = function (canvas) {
                 var size = this.getDashletSize();
                 this.style.height = (Math.max(size.height, 300)) + "px";
-                canvas.width = Math.max(size.width,200);
+                canvas.width = Math.max(size.width, 200);
                 canvas.height = Math.max(size.height, 300);
             }
 
@@ -221,7 +221,7 @@
                 }
 
                 var model = this.dashlet.config.get("model") || {};
-                self.templateBox.value = JSON.stringify(model.ChartData || this.dashlet.templates[this.dashlet.chartType()]);
+                self.templateBox.value = model.ChartData || JSON.stringify(this.dashlet.templates[this.dashlet.chartType()]);
                 self.templateList.value = model.ChartType || this.dashlet.chartType();
                 self.titleInput.value = this.dashlet.title;
             }
