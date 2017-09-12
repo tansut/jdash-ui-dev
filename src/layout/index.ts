@@ -1070,6 +1070,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
 
     removeDashlet(dashletElement: IDashletElement) {
         dashletElement.panel.remove();
+        Helper.fireEvent(dashletElement, "dashlet-removed", dashletElement);        
         return this.save().then(() => this.createDashletDropzones());
     }
 

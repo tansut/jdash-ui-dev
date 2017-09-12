@@ -60,6 +60,17 @@
             this.initialized = function () {
                 // Dom is ready!
 
+                // resize listener
+                var self = this;
+                var resizeListener = debounce(function () {
+                    self.createChart();
+                }, 10);
+                window.addEventListener('resize', resizeListener);
+
+                this.addEventListener('dashlet-removed', function () {
+                    window.removeEventListener('resize', resizeListener);
+                });
+
             }
 
             this.getDashletSize = function () {

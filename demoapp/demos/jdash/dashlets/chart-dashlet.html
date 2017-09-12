@@ -140,6 +140,16 @@
 
             this.initialized = function () {
                 this.drawChart();
+                var self = this;
+
+                var resizeListener = debounce(function () {
+                    self.drawChart();
+                }, 10);
+                window.addEventListener('resize', resizeListener);
+
+                this.addEventListener('dashlet-removed', function () {
+                    window.removeEventListener('resize', resizeListener);
+                });
             }
 
             this.chartType = function () {

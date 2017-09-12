@@ -47,6 +47,16 @@
                     }
                 });
 
+                var self = this;
+
+                var resizeListener = debounce(function () {
+                    self.drawCharts();
+                }, 10);
+                window.addEventListener('resize', resizeListener);
+
+                this.addEventListener('dashlet-removed', function () {
+                    window.removeEventListener('resize', resizeListener);
+                });
             }
 
             this.addEventListener('after-place', function () {
