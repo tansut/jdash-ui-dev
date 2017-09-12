@@ -9,5 +9,13 @@ $(window).ready(function () {
         doneLabel: 'Start!'
     })
 
-    // introTut.start().oncomplete(function () { console.log('Done'); });
+    introTut.start().oncomplete(function () { console.log('Done'); });
 })
+
+// mobilde ekranı büyütüp küçültünce sol tarafın geri açılması için koydum
+window.addEventListener('resize', function (event) {
+    if(event && event.target.innerWidth > 850){
+        app && app.openSidenav();
+    }
+
+});
