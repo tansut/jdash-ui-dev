@@ -17,17 +17,17 @@ import Helper from '../helper';
 import { TemplateInstantiatePosition } from '../helper';
 
 function findTopLeft(element) {
-  var rec = element.getBoundingClientRect();
-  return {top: rec.top + window.scrollY, left: rec.left + window.scrollX};
+    var rec = element.getBoundingClientRect();
+    return { top: rec.top + window.scrollY, left: rec.left + window.scrollX };
 }
 
 function dragMoveListener(event) {
     var target = event.target,
         x = event.pageX,
         y = event.pageY;
-        target.style.position = 'fixed';
-        target.style.left = (event.pageX - (window.scrollX || window.pageXOffset)) + 'px';
-        target.style.top =   (event.pageY - (window.scrollY  || window.pageYOffset )) + 'px';
+    target.style.position = 'fixed';
+    target.style.left = (event.pageX - (window.scrollX || window.pageXOffset)) + 'px';
+    target.style.top = (event.pageY - (window.scrollY || window.pageYOffset)) + 'px';
 }
 
 function getAbsoluteBoundingRect(el) {
@@ -410,16 +410,16 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         return this._viewMode2;
     }
 
-    set viewMode2(value: string) { 
+    set viewMode2(value: string) {
         if (this._viewMode != value) {
             this.fireEvent('viewmode-change', {
                 oldVal: this.viewMode,
                 newVal: value
             }, false, true)
-            this._viewMode = value; 
+            this._viewMode = value;
 
             if (this.isInitialized) {
-                this.setViewMode(value); 
+                this.setViewMode(value);
 
             }
 
@@ -988,6 +988,62 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         return this.getDashlets();
     }
 
+    movePlacedDashlet(dashletElement: IDashletElement, event, to?: DashletPositionModel) {
+        to = this.normalizePosition(to);
+        var zoneToAdd = this.querySelector(`[j-dashlet-zone="${to.zone}"]`);
+        zoneToAdd = zoneToAdd || this.querySelector('[j-dashlet-zone]');
+
+        if (!dashletElement.panel) {
+            dashletElement.panel = this.createPanelForDashlet(dashletElement);
+        }
+
+        if (!dashletElement.layout)
+            dashletElement.layout = this;
+
+        var dashletId = dashletElement.getAttribute('j-provider-id') || dashletElement.id;
+
+        event.target.parentElement.insertBefore(dashletElement.panel, event.target);
+
+        var dashletsInZone = Helper.getElementsNotIn(zoneToAdd, '[j-type="j-dashlet"]', '[j-type="j-dashlet-zone-group"]');
+
+        for (var i = 0; i < dashletsInZone.length; i++) {
+            var dashlet = <IDashletElement>dashletsInZone[i];
+            this.setElementPosition(dashlet, { x: 0, y: i, z: 0 });
+        }
+
+        this.setDashletProperties(dashletElement);
+
+        var placeEventArgs = {
+            zone: zoneToAdd,
+            dashlet: dashletElement
+        }
+
+        Helper.fireEvent(document, "jdash:dashlet.after-place", placeEventArgs);
+        Helper.fireEvent(dashletElement, "after-place", placeEventArgs);
+
+
+        if (this.viewMode == LayoutViewMode.editable || this.viewMode == LayoutViewMode.dashletedit) {
+            this.createDashletDropzones();
+        }
+        this.collapseDashlet(dashletElement, this.dashletsCollapsed);
+        var createPromise: Promise<any>;
+
+        if (this.dashboard.state == DashboardState.loading)
+            return Promise.resolve(dashletElement);
+
+        if (dashletElement.status == IDashletElementStatus.created)
+            createPromise = this.dashboard.provider.createDashlet(dashletElement.model).then((createResult) => {
+                dashletElement.model.id = createResult.id;
+                dashletElement.status == IDashletElementStatus.loaded;
+                dashletElement.updateFromModel();
+                return dashletElement;
+            });
+        else createPromise = Promise.resolve(dashletElement);
+        return createPromise.then((dashletEl) => {
+            return this.save();
+        })
+    }
+
     placeDashlet(dashletElement: IDashletElement, to?: DashletPositionModel) {
         to = this.normalizePosition(to);
         var zoneToAdd = this.querySelector(`[j-dashlet-zone="${to.zone}"]`);
@@ -1070,7 +1126,9 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
 
     removeDashlet(dashletElement: IDashletElement) {
         dashletElement.panel.remove();
-        Helper.fireEvent(dashletElement, "dashlet-removed", dashletElement);        
+        Helper.fireEvent(this.dashboard, "dashlet-removed", dashletElement);
+        Helper.fireEvent(dashletElement, "dashlet-removed", dashletElement);
+
         return this.save().then(() => this.createDashletDropzones());
     }
 
