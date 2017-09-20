@@ -216,7 +216,7 @@ export class Dashboard extends TemplatedElement {
     }
 
 
-    addDashlet(dashletEl: string | IDashletElement | DashletModel | DashletModule, position?: DashletPositionModel) {
+    addDashlet(dashletEl: string | IDashletElement | DashletModel | DashletModule, position?: DashletPositionModel): IDashletElement {
         var dashlet: IDashletElement, model: DashletModel;
         if (typeof dashletEl == 'string') {
             var module = DashletModule.getByTag(dashletEl);
@@ -249,6 +249,7 @@ export class Dashboard extends TemplatedElement {
             dashlet = this.layout.generateDashletElement(model, IDashletElementStatus.created);
         }
         this.layout.placeDashlet(dashlet, position);
+        return dashlet;
     }
 }
 

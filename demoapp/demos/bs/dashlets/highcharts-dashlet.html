@@ -120,6 +120,7 @@
 
             }
 
+
             this.addEventListener('after-place', function (event) {
                 setTimeout(function () {
                     this.createChart();
@@ -175,7 +176,14 @@
 
             }
 
+            
+            this.addEventListener('execute-closeeditor',function(event){
+                event.preventDefault();
+            });
 
+ 
+
+          
             this.addEventListener('setconfig', function (event) {
 
                 var preset = this.presetsInput.value;

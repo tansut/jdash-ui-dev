@@ -150,11 +150,15 @@ export default class Helper {
         var executeHandler = context[`j-action-${action}-execute-handler`];
         if (!executeHandler) {
             context.addEventListener(`execute-${action}`, function (event: CustomEvent) {
+                if (event.defaultPrevented)
+                    return;
+
                 var before = Helper.fireEvent(context || window, `${action}`, event.detail, true, true);
-                if (before == false) {
+                if (before.dispatchResult == false || before.event.defaultPrevented) {
                     event.cancelable && event.preventDefault();
                     return;
                 }
+
                 var waitForPromise = event.detail.$waitFor;
                 Promise.resolve(waitForPromise).then(() => {
                     handlers.forEach((handler) => handler.apply(context, [event]))
@@ -477,7 +481,7 @@ export default class Helper {
     static fireEvent(source: HTMLElement | Window | Document, name: string, detail: any = null, cancellable: boolean = false, canBubble: boolean = false) {
         var createdEvent = new CustomEvent('Event');
         createdEvent.initCustomEvent(name, canBubble, cancellable, detail);
-        return source.dispatchEvent(createdEvent);
+        return { event: createdEvent, dispatchResult: source.dispatchEvent(createdEvent) };
     }
 
     static extends(d, b) {

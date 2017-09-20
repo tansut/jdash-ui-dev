@@ -666,38 +666,73 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
                         zone: HTMLElement = event.target,
                         dashlet = <IDashletElement>el.querySelector('[j-type="j-dashlet"]'),
                         dashletModule = <HTMLElement>el.querySelector('[j-type="j-dashlet-module"]');
+
                     zone.classList.add('j-dropzone-active');
                     self.dropActiveForElement(el);
-
-
-
                     dashlet && self.createDashletDropzones([dashlet]);
+
                 },
 
                 ondragenter: function (event) {
                     var el: HTMLElement = event.relatedTarget,
                         zone: HTMLElement = event.target,
-                        dashlet = el.querySelector('[j-type="j-dashlet"]'),
+                        dashlet = <IDashletElement>el.querySelector('[j-type="j-dashlet"]'),
                         dashletModule = <HTMLElement>el.querySelector('[j-type="j-dashlet-module"]');
+
+                    if (dashlet) {
+                        var eventResult = Helper.fireEvent(dashlet, 'drag-zone-entering', { zone: zone, dashlet: dashlet, target: el, originalEvent: event }, true);
+                        if (!eventResult.event.defaultPrevented) {
+                            eventResult = Helper.fireEvent(self.dashboard, 'dashlet:drag-zone-entering', { zone: zone, dashlet: dashlet, target: el, originalEvent: event }, true, true);
+                        }
+
+                        if (eventResult.event.defaultPrevented) {
+                            return false;
+                        }
+                    }
+
                     zone.classList.add('j-dropzone-enter');
                     el.classList.add('j-can-drop');
                     var rect = el.getBoundingClientRect();
                     zone.style.height = `${Math.round(rect.height)}px`;
+
+                    if (dashlet) {
+                        var eventResult = Helper.fireEvent(dashlet, 'drag-zone-entered', { zone: zone, dashlet: dashlet, target: el, originalEvent: event });
+                        eventResult = Helper.fireEvent(self.dashboard, 'dashlet:drag-zone-entered', { zone: zone, dashlet: dashlet, target: el, originalEvent: event }, false, true);
+                    }
+
                 },
                 ondragleave: function (event) {
                     var el: HTMLElement = event.relatedTarget,
                         zone: HTMLElement = event.target,
-                        dashlet = el.querySelector('[j-type="j-dashlet"]'),
+                        dashlet = <IDashletElement>el.querySelector('[j-type="j-dashlet"]'),
                         dashletModule = <HTMLElement>el.querySelector('[j-type="j-dashlet-module"]');
                     zone.classList.remove('j-dropzone-enter');
                     zone.style.height = '';
                     el.classList.remove('j-can-drop');
+
+                    if (dashlet) {
+                        Helper.fireEvent(dashlet, 'drag-zone-left', { zone: zone, dashlet: dashlet, target: el, originalEvent: event });
+                        Helper.fireEvent(self.dashboard, 'dashlet:drag-zone-left', { zone: zone, dashlet: dashlet, target: el, originalEvent: event }, false, true);
+                    }
                 },
                 ondrop: function (event) {
                     var el: HTMLElement = event.relatedTarget,
                         zone: HTMLElement = event.target,
                         dashlet = <IDashletElement>el.querySelector('[j-type="j-dashlet"]'),
                         dashletModule = <HTMLElement>el.querySelector('[j-type="j-dashlet-module"]');
+
+                    if (dashlet) {
+                        var eventResult = Helper.fireEvent(dashlet, 'drop-to-zone-starting', { zone: zone, dashlet: dashlet, target: el, originalEvent: event }, true);
+                        if (!eventResult.event.defaultPrevented) {
+                            eventResult = Helper.fireEvent(self.dashboard, 'dashlet:drop-to-zone-starting', { zone: zone, dashlet: dashlet, target: el, originalEvent: event }, true, true);
+                        }
+
+                        if (eventResult.event.defaultPrevented) {
+                            self.moveDashletToOriginalPosition(dashlet);
+                            return false;
+                        }
+
+                    }
                     el.classList.remove('j-can-drop');
 
                     self.dropEndForElement(el);
@@ -706,17 +741,18 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
 
                     if (dashlet) {
                         self.placeDashlet(dashlet, newPos);
+
+                        Helper.fireEvent(dashlet, 'drop-to-zone-end', { zone: zone, dashlet: dashlet, target: el, originalEvent: event, fromModule: false });
+                        Helper.fireEvent(self.dashboard, 'dashlet:drop-to-zone-end', { zone: zone, dashlet: dashlet, target: el, originalEvent: event, fromModule: false }, false, true);
+
                     } else if (el.getAttribute('j-type') == 'j-dashlet-module') {
-                        var model: DashletModel = {
-                            id: '',
-                            moduleId: el.getAttribute('j-module-id'),
-                            dashboardId: self.dashboard.getAttribute('j-provider-id') || self.dashboard.id,
-                            title: '',
-                            configuration: {},
-                            createdAt: null
-                        }
-                        self.dashboard.addDashlet(el.getAttribute('j-module-id'), newPos);
+                        dashlet = self.dashboard.addDashlet(el.getAttribute('j-module-id'), newPos);
+
+                        Helper.fireEvent(dashlet, 'drop-to-zone-end', { zone: zone, dashlet: dashlet, target: el, originalEvent: event, fromModule: true });
+                        Helper.fireEvent(self.dashboard, 'dashlet:drop-to-zone-end', { zone: zone, dashlet: dashlet, target: el, originalEvent: event, fromModule: true }, false, true);
                     }
+
+
 
                 },
                 ondropdeactivate: function (event) {
@@ -732,6 +768,12 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         }
 
 
+    }
+
+    private moveDashletToOriginalPosition(dashlet: IDashletElement) {
+        this.dropEndForElement(dashlet.panel);
+        var pos = this.getElementPosition(dashlet);
+        this.placeDashlet(dashlet, pos);
     }
 
     makeDashletDragable(dashletElement: IDashletElement, enable: boolean) {
@@ -753,12 +795,15 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
                 },
                 autoScroll: true,
                 onstart: function (event) {
-                    // scroll bug fix hack
+                    var eventResult = Helper.fireEvent(dashletElement, 'drag-started', { dashlet: dashletElement, originalEvent: event }, true);
+                    if (!eventResult.event.defaultPrevented) {
+                        eventResult = Helper.fireEvent(self.dashboard, 'dashlet:drag-started', { dashlet: dashletElement, originalEvent: event }, true, true);
+                    }
 
-                    // setTimeout(function () {
-                    //     event.target.style.left = "";
-                    //     event.target.style.top = "";
-                    // });
+                    if (eventResult.event.defaultPrevented) {
+                        event.interaction.stop();
+                        return false;
+                    }
                 },
                 onmove: function (event) {
                     dragMoveListener.apply(this, [event])
@@ -766,11 +811,8 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
                 onend: function (event) {
                     var zone = event['dropzone'];
                     if (!zone) {
-                        var el = event.target;
-                        self.dropEndForElement(el);
                         var dashlet = event.target.querySelector('[j-type="j-dashlet"]');
-                        var pos = self.getElementPosition(dashlet);
-                        self.placeDashlet(dashlet, pos);
+                        self.moveDashletToOriginalPosition(dashlet);
                     }
                 }
             }).allowFrom('[j-drag-handle]');
@@ -779,6 +821,52 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         }
     }
 
+    makeDroppable(selector: string, enable: boolean, context?: HTMLElement, container?: HTMLElement) {
+
+        var interactable = interact(selector, {
+            context: context
+        });
+
+        var self = this;
+
+        if (enable) {
+            (<any>interactable).draggable({
+                inertia: true,
+                restrict: {
+                    endOnly: true,
+                    elementRect: { top: 1, left: 1, bottom: 1, right: 1 },
+
+                },
+                autoScroll: {
+                    container: this
+                },
+                onstart: function (event) {
+                    if (event.target.getAttribute("j-type") == "j-dashlet-module") {
+                        var eventResult = Helper.fireEvent(self.dashboard, 'dashlet-module:drag-started', { module: event.target, originalEvent: event }, true, true);
+                        if (eventResult.event.defaultPrevented) {
+                            event.interaction.stop();
+                            return false;
+                        }
+                    }
+                },
+                onmove: function (event) {
+                    dragMoveListener.apply(this, [event])
+                },
+                onend: function (event) {
+                    self.dropEndForElement(event.target);
+                    var zone = event['dropzone'];
+                    if (!zone) {
+                        var el = event.target;
+                        el.style.webkitTransform = el.style.transform = '';
+                        el.removeAttribute('data-x');
+                        el.removeAttribute('data-y');
+                    }
+                }
+            }).allowFrom('[j-drag-handle]')
+        } else {
+            interactable.draggable(false);
+        }
+    }
 
     createDashletDropzones(excludeList: Array<HTMLElement> = []) {
         var zones = this.querySelectorAll("[j-dashlet-zone]");
@@ -836,7 +924,7 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         } else {
             Helper.instantiateTemplate(contentTemplate);
             this.generateDashletZoneIds(); // fix : if not given zoneId, moving dashlet to the zone cannot work.
-            this.setViewMode(this.viewMode);            
+            this.setViewMode(this.viewMode);
         }
 
     }
@@ -875,51 +963,6 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         super.connectedCallback();
     }
 
-    makeDroppable(selector: string, enable: boolean, context?: HTMLElement, container?: HTMLElement) {
-
-        var interactable = interact(selector, {
-            context: context
-        });
-
-        var self = this;
-
-        if (enable) {
-            (<any>interactable).draggable({
-                inertia: true,
-                restrict: {
-                    endOnly: true,
-                    elementRect: { top: 1, left: 1, bottom: 1, right: 1 },
-
-                },
-                autoScroll: {
-                    container: this
-                },
-                onstart: function (event) {
-                    // scroll bug fix hack
-
-                    // setTimeout(function () {
-                    //     event.target.style.left = (event.pageX - 25) + "px";
-                    //     event.target.style.top = (event.pageY - 25) + "px";
-                    // });
-                },
-                onmove: function (event) {
-                    dragMoveListener.apply(this, [event])
-                },
-                onend: function (event) {
-                    self.dropEndForElement(event.target);
-                    var zone = event['dropzone'];
-                    if (!zone) {
-                        var el = event.target;
-                        el.style.webkitTransform = el.style.transform = '';
-                        el.removeAttribute('data-x');
-                        el.removeAttribute('data-y');
-                    }
-                }
-            }).allowFrom('[j-drag-handle]')
-        } else {
-            interactable.draggable(false);
-        }
-    }
 
 
 
@@ -1126,9 +1169,18 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
 
 
     removeDashlet(dashletElement: IDashletElement) {
+        var removeEventResult = Helper.fireEvent(dashletElement, 'dashlet-removing', { dashlet: dashletElement }, true, false);
+        if (!removeEventResult.event.defaultPrevented) {
+            removeEventResult = Helper.fireEvent(this.dashboard, "dashlet:dashlet-removing", { dashlet: dashletElement }, true, true);
+        }
+
+        if (removeEventResult.event.defaultPrevented)
+            return;
+
         dashletElement.panel.remove();
-        Helper.fireEvent(this.dashboard, "dashlet-removed", dashletElement);
-        Helper.fireEvent(dashletElement, "dashlet-removed", dashletElement);
+
+        Helper.fireEvent(dashletElement, "dashlet-removed", { dashlet: dashletElement });
+        Helper.fireEvent(this.dashboard, "dashlet:dashlet-removed", { dashlet: dashletElement }, false, true);
 
         return this.save().then(() => this.createDashletDropzones());
     }
