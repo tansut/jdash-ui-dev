@@ -11,3 +11,8 @@ $(window).ready(function () {
         console.log('Done');
     })
 })
+function rightBarInitted(navbar, isResize) {
+    if (!isResize) {
+        app.loadThemes(navbar.querySelector('#themes'));
+    }
+}

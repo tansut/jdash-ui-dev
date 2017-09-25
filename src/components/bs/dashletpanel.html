@@ -11,12 +11,24 @@
         padding: 5px;
     }
 
+    [j-type="j-dashlet-configuration-tools"] {
+        padding: 5px;
+    }
+
     [j-view-mode="dashletedit"] j-dashlet-panel [j-type="j-dashlet-header"] {
         cursor: move;
     }
 
     [j-type="j-dashlet-configuration-tools"] {
-        margin-top: 0.25em;
+        margin-top: -1px;
+    }
+
+    [j-type="j-dashlet-configuration-tools"] .btn {
+        border: none;
+    }
+
+    [j-type="j-dashlet-configuration-tools"] .btn:hover {
+        background: #ccc;
     }
 </style>
 <j-component id="j-dashlet-panel" delay-register="true">
@@ -26,12 +38,12 @@
                 <h3 class="panel-title" j-bind="title" j-bind-default="&nbsp" j-type="j-dashlet-title"></h3>
             </div>
             <template j-type="j-dashlet-configuration-tools" class="text-center dashlet-action j-theme-l1">
-                <button type="button" title="Configure" class="btn btn-default j-theme-action" j-action="configuredashlet"><span class="glyphicon glyphicon-pencil"></span></button>
-                <button type="button" title="Set title" class="btn btn-default j-theme-action" j-action="setdashlettitle"><span class="glyphicon glyphicon-font"></span></button>
-                <button type="button" title="Clone" class="btn btn-default j-theme-action" j-action="clonedashlet"><span class="glyphicon glyphicon-tint"></span></button>
+                <button type="button" title="Configure" class="btn btn-default j-theme-action" j-action="configuredashlet"><span class="glyphicon glyphicon-edit"></span></button>
+                <button type="button" title="Set title" class="btn btn-default j-theme-action" j-action="setdashlettitle"><span class="glyphicon glyphicon-pencil"></span></button>
+                <button type="button" title="Clone" class="btn btn-default j-theme-action" j-action="clonedashlet"><span class="glyphicon glyphicon-duplicate"></span></button>
                 <button type="button" title="Delete" class="btn btn-default j-theme-action" j-action="removedashlet"><span class="glyphicon glyphicon-remove"></span></button>
             </template>
-            <div class="panel-body j-theme-d1" j-type="j-dashlet-container">
+            <div class="panel-body" j-type="j-dashlet-container">
                 <slot name="body"></slot>
             </div>
         </div>

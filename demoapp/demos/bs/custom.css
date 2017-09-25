@@ -133,3 +133,11 @@
 .logo {
     text-align: center;
 }
+
+.move {
+    cursor: move;
+}
+
+.collapse.navbar-collapse.has-image .dropdown .dropdown-toggle {
+    width: 90%;
+}

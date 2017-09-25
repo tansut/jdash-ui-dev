@@ -924,7 +924,6 @@ export class DashboardLayout extends ComponentElement implements IDashboardLayou
         } else {
             Helper.instantiateTemplate(contentTemplate);
             this.generateDashletZoneIds(); // fix : if not given zoneId, moving dashlet to the zone cannot work.
-            this.setViewMode(this.viewMode);
         }
 
     }
