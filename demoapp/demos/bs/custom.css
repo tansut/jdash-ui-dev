@@ -141,3 +141,17 @@
 .collapse.navbar-collapse.has-image .dropdown .dropdown-toggle {
     width: 90%;
 }
+
+#dashboard-list li {
+    border-radius: 10px;
+}
+
+.sidebar-wrapper .navbar-nav {
+    text-align: center;  
+}
+
+.sidebar-wrapper .navbar-nav li button {
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
