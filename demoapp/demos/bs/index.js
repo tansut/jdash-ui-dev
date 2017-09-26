@@ -54,7 +54,7 @@ $(document).ready(function () {
         this.editDashletsBtn = document.querySelector('#dashletedit');
         this.editLayoutBtn = document.querySelector('#layoutedit');
         this.createDashboardBtn = document.querySelector('#create-dashboard-btn');
-        this.dashboardListContainer = document.querySelector('#dashboard-list');
+        this.dashboardListContainer = this.dashboardListContainer || document.querySelector('#dashboard-list');
         this.dashboardListItemTemplate = document.querySelector('#dashboard-list-item-template');
         this.dashletListItemTemplate = document.querySelector('#dashlet-list-item-template');
         this.startEditBtn = document.querySelector('#startedit');
@@ -301,7 +301,7 @@ $(document).ready(function () {
         return true;
     }
 
-    app.prototype.createDashboardList = function (dashboards) {
+    app.prototype.createDashboardList = function (dashboards, listContainer) {
         this.dashboardListContainer.innerHTML = '';
         dashboards.forEach(function (dashboard) {
             var el = document.importNode(this.dashboardListItemTemplate.content, true);
@@ -354,7 +354,7 @@ $(document).ready(function () {
                 result.meta && (model.meta = result.meta);
                 this.loadDashboards();
                 this.loadDashboard(model);
-                startNewDashboardIntro && startNewDashboardIntro();                
+                startNewDashboardIntro && startNewDashboardIntro();
             }.bind(this)).catch(function (err) {
                 alert('Unable to create dashboard:' + err.message)
             }.bind(this))

@@ -21,10 +21,23 @@ export class BsDashletEditorPanel extends DashletEditorPanel {
     showEditor() {
 
         var modal = window.$(Helper.getFirstElementChild(this)).modal('show');
-        modal.on('hidden.bs.modal', function () { this.remove(); }.bind(this));
-        modal.on('hidden', function () { this.remove(); }.bind(this));
+
+        modal.on('hidden.bs.modal', function () {
+            this.remove();
+            this.editor.dashlet.style.position = '';
+        }.bind(this));
+        modal.on('hidden', function () {
+            this.remove();
+            this.editor.dashlet.panel.style.position = '';
+        }.bind(this));
+        var backDrop = window.$('.modal-backdrop');
+        backDrop.appendTo(this.editor.dashlet);
+        backDrop.css({ position: 'absolute', 'border-radius': '10px' });
+        window.$('body').removeClass('modal-open');
+
+        this.editor.dashlet.panel.style.position = 'relative';
     }
 
-  
+
 }
 

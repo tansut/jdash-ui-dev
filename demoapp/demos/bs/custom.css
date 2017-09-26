@@ -139,7 +139,8 @@
 }
 
 .collapse.navbar-collapse.has-image .dropdown .dropdown-toggle {
-    width: 90%;
+    width: 86%;
+    border: 1px solid #ccc;
 }
 
 #dashboard-list li {
