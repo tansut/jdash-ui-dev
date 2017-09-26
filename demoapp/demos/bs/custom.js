@@ -16,3 +16,27 @@ function rightBarInitted(navbar, isResize) {
         app.loadThemes(navbar.querySelector('#themes'));
     }
 }
+
+function startNewDashboardIntro() {
+    if (!startNewDashboardIntro.isNewDashboardIntroShown) {
+        var intro = introJs();
+        intro.setOptions({
+            steps: [
+                {
+                    intro: "Your new dashboard has been created and is ready to design!"
+                },
+                {
+                    element : document.querySelector('#dashlet-list'),
+                    intro : 'You can add any dashlet inside.'
+                },
+                {
+                    element: document.querySelector('#layoutedit'),
+                    intro: "Click design button to design dashboard layout."
+                }
+            ]
+        });
+
+        intro.start();
+        startNewDashboardIntro.isNewDashboardIntroShown = true;
+    }
+}

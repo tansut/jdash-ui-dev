@@ -354,6 +354,7 @@ $(document).ready(function () {
                 result.meta && (model.meta = result.meta);
                 this.loadDashboards();
                 this.loadDashboard(model);
+                startNewDashboardIntro && startNewDashboardIntro();                
             }.bind(this)).catch(function (err) {
                 alert('Unable to create dashboard:' + err.message)
             }.bind(this))
