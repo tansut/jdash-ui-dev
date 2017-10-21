@@ -11,6 +11,7 @@
     //         window.customElements.forcePolyfill = true;
     //     }
     // }
+    window.customElements = window.customElements || {};
     window.customElements.forcePolyfill = true;
     // var viewMode = getCookie("view-mode");
     // if (viewMode == "desktop") {
