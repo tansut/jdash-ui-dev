@@ -22,7 +22,7 @@ import { InitialConfigurator } from "./lib/initialConfigurator";
 
 export var JDash = {
     HtmlElement: HtmlElement,
-    Helper: Helper, 
+    Helper: Helper,
     Component: Component,
     DashletModule: DashletModule,
     DashletPanel: DashletPanel,
@@ -76,7 +76,7 @@ export var JDash = {
 
 
 declare global {
-    interface Window { 
+    interface Window {
         jdash: any
     }
 }
@@ -84,9 +84,6 @@ declare global {
 (function (window: Window) {
     window['jdash'] = JDash;
     InitialConfigurator.JDashConfiguratorAttributes();
-    // var jdash = window['jdash'] = (window['jdash'] || {});
-    // for(var prop in JDash)
-    //   jdash[prop] = JDash[prop] || jdash[prop];
     register.elements();
     JDash.ready(() => ThemeManager.init())
 })(window)

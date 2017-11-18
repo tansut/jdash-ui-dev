@@ -1,4 +1,4 @@
-(function () {    
+(function () {
     (function (arr) {
         arr.forEach(function (item) {
             if (item.hasOwnProperty('remove')) {
@@ -15,8 +15,9 @@
         });
     })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
 
-    if(!("customElements" in window)){
+    if (!("customElements" in window)) {
         window.customElements = {};
     }
     window.customElements.forcePolyfill = true;
+    window._nativeCustomElements = window.customElements;
 })();
