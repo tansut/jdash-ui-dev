@@ -3,15 +3,20 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
+    "babel-preset-es2015-script": "^1.1.0",
     "jdash-core": "^1.0.0",
     "jdash-ui": "^1.0.2"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/es6-promise": "0.0.32",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "browserify": "^13.1.1",
+    "custom-elements": "^1.0.2",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
     "gulp-clean-css": "^2.4.0",
     "gulp-concat": "^2.6.1",
     "gulp-git": "^2.0.1",

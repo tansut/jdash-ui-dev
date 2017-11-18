@@ -22,6 +22,7 @@ var removeCode = require('gulp-remove-code');
 var git = require('gulp-git');
 const shell = require('gulp-shell');
 var rename = require("gulp-rename");
+const babel = require('gulp-babel');
 
 var npmDir = '../deploy/jdash-ui/';
 
@@ -141,17 +142,6 @@ gulp.task('deploy-full', ['deploy:clean'], function (cb) {
     });
 });
 
-gulp.task('polyfills', function () {
-    return gulp.src([
-        './src/lib/polyfillConfigurations/customElements.js',
-        'bower_components/custom-elements/src/native-shim.js',
-        'bower_components/custom-elements/custom-elements.min.js',
-        'bower_components/webcomponentsjs/HTMLImports.min.js',
-        'bower_components/es6-promise/es6-promise.min.js'
-    ])
-        .pipe(concat('polyfills.js'))
-        .pipe(gulp.dest('./debug/'));
-})
 
 gulp.task('fonts', function () {
     return gulp.src(['./fonts/**/*'])
@@ -272,3 +262,19 @@ gulp.task('npm.deploy', ['npm:clean', 'deploy', 'tsc-def'], function () {
 
 
 gulp.task('deploy', ['deploy-native-only', 'deploy-full', 'sass-deploy', 'vulcanize-deploy']);
+
+
+
+gulp.task('polyfills', function () {
+    return gulp.src([
+        './src/lib/polyfillConfigurations/customElements.js',
+        './bower_components/template/template.js',
+        'bower_components/custom-elements/src/native-shim.js',
+        'bower_components/custom-elements/custom-elements.min.js',
+        'bower_components/webcomponentsjs/HTMLImports.min.js',
+        'bower_components/es6-promise/es6-promise.js'
+    ]).pipe(babel({
+        presets: [['env', { "modules": false }]] 
+    })).pipe(concat('polyfills.js'))
+        .pipe(gulp.dest('./debug/'));
+})
