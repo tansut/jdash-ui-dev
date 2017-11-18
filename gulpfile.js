@@ -106,8 +106,9 @@ gulp.task('deploy-native-only', ['deploy:clean'], function (cb) {
             'bower_components/interactjs/dist/interact.min.js',
             'node_modules/axios/dist/axios.min.js',
             'dist/jdash.lean.min.js'
-        ])
-            .pipe(concat('jdash.native.min.js'))
+        ]).pipe(babel({
+            presets: [['env', { "modules": false }]]
+        })).pipe(concat('jdash.native.min.js'))
             .pipe(gulp.dest('./dist/'));
         return merge(jdash);
     });
@@ -136,8 +137,9 @@ gulp.task('deploy-full', ['deploy:clean'], function (cb) {
             'bower_components/interactjs/dist/interact.min.js',
             'node_modules/axios/dist/axios.min.js',
             'dist/jdash.lean.min.js'
-        ])
-            .pipe(concat('jdash.min.js'))
+        ]).pipe(babel({
+            presets: [['env', { "modules": false }]]
+        })).pipe(concat('jdash.min.js'))
             .pipe(gulp.dest('./dist/'));
 
         return merge(jdash);
@@ -276,7 +278,7 @@ gulp.task('polyfills', function () {
         'bower_components/webcomponentsjs/HTMLImports.min.js',
         'bower_components/es6-promise/es6-promise.js'
     ]).pipe(babel({
-        presets: [['env', { "modules": false }]] 
+        presets: [['env', { "modules": false }]]
     })).pipe(concat('polyfills.js'))
         .pipe(gulp.dest('./debug/'));
 })

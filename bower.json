@@ -17,10 +17,10 @@
   ],
   "dependencies": {
     "es6-promise": "^4.0.5",
-    "custom-elements": "webcomponents/custom-elements#1.0.0-alpha.3",
     "interactjs": "^1.2.8",
     "html-imports": "webcomponents/html-imports",
     "webcomponentsjs": "^0.7.23",
-    "template": "webcomponents/template#^1.2.0"
+    "template": "webcomponents/template#^1.2.0",
+    "custom-elements": "webcomponents/custom-elements#1.0.0"
   }
 }
