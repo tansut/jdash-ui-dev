@@ -22,6 +22,7 @@ var removeCode = require('gulp-remove-code');
 var git = require('gulp-git');
 const shell = require('gulp-shell');
 var rename = require("gulp-rename");
+const babel = require('gulp-babel');
 
 var npmDir = '../deploy/jdash-ui/';
 
@@ -100,12 +101,14 @@ gulp.task('deploy-native-only', ['deploy:clean'], function (cb) {
     return Promise.all(doit()).then(() => {
         var jdash = gulp.src([
             './src/lib/polyfillConfigurations/customElements.js',
+            './bower_components/template/template.js',
             'bower_components/custom-elements/src/native-shim.js',
             'node_modules/interactjs/dist/interact.min.js',
             'node_modules/axios/dist/axios.min.js',
             'dist/jdash.lean.min.js'
-        ])
-            .pipe(concat('jdash.native.min.js'))
+        ]).pipe(babel({
+            presets: [['env', { "modules": false }]]
+        })).pipe(concat('jdash.native.min.js'))
             .pipe(gulp.dest('./dist/'));
         return merge(jdash);
     });
@@ -126,6 +129,7 @@ gulp.task('deploy-full', ['deploy:clean'], function (cb) {
     return Promise.all(doit()).then(() => {
         var jdash = gulp.src([
             './src/lib/polyfillConfigurations/customElements.js',
+            './bower_components/template/template.js',
             'bower_components/custom-elements/custom-elements.min.js',
             'bower_components/webcomponentsjs/HTMLImports.min.js',
             'bower_components/custom-elements/src/native-shim.js',
@@ -133,25 +137,15 @@ gulp.task('deploy-full', ['deploy:clean'], function (cb) {
             'node_modules/interactjs/dist/interact.min.js',
             'node_modules/axios/dist/axios.min.js',
             'dist/jdash.lean.min.js'
-        ])
-            .pipe(concat('jdash.min.js'))
+        ]).pipe(babel({
+            presets: [['env', { "modules": false }]]
+        })).pipe(concat('jdash.min.js'))
             .pipe(gulp.dest('./dist/'));
 
         return merge(jdash);
     });
 });
 
-gulp.task('polyfills', function () {
-    return gulp.src([
-        './src/lib/polyfillConfigurations/customElements.js',
-        'bower_components/custom-elements/src/native-shim.js',
-        'bower_components/custom-elements/custom-elements.min.js',
-        'bower_components/webcomponentsjs/HTMLImports.min.js',
-        'bower_components/es6-promise/es6-promise.min.js'
-    ])
-        .pipe(concat('polyfills.js'))
-        .pipe(gulp.dest('./debug/'));
-})
 
 gulp.task('fonts', function () {
     return gulp.src(['./fonts/**/*'])
@@ -272,3 +266,19 @@ gulp.task('npm.deploy', ['npm:clean', 'deploy', 'tsc-def'], function () {
 
 
 gulp.task('deploy', ['deploy-native-only', 'deploy-full', 'sass-deploy', 'vulcanize-deploy']);
+
+
+
+gulp.task('polyfills', function () {
+    return gulp.src([
+        './src/lib/polyfillConfigurations/customElements.js',
+        './bower_components/template/template.js',
+        'bower_components/custom-elements/src/native-shim.js',
+        'bower_components/custom-elements/custom-elements.min.js',
+        'bower_components/webcomponentsjs/HTMLImports.min.js',
+        'bower_components/es6-promise/es6-promise.js'
+    ]).pipe(babel({
+        presets: [['env', { "modules": false }]]
+    })).pipe(concat('polyfills.js'))
+        .pipe(gulp.dest('./debug/'));
+})

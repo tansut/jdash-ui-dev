@@ -19,6 +19,7 @@
     "es6-promise": "^4.0.5",
     "custom-elements": "webcomponents/custom-elements#^1.0.0-alpha.3",
     "html-imports": "webcomponents/html-imports",
-    "webcomponentsjs": "^0.7.23"
+    "webcomponentsjs": "^0.7.23",
+    "template": "webcomponents/template#^1.2.0"
   }
 }
