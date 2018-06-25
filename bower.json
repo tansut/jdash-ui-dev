@@ -7,7 +7,7 @@
   "main": "",
   "moduleType": [],
   "license": "MIT",
-  "homepage": "",
+  "homepage": "http://jdash.io",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -18,7 +18,6 @@
   "dependencies": {
     "es6-promise": "^4.0.5",
     "custom-elements": "webcomponents/custom-elements#^1.0.0-alpha.3",
-    "interactjs": "^1.2.8",
     "html-imports": "webcomponents/html-imports",
     "webcomponentsjs": "^0.7.23"
   }

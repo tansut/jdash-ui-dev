@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
+    "interactjs": "^1.3.4",
     "jdash-core": "^1.0.0",
     "jdash-ui": "^1.0.2"
   },
