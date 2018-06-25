@@ -131,7 +131,7 @@ $(document).ready(function () {
         //endRemoveIf(nodev)
 
         //removeIf(nopremise)
-        // jdash.Provider = new jdash.ProviderTypes.OnPremise({ url: '/jdash/api/v1' });
+        jdash.Provider = new jdash.ProviderTypes.OnPremise({ url: '/jdash/api/v1' });
         //endRemoveIf(nopremise)
 
         this.go();
